@@ -1,15 +1,25 @@
 import './App.css';
 
+import Navbar from './Components/Navbar'
+import Sidebar from './Components/Sidebar'
+import Feed from './Components/Feed'
+import Widgets from './Components/Widgets'
+
 function App() {
   return (
     <div className="app">
-      <h1> Hello World</h1>
+
       {/* Navbar */}
+      <Navbar />
+
       {/* Sidebar */}
+      <Sidebar />
+      
       {/* Feed */}
+      <Feed />
+
       {/* Widgets */}
-        {/* To-do List */}
-        {/* Schedule */}
+      <Widgets />
 
     </div>
   );
