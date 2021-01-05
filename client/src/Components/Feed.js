@@ -7,8 +7,6 @@ import PostSender from './PostSender'
 const Feed = () => {
     return (
         <div className='feed'>
-            
-            {/* Create Post */}
             <PostSender />    
             
             {/* Posts */}
