@@ -21,6 +21,6 @@
     font-weight: 600;
 }
 
-.sidebarRow > .avatar {
+.sidebarRow > .sidebarRow__avatar {
     margin: 10px 10px;  
 }
