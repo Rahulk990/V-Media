@@ -8,7 +8,9 @@
     /* max-height: 50px; */
     justify-content: space-evenly;
     box-shadow:0 2px 4px .5px #888888;
+    top: 0;
 }
+
 .MuiSvgIcon-root{
     padding: 10px;
 }

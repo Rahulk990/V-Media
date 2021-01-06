@@ -2,16 +2,35 @@ import React from 'react'
 import './Feed.css'
 
 import PostSender from './PostSender'
-// import Post from './Post'
+import Post from './Post'
 
 const Feed = () => {
     return (
         <div className='feed'>
-            
-            {/* Create Post */}
-            <PostSender />    
-            
-            {/* Posts */}
+            <PostSender />
+
+            <Post
+                profilePic='{entry.avatar}'
+                username='Rahul'
+                timestamp='Timestamp'
+                text='Message is to be displayed here'
+            />
+
+            <Post
+                profilePic='{entry.avatar}'
+                username='Rahul'
+                timestamp='Timestamp'
+                text='Message is to be displayed here'
+            />
+
+            <Post
+                profilePic='{entry.avatar}'
+                username='Rahul'
+                timestamp='Timestamp'
+                text='Message is to be displayed here'
+                image='https://i.ytimg.com/vi/FIrgsfsvzlI/hqdefault.jpg'
+            />
+
             {/* {
                 postData.map(entry => (
                     <Post 
@@ -23,8 +42,8 @@ const Feed = () => {
                     />
                 ))
             } */}
-        
-        
+
+
         </div>
     )
 }
