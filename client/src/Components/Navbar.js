@@ -1,56 +1,70 @@
 import React from 'react'
 import "./Navbar.css"
+
 import FBicon from '@material-ui/icons/Facebook';
-import SearchIcon from '@material-ui/icons/Search';
-import HomeIcon from '@material-ui/icons/Home';
-import FlagIcon from '@material-ui/icons/Flag';
-import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
-import {Avatar} from "@material-ui/core";
-import {IconButton} from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
+import { Search, Home, People, Telegram, NotificationsActive, ExpandMoreOutlined } from '@material-ui/icons';
+
 const Navbar = () => {
     return (
-        <div className = "navbar">
-            <div className = "navbar__left"> 
-                <FBicon style={{color:"#4267B2", fontSize:"40px"}}/>
-                <div className = "navbar__input">
-                    <SearchIcon />
-                    <input placeholder = "Type here"/>
+        <div className="navbar">
+
+            <div className="navbar__left">
+
+                <div className='navbar__logo'>
+                    <Avatar src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1004px-Google_%22G%22_Logo.svg.png'/>
                 </div>
+
+                <div className='navbar__info'>
+                    <Avatar src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1004px-Google_%22G%22_Logo.svg.png'/>
+                    {/* <h4>Google</h4> */}
+                </div>
+
+                <div className="navbar__input">
+                    <Search />
+                    <input placeholder="Type here" />
+                </div>
+
             </div>
-            <div className = "navbar__center"> 
-                <div className = "navbar__option active navbar__option--active">
-                <HomeIcon />
+
+            <div className="navbar__center">
+
+                <div className="navbar__option active navbar__option--active">
+                    <Home />
                 </div>
-                <div className = "navbar__option ">
-                <FlagIcon />
+
+                <div className="navbar__option ">
+                    <People />
                 </div>
-                <div className = "navbar__option">
-                <SubscriptionsIcon />
+
+                <div className="navbar__option">
+                    <Telegram />
                 </div>
-                <div className = "navbar__option">
-                <FlagIcon />
-                </div>
-                <div className = "navbar__option">
-                <FlagIcon />
-                </div>
+
             </div>
-            <div className = "navbar__right"> 
-                <div className = "navbar__info">
-                    <Avatar/>
-                    <h4>Name</h4> 
+
+            <div className="navbar__right">
+
+                <div className="navbar__info">
+                    <Avatar />
+                    <h4>User Name</h4>
                 </div>
-                <div className="temp">
-                    <IconButton>
-                    <SubscriptionsIcon />
+
+                <div className='navbar__settings'>
+
+                    <IconButton style={{ 'padding': '0px' }}>
+                        <NotificationsActive />
                     </IconButton>
-                    <IconButton>
-                    <FlagIcon />
+
+                    <IconButton style={{ 'padding': '0px' }}>
+                        <ExpandMoreOutlined />
                     </IconButton>
-                    <IconButton>
-                    <FlagIcon />
-                    </IconButton>
+
                 </div>
+
             </div>
+
         </div>
     )
 }
