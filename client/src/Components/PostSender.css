@@ -39,6 +39,10 @@
     cursor: pointer;
 }
 
+.postSender__top > form > button:hover {
+    background-color: #2972d8;
+}
+
 .postSender__input {
     flex: 1;
 }
@@ -49,7 +53,7 @@
 }
 
 .postSender__option {
-    padding: 20px;
+    padding: 5px 10px;
     display: flex;
     align-items: center;
     color: gray;
@@ -59,7 +63,7 @@
 
 .postSender__option > h3 {
     font-size: medium;
-    margin-left: 10px;
+    margin-left: 7px;
 }
 
 .postSender__option:hover{

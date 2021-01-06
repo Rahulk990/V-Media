@@ -10,15 +10,18 @@
     box-shadow:0 2px 4px .5px #888888;
     top: 0;
 }
+
 .MuiSvgIcon-root{
     padding: 10px;
 }
+
 .nav-left {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     /* height: 40px; */
 }
+
 .nav-left .search-bar{
 
     display: flex;
@@ -28,32 +31,39 @@
     margin-left: 10px;
     border-radius: 33px;
 }
+
 .search-bar input{
     border: none;
     outline-width: 0;
     background-color: #eff2f5;
     border-radius: 33px;
 }
+
 .search-bar .MuiSvgIcon-root{
     font-size: 20px;
 }
+
 .nav-mid {
     display: flex;
     align-items: center;
     /* flex: 1; */
 }
+
 .nav-option .MuiSvgIcon-root{
     color: gray;
     cursor: pointer;
 }
+
 .nav-option .MuiSvgIcon-root:hover{
     color : #2e81f4;
 }
+
 .nav-option{
     display: flex;
     align-items: center;
     padding: 0 25px;
 }
+
 .nav-option:hover{
     background-color: #eff2f5;
     border-radius: 10px;
@@ -63,10 +73,12 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
+
 .nav-right {
     display: flex;
     /* align-items: center; */
 }
+
 .person-info{
     display: flex;
     align-items: center;
