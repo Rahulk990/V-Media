@@ -13,7 +13,7 @@ const Navbar = () => {
             <div className="navbar__left">
 
                 <div className='navbar__logo'>
-                    <Avatar src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1004px-Google_%22G%22_Logo.svg.png'/>
+                    <Avatar src='https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo-500x350.png'/>
                 </div>
 
                 <div className='navbar__info'>
