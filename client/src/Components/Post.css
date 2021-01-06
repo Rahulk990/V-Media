@@ -43,6 +43,9 @@
     border-radius: 20px;
 }
 
+
+/* Post Bottom */
+
 .post__bottom {
     padding: 0 15px 10px 15px;
     display: flex;
@@ -57,7 +60,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    padding: 0 5px 5px 5px;
+    padding: 2.5px 5px;
     flex: 1;
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './PostSender.css'
 
-import { Avatar } from '@material-ui/core'
+import { Avatar, Button } from '@material-ui/core'
 import { InsertEmoticon, PhotoLibrary, Videocam } from '@material-ui/icons'
 
 const PostSender = () => {
@@ -28,9 +28,9 @@ const PostSender = () => {
                         className='postSender__input'
                         placeholder="What's on your mind?"
                     />
-                    <button onClick={handleSubmit} type='submit'>
-                        <h3> Submit </h3>
-                    </button>
+                    <Button onClick={handleSubmit} type='submit'>
+                        Submit
+                    </Button>
                 </form>
             </div>
 

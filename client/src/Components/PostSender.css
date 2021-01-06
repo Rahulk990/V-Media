@@ -8,6 +8,9 @@
     width: 100%;
 }
 
+
+/* Post Sender Top */
+
 .postSender__top {
     display: flex;
     border-bottom: 1px solid #eff2f5;
@@ -35,7 +38,7 @@
     border-radius: 999px;
     background-color: #2e81f4;
     color: white;
-    font-size: small;
+    font-weight: 800;
     cursor: pointer;
 }
 
@@ -47,13 +50,16 @@
     flex: 1;
 }
 
+
+/* Post Sender Bottom */
+
 .postSender__bottom {
     display: flex;
     justify-content: space-evenly;
 }
 
 .postSender__option {
-    padding: 5px 10px;
+    padding: 2.5px 10px;
     display: flex;
     align-items: center;
     color: gray;
