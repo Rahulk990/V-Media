@@ -10,35 +10,36 @@ import {IconButton} from "@material-ui/core";
 const Navbar = () => {
     return (
         <div className = "navbar">
-            <div className = "nav-left"> 
+            <div className = "navbar__left"> 
                 <FBicon style={{color:"#4267B2", fontSize:"40px"}}/>
-                <div className = "search-bar">
+                <div className = "navbar__input">
                     <SearchIcon />
                     <input placeholder = "Type here"/>
                 </div>
             </div>
-            <div className = "nav-mid"> 
-                <div className = "nav-option">
+            <div className = "navbar__center"> 
+                <div className = "navbar__option active navbar__option--active">
                 <HomeIcon />
                 </div>
-                <div className = "nav-option">
+                <div className = "navbar__option ">
                 <FlagIcon />
                 </div>
-                <div className = "nav-option">
+                <div className = "navbar__option">
                 <SubscriptionsIcon />
                 </div>
-                <div className = "nav-option">
+                <div className = "navbar__option">
                 <FlagIcon />
                 </div>
-                <div className = "nav-option">
+                <div className = "navbar__option">
                 <FlagIcon />
                 </div>
             </div>
-            <div className = "nav-right"> 
-                <div className = "person-info">
+            <div className = "navbar__right"> 
+                <div className = "navbar__info">
                     <Avatar/>
                     <h4>Name</h4> 
                 </div>
+                <div className="temp">
                     <IconButton>
                     <SubscriptionsIcon />
                     </IconButton>
@@ -48,7 +49,7 @@ const Navbar = () => {
                     <IconButton>
                     <FlagIcon />
                     </IconButton>
-                
+                </div>
             </div>
         </div>
     )

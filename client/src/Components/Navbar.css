@@ -12,13 +12,13 @@
 .MuiSvgIcon-root{
     padding: 10px;
 }
-.nav-left {
+.navbar__left {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     /* height: 40px; */
 }
-.nav-left .search-bar{
+.navbar__left .navbar__input{
 
     display: flex;
     align-items: center;
@@ -27,51 +27,65 @@
     margin-left: 10px;
     border-radius: 33px;
 }
-.search-bar input{
+.navbar__input input{
     border: none;
     outline-width: 0;
     background-color: #eff2f5;
     border-radius: 33px;
 }
-.search-bar .MuiSvgIcon-root{
+.navbar__input .MuiSvgIcon-root{
     font-size: 20px;
 }
-.nav-mid {
+.navbar__center {
     display: flex;
     align-items: center;
     /* flex: 1; */
 }
-.nav-option .MuiSvgIcon-root{
+.navbar__option .MuiSvgIcon-root{
     color: gray;
     cursor: pointer;
 }
-.nav-option .MuiSvgIcon-root:hover{
+.navbar__option .MuiSvgIcon-root:hover{
     color : #2e81f4;
 }
-.nav-option{
+.navbar__option{
     display: flex;
     align-items: center;
-    padding: 0 25px;
+    padding: 0 20px;
 }
-.nav-option:hover{
+
+.navbar__option:hover{
     background-color: #eff2f5;
     border-radius: 10px;
+    border-bottom: none;
     align-items: center;
-    padding: 0 25px;
-    border-bottom: 3px solid #2e81f4;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    padding: 0 20px;
 }
-.nav-right {
+.navbar__option--active .MuiSvgIcon-root {
+    color: #2e81f4;
+}
+.navbar__option--active{
+    border-bottom: 2px solid #2e81f4;
+}
+.navbar__right {
     display: flex;
     /* align-items: center; */
 }
-.person-info{
+.navbar__info{
     display: flex;
     align-items: center;
 }
-
-.person-info h4{
+.navbar__right .MuiSvgIcon-root{
+    padding: 0;
+    height: 24px;
+    width: 24px;
+}
+.temp{
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+.navbar__info h4{
     margin-left: 15px;
     margin-right: 10px;
 }
