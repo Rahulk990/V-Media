@@ -1,5 +1,4 @@
 import './App.css';
-// import './Components/Navbar.css'
 import Navbar from './Components/Navbar'
 import Sidebar from './Components/Sidebar'
 import Feed from './Components/Feed'

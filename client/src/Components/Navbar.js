@@ -1,6 +1,5 @@
 import React from 'react'
 import "./Navbar.css"
-
 import FBicon from '@material-ui/icons/Facebook';
 import { Avatar } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
