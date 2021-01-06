@@ -1,0 +1,7 @@
+.eventRow {
+    margin: 10px;
+    height: 50px;
+    width: 150px;
+    background-color: aqua;
+    flex: 1;
+}

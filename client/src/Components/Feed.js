@@ -28,6 +28,20 @@ const Feed = () => {
                 username='Rahul'
                 timestamp='Timestamp'
                 text='Message is to be displayed here'
+            />
+
+            <Post
+                profilePic='{entry.avatar}'
+                username='Rahul'
+                timestamp='Timestamp'
+                text='Message is to be displayed here'
+            />
+
+            <Post
+                profilePic='{entry.avatar}'
+                username='Rahul'
+                timestamp='Timestamp'
+                text='Message is to be displayed here'
                 image='https://i.ytimg.com/vi/FIrgsfsvzlI/hqdefault.jpg'
             />
 
