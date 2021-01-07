@@ -6,7 +6,7 @@ import Sidebar from './Sidebar'
 const Messenger = () => {
     return (
         <div className='messenger'>
-            
+            <Sidebar />
         </div>
     )
 }

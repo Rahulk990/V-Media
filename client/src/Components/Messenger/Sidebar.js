@@ -6,7 +6,7 @@ import SidebarRow from './SidebarRow'
 
 const Sidebar = () => {
 
-    const isTeam = false;
+    const isContact = false;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,7 +26,7 @@ const Sidebar = () => {
                 <p> Your Teams </p>
             </div>
 
-            {(isTeam) ? (
+            {(isContact) ? (
                 <div className='sidebar__rows'>
                     <SidebarRow src="S" title='Team1' />
                     <SidebarRow src="S" title='Team1' />
