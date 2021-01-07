@@ -2,7 +2,7 @@ import React from 'react'
 import "./Navbar.css"
 import { centerOptionHandler } from './TabHandler'
 
-import { Avatar } from "@material-ui/core";
+import { Avatar, Tooltip, Zoom } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import { Search, Home, People, Telegram, NotificationsActive, ExpandMoreOutlined } from '@material-ui/icons';
 
@@ -36,29 +36,50 @@ const Navbar = ({ setPath }) => {
 
             <div className="navbar__center">
 
-                <div
-                    id='home'
-                    className="navbar__option active"
-                    onClick={() => centerOnClickHandler('home')}
+                <Tooltip
+                    TransitionComponent={Zoom}
+                    title="Home"
+                    enterDelay={500}
+                    leaveDelay={200}
                 >
-                    <Home />
-                </div>
+                    <div
+                        id='home'
+                        className="navbar__option navbar__option--active"
+                        onClick={() => centerOnClickHandler('home')}
+                    >
+                        <Home />
+                    </div>
+                </Tooltip>
 
-                <div
-                    id='teams'
-                    className="navbar__option "
-                    onClick={() => centerOnClickHandler('teams')}
+                <Tooltip
+                    TransitionComponent={Zoom}
+                    title="Teams"
+                    enterDelay={500}
+                    leaveDelay={200}
                 >
-                    <People />
-                </div>
+                    <div
+                        id='teams'
+                        className="navbar__option "
+                        onClick={() => centerOnClickHandler('teams')}
+                    >
+                        <People />
+                    </div>
+                </Tooltip>
 
-                <div
-                    id='messenger'
-                    className="navbar__option"
-                    onClick={() => centerOnClickHandler('messenger')}
+                <Tooltip
+                    TransitionComponent={Zoom}
+                    title="Messenger"
+                    enterDelay={500}
+                    leaveDelay={200}
                 >
-                    <Telegram />
-                </div>
+                    <div
+                        id='messenger'
+                        className="navbar__option"
+                        onClick={() => centerOnClickHandler('messenger')}
+                    >
+                        <Telegram />
+                    </div>
+                </Tooltip>
 
             </div>
 
@@ -83,7 +104,7 @@ const Navbar = ({ setPath }) => {
 
             </div>
 
-        </div>
+        </div >
     )
 }
 
