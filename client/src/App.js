@@ -1,18 +1,16 @@
 import './App.css';
 import Navbar from './Components/Navbar'
-import Sidebar from './Components/Sidebar'
-import Feed from './Components/Feed'
-import Rightbar from './Components/Rightbar'
+import Home from './Components/Home/Home'
+import Team from './Components/Teams/Team' 
 
 function App() {
   return (
     <div className="app">
       <Navbar />
 
-      <div className="app__body">
-        <Sidebar />
-        <Feed />
-        <Rightbar />
+      <div>
+        {/* <Home /> */}
+        <Team />
       </div>
       
     </div>

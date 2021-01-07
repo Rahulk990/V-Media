@@ -14,6 +14,8 @@ const Rightbar = () => {
     
     return (
         <div className='rightbar'>
+
+
             <nav>
                 <div className = "drop__btn" onClick={dropmenu}>
                 Events <span><ArrowDropDownIcon/></span>
@@ -27,6 +29,8 @@ const Rightbar = () => {
                 </div>
 
             </nav>
+
+            
             <div className="scroll_div">
                 <Event />   
                 <Event />            

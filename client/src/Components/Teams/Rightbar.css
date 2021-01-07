@@ -1,0 +1,10 @@
+.rightbar {
+	padding: 25px 10px;
+	flex: 0.3;
+    /* z-index: 10; */
+    /* border-left:1px solid #808080 ; */
+	background-color: blue;
+	display: flex;
+    flex-direction: column;
+    width: 100%;
+}
