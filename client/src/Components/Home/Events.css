@@ -1,8 +1,8 @@
 .event {
-    margin: 20px;
+    /* margin: 20px; */
     padding: 20px;
     height: 250px;
-    background-color: blue;
+    background-color: #eff2f5;
     flex: 1;
     display: flex;
     flex-direction: column;

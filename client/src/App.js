@@ -9,7 +9,7 @@ function App() {
       <Navbar />
 
       <div>
-        {/* <Home /> */}
+        <Home />
         <Team />
       </div>
       
