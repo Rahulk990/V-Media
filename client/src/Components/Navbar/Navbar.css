@@ -31,7 +31,7 @@
 .navbar__left {
     flex: 1;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -96,6 +96,11 @@
     color: #2e81f4;
 }
 
+.navbar__option--active:hover{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom: 2px solid #2e81f4;
+}
 
 
 /* Navbar Right  */

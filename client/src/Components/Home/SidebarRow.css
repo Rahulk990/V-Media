@@ -3,7 +3,7 @@
     align-items: center;
     padding: 2px 10px;
     cursor: pointer;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .sidebarRow:hover {
