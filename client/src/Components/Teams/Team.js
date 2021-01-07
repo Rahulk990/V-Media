@@ -2,19 +2,20 @@ import React from 'react'
 import './Team.css'
 
 import Sidebar from './Sidebar'
-import Feed from './Feed'
+import Feed from '../Feed/Feed'
 import Rightbar from './Rightbar'
 import { Autorenew } from '@material-ui/icons'
 
 const Team = () => {
 
+    const isAdmin = false;
     const isSelected = false;
 
     return (
         <div className='team'>
             <Sidebar />
             {(isSelected)? (
-                <Feed />
+                <Feed isAdmin={isAdmin}/>
             ):(
                 <div className='team__select'>
                     <Autorenew />

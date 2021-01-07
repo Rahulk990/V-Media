@@ -4,10 +4,10 @@ import './Feed.css'
 import PostSender from './PostSender'
 import Post from './Post'
 
-const Feed = () => {
+const Feed = ({ isAdmin }) => {
     return (
         <div className='feed'>
-            <PostSender />
+            {isAdmin && <PostSender />}
 
             <Post
                 profilePic='{entry.avatar}'
@@ -42,7 +42,13 @@ const Feed = () => {
                 username='Rahul'
                 timestamp='Timestamp'
                 text='Message is to be displayed here'
-                image='https://i.ytimg.com/vi/FIrgsfsvzlI/hqdefault.jpg'
+            />
+
+            <Post
+                profilePic='{entry.avatar}'
+                username='Rahul'
+                timestamp='Timestamp'
+                text='Message is to be displayed here'
             />
 
             {/* {
