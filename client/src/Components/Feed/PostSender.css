@@ -1,6 +1,6 @@
 .postSender {
     display: flex;
-    margin-top: 5px;
+    margin-top: 20px;
     flex-direction: column;
     background-color: white;
     border-radius: 15px;
@@ -38,7 +38,7 @@
     border-radius: 999px;
     background-color: #2e81f4;
     color: white;
-    font-weight: 800;
+    font-weight: 600;
     cursor: pointer;
 }
 
