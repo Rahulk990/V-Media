@@ -6,7 +6,7 @@ import SidebarRow from './SidebarRow'
 
 const Sidebar = () => {
 
-    const isTeam = true;
+    const isTeam = false;
 
     const handleSubmit = (e) => {
         e.preventDefault();

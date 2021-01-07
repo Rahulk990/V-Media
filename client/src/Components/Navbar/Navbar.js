@@ -1,18 +1,25 @@
 import React from 'react'
 import "./Navbar.css"
+import { centerOptionHandler } from './TabHandler'
 
 import { Avatar } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import { Search, Home, People, Telegram, NotificationsActive, ExpandMoreOutlined } from '@material-ui/icons';
 
-const Navbar = () => {
+const Navbar = ({ setPath }) => {
+
+    const centerOnClickHandler = (id) => {
+        setPath(id);
+        centerOptionHandler(id);
+    }
+
     return (
         <div className="navbar">
 
             <div className="navbar__left">
 
                 <div className='navbar__logo'>
-                    <Avatar src='https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo-500x350.png'/>
+                    <Avatar src='https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo-500x350.png' />
                 </div>
 
                 {/* <div className='navbar__info'>
@@ -29,15 +36,27 @@ const Navbar = () => {
 
             <div className="navbar__center">
 
-                <div className="navbar__option active navbar__option--active">
+                <div
+                    id='home'
+                    className="navbar__option active"
+                    onClick={() => centerOnClickHandler('home')}
+                >
                     <Home />
                 </div>
 
-                <div className="navbar__option ">
+                <div
+                    id='teams'
+                    className="navbar__option "
+                    onClick={() => centerOnClickHandler('teams')}
+                >
                     <People />
                 </div>
 
-                <div className="navbar__option">
+                <div
+                    id='messenger'
+                    className="navbar__option"
+                    onClick={() => centerOnClickHandler('messenger')}
+                >
                     <Telegram />
                 </div>
 

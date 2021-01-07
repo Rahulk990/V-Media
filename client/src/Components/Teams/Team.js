@@ -8,7 +8,7 @@ import { Autorenew } from '@material-ui/icons'
 
 const Team = () => {
 
-    const isAdmin = false;
+    const isAdmin = true;
     const isSelected = false;
 
     return (
