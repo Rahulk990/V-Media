@@ -2,8 +2,7 @@ import React from 'react'
 import "./Navbar.css"
 import { centerOptionHandler } from './TabHandler'
 
-import { Avatar, Tooltip, Zoom } from "@material-ui/core";
-import { IconButton } from "@material-ui/core";
+import { Avatar, Tooltip, Zoom, IconButton } from "@material-ui/core";
 import { Search, Home, People, Telegram, NotificationsActive, ExpandMoreOutlined } from '@material-ui/icons';
 
 const Navbar = ({ setPath }) => {
