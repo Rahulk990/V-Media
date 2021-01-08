@@ -1,9 +1,0 @@
-.scroll_div{
-    overflow:hidden;
-    padding: 20px;
-} 
-.scroll_div:hover{
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-    padding-right: 5px;
-}

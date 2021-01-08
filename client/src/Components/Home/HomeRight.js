@@ -1,13 +1,11 @@
 import React from 'react'
-import './Rightbar.css'
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import './HomeRight.css'
 import Event from './Events'
 
-const Rightbar = () => {
+const HomeRight = () => {
 
     return (
-        <div className='rightbar'>
-
+        <div className='homeRight'>
             <div className="scroll_div">
                 <Event />            
             </div>
@@ -15,4 +13,4 @@ const Rightbar = () => {
     )
 }
 
-export default Rightbar
+export default HomeRight

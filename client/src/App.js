@@ -14,7 +14,7 @@ function App() {
     <div className="app">
       <Navbar setPath={setPath} />
 
-      <div>
+      <div className='app__body'>
         {path === 'home' && <Home />}
         {path === 'teams' && <Team />}
         {path === 'messenger' && <Messenger />}

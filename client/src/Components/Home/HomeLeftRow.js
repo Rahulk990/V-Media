@@ -1,14 +1,14 @@
 import React from 'react'
-import './SidebarRow.css'
+import './HomeLeftRow.css'
 
 import { Avatar } from '@material-ui/core'
 
-const SidebarRow = ({ src, Icon, title }) => {
+const HomeLeftRow = ({ src, Icon, title }) => {
     return (
-        <div className='sidebarRow'>
+        <div className='homeLeftRow'>
             
             {src && <Avatar
-                className="sidebarRow__avatar"
+                className="homeLeftRow__avatar"
                 style={{ "height": "25px", "width": "25px" }}
                 src={src}
             />}
@@ -19,4 +19,4 @@ const SidebarRow = ({ src, Icon, title }) => {
     )
 }
 
-export default SidebarRow
+export default HomeLeftRow

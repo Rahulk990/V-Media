@@ -1,6 +1,7 @@
 .app {
     background-color: #f1f2f5;
-}
-html::-webkit-scrollbar{
-    display: none;
+    height: 100vh;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
 }

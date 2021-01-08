@@ -1,16 +1,16 @@
 import React from 'react'
 import './Home.css'
 
-import Sidebar from './Sidebar'
+import HomeLeft from './HomeLeft'
 import Feed from '../Feed/Feed'
-import Rightbar from './Rightbar'
+import HomeRight from './HomeRight'
 
 const Home = () => {
     return (
         <div className='home'>
-            <Sidebar />
+            <HomeLeft />
             <Feed isAdmin={true} />
-            <Rightbar />
+            <HomeRight />
         </div>
     )
 }
