@@ -3,7 +3,6 @@ import './Team.css'
 
 import Sidebar from './Sidebar'
 import Feed from '../Feed/Feed'
-import Rightbar from './Rightbar'
 import { Autorenew } from '@material-ui/icons'
 
 const Team = () => {
@@ -22,7 +21,6 @@ const Team = () => {
                     <p>Select a team to get Feed</p>
                 </div>
             )}
-            <Rightbar />
 
         </div>
     )
