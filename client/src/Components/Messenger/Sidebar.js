@@ -1,12 +1,13 @@
 import { Button } from '@material-ui/core'
 import React from 'react'
 import './Sidebar.css'
-
+import { Search, Home, People, Telegram, NotificationsActive, ExpandMoreOutlined } from '@material-ui/icons';
 import SidebarRow from './SidebarRow'
-
+import EventRow from "../Home/EventRow"
+import { Avatar } from "@material-ui/core";
 const Sidebar = () => {
 
-    const isContact = false;
+    const isContact = true;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -15,8 +16,49 @@ const Sidebar = () => {
 
     return (
         <div className='sidebar'>
+            <div className='sidebar__info'>
+                <div className='sidebar__btn'>
+                    Contact
+                </div>
+                <div className='sidebar__btn'>
+                    Teams
+                </div>
+            </div>
 
-            <div className='sidebar__new'>
+            <div className="message">
+                <Search/>
+                <input autocomplete="off" placeholder="Search Message" />
+            </div>
+            <div className='contact__info'>
+                {/* <SidebarRow/> */}
+                <div className='contact__info__item'>
+                    <Avatar/><EventRow/>
+                </div>
+                
+                <div className='contact__info__item'>
+                    <Avatar/><EventRow/>
+                </div>
+                
+                <div className='contact__info__item'>
+                    <Avatar/><EventRow/>
+                </div>
+                
+                <div className='contact__info__item'>
+                    <Avatar/><EventRow/>
+                </div>
+                
+                <div className='contact__info__item'>
+                    <Avatar/><EventRow/>
+                </div>
+                
+            </div>
+        </div>
+    )
+}
+
+export default Sidebar
+/*
+<div className='sidebar__new'>
                 <Button onClick={handleSubmit}>
                     Create New Team
                 </Button>
@@ -41,9 +83,4 @@ const Sidebar = () => {
                         <p> Nothing to Display </p>
                     </div>
                 )}
-
-        </div >
-    )
-}
-
-export default Sidebar
+*/
