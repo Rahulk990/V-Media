@@ -1,5 +1,4 @@
 import './App.css';
-
 import {useState} from 'react'
 import Navbar from './Components/Navbar/Navbar'
 import Home from './Components/Home/Home'
