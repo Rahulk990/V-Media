@@ -85,8 +85,8 @@ const Navbar = ({ setPath }) => {
             <div className="navbar__right">
 
                 <div className="navbar__info">
-                    <Avatar />
-                    <h4>User Name</h4>
+                    <Avatar style={{ "height": "25px", "width": "25px" }} />
+                    <p>Username</p>
                 </div>
 
                 <div className='navbar__settings'>

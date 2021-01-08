@@ -1,10 +1,11 @@
 .inbox{
     display:flex;
     position: relative;
-    /* flex:0.3; */
+    flex:0.75;
     width: 100%;
     background-color: greenyellow;
 }
+
 .inbox__input{
     display: flex;
     position: absolute;
@@ -17,10 +18,12 @@
     width: 95%;
     height: 30px;
 }
+
 .inbox__input > .MuiSvgIcon-root{
     font-size: 18px;
     color: grey;
 }
+
 .inbox__input > input{
     border: none;
     outline-width: 0;

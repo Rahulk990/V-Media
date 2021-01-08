@@ -8,8 +8,7 @@ const HomeLeftRow = ({ src, Icon, title }) => {
         <div className='homeLeftRow'>
             
             {src && <Avatar
-                className="homeLeftRow__avatar"
-                style={{ "height": "25px", "width": "25px" }}
+                style={{ "height": "25px", "width": "25px", 'margin': "10px 10px"}}
                 src={src}
             />}
 
