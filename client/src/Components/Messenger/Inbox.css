@@ -3,9 +3,28 @@
     position: relative;
     flex:0.75;
     width: 100%;
-    background-color: greenyellow;
+    background-image: url("https://preview.redd.it/qwd83nc4xxf41.jpg?width=640&crop=smart&auto=webp&s=e82767fdf47158e80604f407ce4938e44afc6c25");
 }
-
+.inbox__navbar{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    height: 40px;
+    width: 100%;
+    justify-content: space-between;
+    background-color: azure;
+}
+.inbox__navbar__left{
+    display: flex;
+    margin-left:20px;
+    align-items: center;
+}
+.inbox__navbar__left > p{
+    margin-left: 20px;
+}
+.inbox__navbar__right{
+    margin-right: 20px;
+}
 .inbox__input{
     display: flex;
     position: absolute;

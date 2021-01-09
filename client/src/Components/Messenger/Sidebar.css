@@ -1,23 +1,31 @@
 .sidebar{
-    /* padding: 30px 10px; */
-    flex: 0.25;
+    /* flex: 0.25; */
+    padding:0;
     z-index: 10;
+    background-color: aqua;
 }
 
 .sidebar__info {
     display: flex;
     align-items: center;
-    /* padding: 5px 10px; */
     justify-items: center;
     justify-content: space-around;
-    /* margin-bottom: 20px; */
+    height: 50px;
+    background-color: azure;
+    border-right: 1px solid #8888887b;
 }
 .sidebar__btn{
-    padding:10px 20px;
-    border-radius:10px;
+   /* display: flex; */
+   align-content: center;
+   align-items: center;
+   width:33%;
+   padding:10px 0;
+   text-align: center;
+   border-radius: 33px;
 }
 .sidebar__btn:hover {
-    background-color: #fff;
+    color: #fff;
+    background-color: #2e81f4;
     transition-duration: 0.5s;
 }
 .message{
@@ -26,8 +34,7 @@
     background-color: #fff;
     padding-right: 10px;
     justify-items: center;
-    margin: 10px 0;
-    /* margin-left: 10px; */
+    margin: 10px 5px;
     border-radius: 33px;
 }
 .message > input{
@@ -41,11 +48,17 @@
 .message > .MuiSvgIcon-root{
     font-size: 20px;
 }
+.contact__info{
+    margin: 10px, 2px;
+}
 .contact__info__item{
     display: flex;
     align-items: center;
     overflow-y: scroll;
     scroll-behavior: smooth;
+}
+.contact__info__item{
+    margin: 0px 5px;
 }
 
 /* 

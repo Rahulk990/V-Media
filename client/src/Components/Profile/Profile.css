@@ -1,0 +1,36 @@
+.wrapper{
+    position: relative;
+    background-color: bisque;
+}
+.profile__card{
+    position: absolute;
+    background-color: blueviolet;
+}
+.profile__card__img{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: center;
+}
+.profile__card__img > img{
+    height: 175px;
+    width:175px;
+    border-radius: 100%;
+    border: 6px solid #fff;
+}
+.profile__card__info{
+    padding: 10px;
+}
+.profile__card__info__name{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-weight: 800;
+    justify-content: center;
+}
+.profile__card__info__des{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: center;
+}

@@ -4,6 +4,7 @@ import Navbar from './Components/Navbar/Navbar'
 import Home from './Components/Home/Home'
 import Team from './Components/Teams/Team'
 import Messenger from './Components/Messenger/Messenger'
+import Profile from './Components/Profile/Profile'
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
 
   return (
     <div className="app">
+      {/* <Profile/> */}
       <Navbar setPath={setPath} />
 
       <div className='app__body'>

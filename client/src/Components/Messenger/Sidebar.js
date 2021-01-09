@@ -18,7 +18,7 @@ const Sidebar = () => {
                 </div>
 
                 <div className='sidebar__btn'>
-                    Teams
+                    Groups
                 </div>
 
             </div>
