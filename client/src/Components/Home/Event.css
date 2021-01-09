@@ -3,7 +3,7 @@
     flex-direction: column;
     padding: 10px;
 
-    margin: 0 20px;
+    margin: 0 10px;
     margin-bottom: 10px;
     border-radius: 20px;
     cursor: pointer;
@@ -23,4 +23,5 @@
 .event__bottom > p {
     /* color: #404144; */
     font-size: 12.5px;
+    font-weight: 700;
 }

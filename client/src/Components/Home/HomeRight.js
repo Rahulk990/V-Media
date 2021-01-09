@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './HomeRight.css'
 
 import Event from './Event'
+import OutsideAlerter from '../Misc/OutsideAlerter'
 import { Button } from '@material-ui/core'
 import { Add, ExpandMore } from '@material-ui/icons'
 
@@ -9,7 +10,7 @@ const events = [
     {
         'type': 3,
         'teamId': '',
-        'heading': "EngiFest 21",
+        'heading': "Engi Fest 21",
         'description': 'Happ',
         'timestamp': 'Feb. 21'
     },
@@ -32,12 +33,13 @@ const events = [
 const HomeRight = () => {
 
     const [option, setOption] = useState('Overall');
+    const [optionDropdown, setOptionDropdown] = useState(false);
 
     const checkEvent = (type) => {
-        if(option === 'Overall') return true;
-        if(option === 'Individual' && type === 1) return true;
-        if(option === 'Team' && type === 2) return true;
-        if(option === 'Company' && type === 3) return true;
+        if (option === 'Overall') return true;
+        if (option === 'Individual' && type === 1) return true;
+        if (option === 'Team' && type === 2) return true;
+        if (option === 'Company' && type === 3) return true;
         return false;
     }
 
@@ -45,16 +47,15 @@ const HomeRight = () => {
         e.preventDefault();
     }
 
-    const showDialog = (e) => {
-        e.preventDefault();
-        document.getElementsByClassName('homeRight__selectList')[0].classList.toggle('homeRight__selectList--disable');
+    const showDialog = () => {
         document.getElementsByClassName('homeRight__select')[0].classList.toggle('homeRight__select--disable');
+        setOptionDropdown(true);
     }
 
     const handleSelection = (value) => {
-        setOption(value);
-        document.getElementsByClassName('homeRight__selectList')[0].classList.toggle('homeRight__selectList--disable');
+        (value && setOption(value));
         document.getElementsByClassName('homeRight__select')[0].classList.toggle('homeRight__select--disable');
+        setOptionDropdown(false);
     }
 
     return (
@@ -78,25 +79,32 @@ const HomeRight = () => {
                 </Button>
             </div>
 
-            <div className='homeRight__selectList homeRight__selectList--disable'>
+            { optionDropdown && <OutsideAlerter
+                outsideHandler={handleSelection}
+                component={
+                    <div className='homeRight__selectList'>
 
-                <div className='homeRight__selectListOption' onClick={() => handleSelection('Overall')}>
-                    <p>Overall</p>
-                </div>
+                        <div className='homeRight__selectListOption' onClick={() => handleSelection('Overall')}>
+                            <p>Overall</p>
+                        </div>
 
-                <div className='homeRight__selectListOption' onClick={() => handleSelection('Individual')}>
-                    <p>Individual</p>
-                </div>
+                        <div className='homeRight__selectListOption' onClick={() => handleSelection('Individual')}>
+                            <p>Individual</p>
+                        </div>
 
-                <div className='homeRight__selectListOption' onClick={() => handleSelection('Team')}>
-                    <p>Team</p>
-                </div>
+                        <div className='homeRight__selectListOption' onClick={() => handleSelection('Team')}>
+                            <p>Team</p>
+                        </div>
 
-                <div className='homeRight__selectListOption' onClick={() => handleSelection('Company')}>
-                    <p>Company</p>
-                </div>
+                        <div className='homeRight__selectListOption' onClick={() => handleSelection('Company')}>
+                            <p>Company</p>
+                        </div>
 
-            </div>
+                    </div>
+                }
+            />
+            }
+
 
             <div className='homeRight__eventList'>
                 {events.map(event => (

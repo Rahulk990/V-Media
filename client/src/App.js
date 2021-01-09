@@ -1,10 +1,10 @@
 import './App.css';
-import {useState} from 'react'
+import { useState } from 'react'
 import Navbar from './Components/Navbar/Navbar'
 import Home from './Components/Home/Home'
 import Team from './Components/Teams/Team'
 import Messenger from './Components/Messenger/Messenger'
-import Profile from './Components/Profile/Profile'
+import Profile from './Components/Profile/Profile'  
 
 function App() {
 
@@ -12,14 +12,13 @@ function App() {
 
   return (
     <div className="app">
-      
-      {/* <Navbar setPath={setPath} /> */}
+      <Navbar setPath={setPath} />
 
       <div className='app__body'>
-      <Profile/>
-        {/* {path === 'home' && <Home />}
+        {/* <Profile/> */}
+        {path === 'home' && <Home />}
         {path === 'teams' && <Team />}
-        {path === 'messenger' && <Messenger />} */}
+        {path === 'messenger' && <Messenger />}
       </div>
 
     </div>
