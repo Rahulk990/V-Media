@@ -11,10 +11,10 @@ const Profile = () =>{
                     </div>
                     <div className='profile__card__info'>
                         <div className='profile__card__info__name'>
-                            Shakti Mohan
+                            Justin Beiber
                         </div>
                         <div className='profile__card__info__des'>
-                            Indian Dancer
+                            Celebrity
                         </div>
                     </div>
                 </div>

@@ -1,10 +1,13 @@
 .wrapper{
-    position: relative;
     background-color: bisque;
+    padding: 50px;
 }
 .profile__card{
-    position: absolute;
-    background-color: blueviolet;
+    background: #fff;
+    width:65%;
+    margin: auto;
+    padding: 20px;
+    border-radius: 33px;
 }
 .profile__card__img{
     display: flex;
@@ -16,7 +19,7 @@
     height: 175px;
     width:175px;
     border-radius: 100%;
-    border: 6px solid #fff;
+    border: 6px solid #eff2f5;
 }
 .profile__card__info{
     padding: 10px;
@@ -26,6 +29,7 @@
     align-items: center;
     padding: 10px;
     font-weight: 800;
+    font-size: 20px;
     justify-content: center;
 }
 .profile__card__info__des{

@@ -12,13 +12,14 @@ function App() {
 
   return (
     <div className="app">
-      {/* <Profile/> */}
-      <Navbar setPath={setPath} />
+      
+      {/* <Navbar setPath={setPath} /> */}
 
       <div className='app__body'>
-        {path === 'home' && <Home />}
+      <Profile/>
+        {/* {path === 'home' && <Home />}
         {path === 'teams' && <Team />}
-        {path === 'messenger' && <Messenger />}
+        {path === 'messenger' && <Messenger />} */}
       </div>
 
     </div>
