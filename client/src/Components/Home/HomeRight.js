@@ -48,13 +48,13 @@ const HomeRight = () => {
     }
 
     const showDialog = () => {
-        document.getElementsByClassName('homeRight__select')[0].classList.toggle('homeRight__select--disable');
+        document.getElementsByClassName('homeRight__select')[0].classList.remove('homeRight__select--disable');
         setOptionDropdown(true);
     }
 
     const handleSelection = (value) => {
         (value && setOption(value));
-        document.getElementsByClassName('homeRight__select')[0].classList.toggle('homeRight__select--disable');
+        document.getElementsByClassName('homeRight__select')[0].classList.add('homeRight__select--disable');
         setOptionDropdown(false);
     }
 

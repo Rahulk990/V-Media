@@ -13,6 +13,7 @@
 }
 
 .homeLeftRow > .MuiSvgIcon-root {
+    padding: 10px;
     font-size: 25px;
     color: #2e81f4;
 }

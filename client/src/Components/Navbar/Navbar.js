@@ -1,15 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Navbar.css"
-import { centerOptionHandler } from './TabHandler'
 
+import { centerOptionHandler } from './TabHandler'
+import OutsideAlerter from '../Misc/OutsideAlerter'
+import NotificationList from './NotificationList'
+import SettingsList from './SettingsList'
 import { Avatar, Tooltip, Zoom, IconButton } from "@material-ui/core";
 import { Search, Home, People, Telegram, NotificationsActive, ExpandMoreOutlined } from '@material-ui/icons';
 
 const Navbar = ({ setPath }) => {
 
+
     const centerOnClickHandler = (id) => {
         setPath(id);
         centerOptionHandler(id);
+    }
+
+    const [notificationDropdown, setNotificationDropdown] = useState(false);
+    const showNotificationList = () => {
+        setNotificationDropdown(true);
+        document.getElementsByClassName('navbar__settingsNotification')[0].classList.toggle('navbar__settingsNotification--disable');
+    }
+    const handleNotificationSelection = (id) => {
+        if (id) {
+            // Do related work
+        }
+        setNotificationDropdown(false);
+        document.getElementsByClassName('navbar__settingsNotification')[0].classList.add('navbar__settingsNotification--disable');
+    }
+
+    const [settingsDropdown, setSettingsDropdown] = useState(false);
+    const showSettingList = () => {
+        setSettingsDropdown(true);
+        document.getElementsByClassName('navbar__settingsSetting')[0].classList.toggle('navbar__settingsSetting--disable');
+    }
+    const handleSettingSelection = (id) => {
+        if (id) {
+            // Do related work
+        }
+        setSettingsDropdown(false);
+        document.getElementsByClassName('navbar__settingsSetting')[0].classList.add('navbar__settingsSetting--disable');
     }
 
     return (
@@ -20,11 +50,6 @@ const Navbar = ({ setPath }) => {
                 <div className='navbar__logo'>
                     <Avatar src='https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo-500x350.png' />
                 </div>
-
-                {/* <div className='navbar__info'>
-                    <Avatar src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1004px-Google_%22G%22_Logo.svg.png'/>
-                    <h4>Google</h4>
-                </div> */}
 
                 <div className="navbar__input">
                     <Search />
@@ -86,18 +111,40 @@ const Navbar = ({ setPath }) => {
 
                 <div className="navbar__info">
                     <Avatar style={{ "height": "25px", "width": "25px" }} />
-                    <p>Username</p>
+                    <p> Username </p>
                 </div>
 
                 <div className='navbar__settings'>
 
-                    <IconButton style={{ 'padding': '0px' }}>
-                        <NotificationsActive />
-                    </IconButton>
+                    <div
+                        className='navbar__settingsNotification navbar__settingsNotification--disable'
+                        onClick={() => showNotificationList()}
+                    >
+                        <IconButton >
+                            <NotificationsActive style={{ "height": "20px", "width": "20px" }} />
+                        </IconButton>
 
-                    <IconButton style={{ 'padding': '0px' }}>
-                        <ExpandMoreOutlined />
-                    </IconButton>
+                        {notificationDropdown && <OutsideAlerter
+                            outsideHandler={handleNotificationSelection}
+                            component={<NotificationList />}
+                        />
+                        }
+                    </div>
+
+                    <div
+                        className='navbar__settingsSetting navbar__settingsSetting--disable'
+                        onClick={() => showSettingList()}
+                    >
+                        <IconButton >
+                            <ExpandMoreOutlined style={{ "height": "20px", "width": "20px" }} />
+                        </IconButton>
+
+                        {settingsDropdown && <OutsideAlerter
+                            outsideHandler={handleSettingSelection}
+                            component={<SettingsList />}
+                        />
+                        }
+                    </div>
 
                 </div>
 

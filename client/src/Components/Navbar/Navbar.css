@@ -1,16 +1,18 @@
 .navbar{
     position: sticky;
-    z-index: 10000;
+    z-index: 100;
     background-color: #FFF;
     display: flex;
     justify-content: space-evenly;
     box-shadow:0 1px 3px .3px #888888;
     top: 0;
-    padding: 5px 15px;
+    padding: 7px 15px;
+    max-height: 50px;
+    overflow: visible;
 }
 
-.MuiSvgIcon-root{
-    padding: 10px;
+.navbar .MuiSvgIcon-root{
+    padding: 5px;
 }
 
 .navbar__info{
@@ -41,6 +43,7 @@
     padding-right: 10px;
     margin-left: 10px;
     border-radius: 33px;
+    height: 90%;
 }
 
 .navbar__input > input{
@@ -52,6 +55,7 @@
 
 .navbar__input > .MuiSvgIcon-root{
     font-size: 20px;
+    height: 100%;
 }
 
 
@@ -117,7 +121,7 @@
 }
 
 .navbar__right > .navbar__info > p{
-    margin-left: 10px;
+    margin-left: 5px;
     font-weight: 600;
 }
 
@@ -132,9 +136,55 @@
 }
 
 .navbar__settings {
-    margin-left: 5px;
+    margin-left: 10px;
     display: flex;
     align-items: center;
+}
+
+.navbar__settings .MuiSvgIcon-root{
+    padding: 10px;
+}
+
+/* ### Notification Dropdown ### */
+
+.navbar__settingsNotification {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+}
+
+.navbar__settingsNotification > button {
+    padding: 0;
+    color: #056BE1;
+    background-color: #DAE6F1;
+    cursor: pointer;
+}
+
+.navbar__settingsNotification--disable > button {
+    color: #1a1919;
+    background-color: #f1f2f5;
+}
+
+.navbar__settingsSetting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+}
+
+.navbar__settingsSetting > button {
+    padding: 0;
+    color: #056BE1;
+    background-color: #DAE6F1;
+    cursor: pointer;
+}
+
+.navbar__settingsSetting--disable > button {
+    color: #1a1919;
+    background-color: #f1f2f5;
 }
 
 .navbar__iconButton {

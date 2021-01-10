@@ -2,10 +2,11 @@
     padding: 30px 10px;
     flex: 0.4;
     z-index: 10;
-    height: 80vh;
+    height: calc(100vh - 120px);
     overflow: auto;
     position: sticky;
-    top: 60px;
+    top: 55px;
+    min-width: max-content;
 }
 
 .homeRight__info {
@@ -118,10 +119,6 @@
     align-items: center;
     z-index: 5;
     box-shadow: 5px 5px 7px -7px rgba(0,0,0,0.75);
-}
-
-.homeRight__selectList--disable {
-    display: none;
 }
 
 .homeRight__selectListOption {

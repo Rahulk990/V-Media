@@ -1,0 +1,33 @@
+.settingsList {
+    padding: 10px 10px;
+    margin: 5px 0;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 500;
+    box-shadow: 0 0 10px -3px rgba(0,0,0,0.75);
+}
+
+.settingsList__selectListOption {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    width: 360px;
+    padding: 5px 10px;
+}
+
+.settingsList__selectListOption:hover {
+    background-color: #E4E6EB;
+}
+
+.settingsList__selectListOption > p {
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}

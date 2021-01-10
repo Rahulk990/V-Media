@@ -1,0 +1,19 @@
+.notification {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    width: 360px;
+    padding: 5px 10px;
+}
+
+.notification:hover {
+    background-color: #E4E6EB;
+}
+
+.notification > p {
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}
