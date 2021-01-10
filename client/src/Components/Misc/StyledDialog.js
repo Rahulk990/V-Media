@@ -1,24 +1,28 @@
 import React from 'react'
 
-import { Dialog, makeStyles } from '@material-ui/core'
+import { Dialog } from '@material-ui/core'
+import { makeStyles, StylesProvider } from '@material-ui/core/styles';
+
 const useStyles = makeStyles({
-    Paper: {
-        borderRadius: 20,
-    },
-})
+    paper: {
+        borderRadius: 30
+    }
+});
 
 const StyledDialog = ({ open, onClose, component }) => {
     const classes = useStyles();
     return (
-        <Dialog
+        <StylesProvider injectFirst>
+            <Dialog
             open={open}
             onClose={onClose}
-            className={{
-                paper: classes.Paper
+            classes={{
+                paper: classes.paper
             }}
         >
             {component}
         </Dialog>
+        </StylesProvider>
     )
 }
 

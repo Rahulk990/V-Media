@@ -1,14 +1,9 @@
-.MuiBackdrop-root {
-    background-color: blue;
-}
-
 .createNewEvent {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
+    justify-content: stretch;
     flex-direction: column;
     background-color: white;
-    border-radius: 30px;
     width: 550px;
 }
 
@@ -16,20 +11,23 @@
 /* New Event Top */
 
 .createNewEvent__top {
-    padding: 20px 60px;
+    padding: 20px 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: calc(100% - 60px);
+    border-bottom: 1px solid lightgray;
 }
 
 .createNewEvent__top p {
-    flex: 1;
     color: #1a1919;
     font-size: 20px;
     font-weight: 700;
 }
 
 .createNewEvent__top > button {
+    position:absolute;
+    right: 15px;
     margin-left: 10px;
     padding: 5px;
     background-color: #f1f2f5;
@@ -42,3 +40,48 @@
 
 /* New Event Body */
 
+.createNewEvent__body {
+    padding: 10px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    width: calc(100% - 60px);
+    border-bottom: 1px solid lightgray;
+}
+
+.createNewEvent__body .MuiFormControl-root {
+    width: 100%;
+}
+
+.createNewEvent__bodyEntry {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 10px 20px;
+}
+
+
+/* New Event Bottom */
+
+.createNewEvent__bottom {
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 60px);
+}
+
+.createNewEvent__bottom > button {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #2e81f4;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+
+.createNewEvent__bottom > button:hover {
+    background-color: #2972d8;
+}

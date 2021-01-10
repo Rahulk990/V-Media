@@ -45,16 +45,6 @@ const HomeRight = () => {
         return false;
     }
 
-    const showDialog = () => {
-        setNewEvent(true);
-        console.log(newEvent);
-    }
-
-    const onSubmit = (data) => {
-        setNewEvent(false);
-    }
-
-
     const showDropdown = () => {
         document.getElementsByClassName('homeRight__select')[0].classList.remove('homeRight__select--disable');
         setOptionDropdown(true);
@@ -74,7 +64,7 @@ const HomeRight = () => {
             </div>
 
             <div className='homeRight__new'>
-                <Button onClick={showDialog}>
+                <Button onClick={() => {setNewEvent(true);console.log(newEvent);}}>
                     <Add />
                     <p> Create New Event</p>
                 </Button>
@@ -89,7 +79,7 @@ const HomeRight = () => {
 
             { newEvent && <CreateNewEvent
                 open={newEvent}
-                onSubmit={onSubmit}
+                onClose={() => setNewEvent(false)}
             />
             }
 
