@@ -1,4 +1,5 @@
 .messenger {
     display: flex;
     bottom: 0;
+    height: 100vh;
 }
