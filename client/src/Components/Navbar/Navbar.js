@@ -5,7 +5,7 @@ import { centerOptionHandler } from './TabHandler'
 import OutsideAlerter from '../Misc/OutsideAlerter'
 import NotificationList from './NotificationList'
 import SettingsList from './SettingsList'
-import { Avatar, Tooltip, Zoom, IconButton } from "@material-ui/core";
+import { Avatar, Tooltip, IconButton } from "@material-ui/core";
 import { Search, Home, People, Telegram, NotificationsActive, ExpandMoreOutlined } from '@material-ui/icons';
 
 const Navbar = ({ setPath }) => {
@@ -19,7 +19,7 @@ const Navbar = ({ setPath }) => {
     const [notificationDropdown, setNotificationDropdown] = useState(false);
     const showNotificationList = () => {
         setNotificationDropdown(true);
-        document.getElementsByClassName('navbar__settingsNotification')[0].classList.toggle('navbar__settingsNotification--disable');
+        document.getElementsByClassName('navbar__settingsNotification')[0].classList.remove('navbar__settingsNotification--disable');
     }
     const handleNotificationSelection = (id) => {
         if (id) {
@@ -32,7 +32,7 @@ const Navbar = ({ setPath }) => {
     const [settingsDropdown, setSettingsDropdown] = useState(false);
     const showSettingList = () => {
         setSettingsDropdown(true);
-        document.getElementsByClassName('navbar__settingsSetting')[0].classList.toggle('navbar__settingsSetting--disable');
+        document.getElementsByClassName('navbar__settingsSetting')[0].classList.remove('navbar__settingsSetting--disable');
     }
     const handleSettingSelection = (id) => {
         if (id) {
@@ -61,10 +61,8 @@ const Navbar = ({ setPath }) => {
             <div className="navbar__center">
 
                 <Tooltip
-                    TransitionComponent={Zoom}
                     title="Home"
-                    enterDelay={500}
-                    leaveDelay={200}
+                    enterDelay={1000}
                 >
                     <div
                         id='home'
@@ -76,10 +74,8 @@ const Navbar = ({ setPath }) => {
                 </Tooltip>
 
                 <Tooltip
-                    TransitionComponent={Zoom}
                     title="Teams"
-                    enterDelay={500}
-                    leaveDelay={200}
+                    enterDelay={1000}
                 >
                     <div
                         id='teams'
@@ -91,10 +87,8 @@ const Navbar = ({ setPath }) => {
                 </Tooltip>
 
                 <Tooltip
-                    TransitionComponent={Zoom}
                     title="Messenger"
-                    enterDelay={500}
-                    leaveDelay={200}
+                    enterDelay={1000}
                 >
                     <div
                         id='messenger'
@@ -116,35 +110,45 @@ const Navbar = ({ setPath }) => {
 
                 <div className='navbar__settings'>
 
-                    <div
-                        className='navbar__settingsNotification navbar__settingsNotification--disable'
-                        onClick={() => showNotificationList()}
+                    <Tooltip
+                        title="Notifications"
+                        enterDelay={1000}
                     >
-                        <IconButton >
-                            <NotificationsActive style={{ "height": "20px", "width": "20px" }} />
-                        </IconButton>
+                        <div
+                            className='navbar__settingsNotification navbar__settingsNotification--disable'
+                            onClick={() => showNotificationList()}
+                        >
+                            <IconButton >
+                                <NotificationsActive style={{ "height": "20px", "width": "20px" }} />
+                            </IconButton>
 
-                        {notificationDropdown && <OutsideAlerter
-                            outsideHandler={handleNotificationSelection}
-                            component={<NotificationList />}
-                        />
-                        }
-                    </div>
+                            {notificationDropdown && <OutsideAlerter
+                                outsideHandler={handleNotificationSelection}
+                                component={<NotificationList />}
+                            />
+                            }
+                        </div>
+                    </Tooltip>
 
-                    <div
-                        className='navbar__settingsSetting navbar__settingsSetting--disable'
-                        onClick={() => showSettingList()}
+                    <Tooltip
+                        title="Account"
+                        enterDelay={1000}
                     >
-                        <IconButton >
-                            <ExpandMoreOutlined style={{ "height": "20px", "width": "20px" }} />
-                        </IconButton>
+                        <div
+                            className='navbar__settingsSetting navbar__settingsSetting--disable'
+                            onClick={() => showSettingList()}
+                        >
+                            <IconButton >
+                                <ExpandMoreOutlined style={{ "height": "20px", "width": "20px" }} />
+                            </IconButton>
 
-                        {settingsDropdown && <OutsideAlerter
-                            outsideHandler={handleSettingSelection}
-                            component={<SettingsList />}
-                        />
-                        }
-                    </div>
+                            {settingsDropdown && <OutsideAlerter
+                                outsideHandler={handleSettingSelection}
+                                component={<SettingsList />}
+                            />
+                            }
+                        </div>
+                    </Tooltip>
 
                 </div>
 

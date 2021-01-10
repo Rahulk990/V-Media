@@ -7,3 +7,7 @@
     align-items: center;
     padding-top: 15px;
 }
+
+.feed .MuiSvgIcon-root {
+    padding: 5px;
+}

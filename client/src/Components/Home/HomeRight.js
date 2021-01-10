@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 import './HomeRight.css'
 
 import Event from './Event'
+import CreateNewEvent from './CreateNewEvent'
 import OutsideAlerter from '../Misc/OutsideAlerter'
 import { Button } from '@material-ui/core'
 import { Add, ExpandMore } from '@material-ui/icons'
@@ -32,6 +33,7 @@ const events = [
 
 const HomeRight = () => {
 
+    const [newEvent, setNewEvent] = useState(false);
     const [option, setOption] = useState('Overall');
     const [optionDropdown, setOptionDropdown] = useState(false);
 
@@ -43,11 +45,17 @@ const HomeRight = () => {
         return false;
     }
 
-    const handleNew = (e) => {
-        e.preventDefault();
+    const showDialog = () => {
+        setNewEvent(true);
+        console.log(newEvent);
     }
 
-    const showDialog = () => {
+    const onSubmit = (data) => {
+        setNewEvent(false);
+    }
+
+
+    const showDropdown = () => {
         document.getElementsByClassName('homeRight__select')[0].classList.remove('homeRight__select--disable');
         setOptionDropdown(true);
     }
@@ -66,18 +74,24 @@ const HomeRight = () => {
             </div>
 
             <div className='homeRight__new'>
-                <Button onClick={handleNew}>
+                <Button onClick={showDialog}>
                     <Add />
                     <p> Create New Event</p>
                 </Button>
             </div>
 
             <div className='homeRight__select homeRight__select--disable'>
-                <Button onClick={showDialog}>
+                <Button onClick={showDropdown}>
                     <p> {option} </p>
                     <ExpandMore />
                 </Button>
             </div>
+
+            { newEvent && <CreateNewEvent
+                open={newEvent}
+                onSubmit={onSubmit}
+            />
+            }
 
             { optionDropdown && <OutsideAlerter
                 outsideHandler={handleSelection}

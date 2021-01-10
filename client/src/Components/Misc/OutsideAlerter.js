@@ -19,11 +19,16 @@ function ClickHandler(ref, outsideHandler) {
 }
 
 
-const OutsideAlerter = ({ outsideHandler, component }) => {
+const OutsideAlerter = ({ component, outsideHandler }) => {
     const wrapperRef = useRef(null);
     ClickHandler(wrapperRef, outsideHandler);
     return (
-        <div ref={wrapperRef}>{component}</div>
+        <div
+            ref={wrapperRef}
+            style={{ 'width': 'max-content', 'height': 'max-content' }}
+        >
+            {component}
+        </div>
     )
 }
 

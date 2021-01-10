@@ -4,7 +4,7 @@
     background-color: #FFF;
     display: flex;
     justify-content: space-evenly;
-    box-shadow:0 1px 3px .3px #888888;
+    box-shadow:0 .5px 5px .1px #888888;
     top: 0;
     padding: 7px 15px;
     max-height: 50px;
@@ -131,7 +131,7 @@
     cursor: pointer;
 }
 
-.navbar__right > .MuiSvgIcon-root{
+.navbar__right > .MuiSvgIcon-root {
     color: gray;
 }
 
@@ -141,7 +141,7 @@
     align-items: center;
 }
 
-.navbar__settings .MuiSvgIcon-root{
+.navbar__settings .MuiSvgIcon-root {
     padding: 10px;
 }
 

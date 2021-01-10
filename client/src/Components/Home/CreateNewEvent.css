@@ -1,0 +1,44 @@
+.MuiBackdrop-root {
+    background-color: blue;
+}
+
+.createNewEvent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 30px;
+    width: 550px;
+}
+
+
+/* New Event Top */
+
+.createNewEvent__top {
+    padding: 20px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.createNewEvent__top p {
+    flex: 1;
+    color: #1a1919;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.createNewEvent__top > button {
+    margin-left: 10px;
+    padding: 5px;
+    background-color: #f1f2f5;
+}
+
+.createNewEvent__top > button:hover {
+    background-color: lightgray;
+}
+
+
+/* New Event Body */
+
