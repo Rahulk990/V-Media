@@ -1,59 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Feed.css'
 
+import axios from '../Misc/axios'
 import PostSender from './PostSender'
 import Post from './Post'
 
 const Feed = ({ isAdmin }) => {
+    const [postsData, setPostsData] = useState([])
+
+    const syncFeed = () => {
+        axios.get('retrieve/posts')
+            .then((res) => {
+                console.log(res.data);
+                setPostsData(res.data);
+            })
+    }
+
+    useEffect(() => {
+        syncFeed();
+    }, [])
+
     return (
         <div className='feed'>
             {isAdmin && <PostSender />}
 
-            <Post
-                profilePic='{entry.avatar}'
-                username='Rahul'
-                timestamp='Timestamp'
-                text='Message is to be displayed here'
-            />
-
-            <Post
-                profilePic='{entry.avatar}'
-                username='Rahul'
-                timestamp='Timestamp'
-                text='Message is to be displayed here'
-            />
-
-            <Post
-                profilePic='{entry.avatar}'
-                username='Rahul'
-                timestamp='Timestamp'
-                text='Message is to be displayed here'
-            />
-
-            <Post
-                profilePic='{entry.avatar}'
-                username='Rahul'
-                timestamp='Timestamp'
-                text='Message is to be displayed here'
-            />
-
-            <Post
-                profilePic='{entry.avatar}'
-                username='Rahul'
-                timestamp='Timestamp'
-                text='Message is to be displayed here'
-            />
-
-            <Post
-                profilePic='{entry.avatar}'
-                username='Rahul'
-                timestamp='Timestamp'
-                text='Message is to be displayed here'
-            />
-
-            {/* {
-                postData.map(entry => (
-                    <Post 
+            {
+                postsData.map(entry => (
+                    <Post
                         profilePic={entry.avatar}
                         text={entry.text}
                         timestamp={entry.timestamp}
@@ -61,7 +34,7 @@ const Feed = ({ isAdmin }) => {
                         username={entry.user}
                     />
                 ))
-            } */}
+            }
 
 
         </div>

@@ -3,18 +3,40 @@ import './PostSender.css'
 
 import { Avatar, Button } from '@material-ui/core'
 import { InsertEmoticon, PhotoLibrary, Videocam } from '@material-ui/icons'
+import axios from '../Misc/axios'
 
 const PostSender = () => {
 
     const [postInput, setPostInput] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Send to DB
+        // if (image) {
+
+        // }
+
+        const postData = {
+            text: postInput,
+            user: 'Rahul',
+            avatar: '',
+            timestamp: Date.now()
+        }
+
+        console.log(postData)
+        savePost(postData)
 
         setPostInput('');
     }
+
+    const savePost = async (postData) => {
+        console.log('in saveData');
+        await axios.post('/upload/post', postData)
+            .then((res) => {
+                console.log(res)
+            })
+    }
+
 
     return (
         <div className='postSender'>
