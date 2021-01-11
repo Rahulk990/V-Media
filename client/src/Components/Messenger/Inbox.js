@@ -17,10 +17,12 @@ const Inbox = () => {
                 </IconButton>
             </div>
             </div>
-            <div className="inbox__input">
-                <EmojiEmotions />
-                <input placeholder="Enter your message" />
-            </div>
+                <div className="inbox__input">
+                    <IconButton >
+                        <EmojiEmotions />
+                    </IconButton>
+                    <input placeholder="   Enter your message" />
+                </div>
 
         </div>
     )

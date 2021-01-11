@@ -1,8 +1,8 @@
 import React from 'react'
 import './Sidebar.css'
-
+import { Avatar, IconButton } from "@material-ui/core";
 import { Search } from '@material-ui/icons';
-import { Avatar } from "@material-ui/core";
+
 
 const Sidebar = () => {
 
@@ -24,8 +24,10 @@ const Sidebar = () => {
             </div>
 
             <div className="message">
+            <IconButton >
                 <Search />
-                <input autocomplete="off" placeholder="Search Message" />
+            </IconButton>
+                <input autocomplete="off" placeholder="      Search Message" />
             </div>
 
             <div className='contact__info'>
