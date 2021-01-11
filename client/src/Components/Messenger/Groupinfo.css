@@ -1,10 +1,10 @@
-.settingsList {
+.inbox__groupinfo {
     padding: 10px 10px;
     margin: 5px 0;
     background-color: white;
     border-radius: 10px;
     position: absolute;
-    right: 15px;
+    right: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,21 +12,21 @@
     box-shadow: 0 0 10px -3px rgba(0,0,0,0.75);
 }
 
-.settingsList__selectListOption {
+.inbox__groupinfo__selectListOption {
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
-    width: 10px;
+    width: 120px;
     padding: 5px 10px;
 }
 
-.settingsList__selectListOption:hover {
+.inbox__groupinfo__selectListOption:hover {
     background-color: #E4E6EB;
 }
 
-.settingsList__selectListOption > p {
+.inbox__groupinfo__selectListOption > p {
     padding: 5px;
     font-size: 15px;
     font-weight: 600;
