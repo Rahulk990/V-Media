@@ -51,3 +51,19 @@
     height: 25px;
     width: 90%
 }
+/* =-------------- */
+
+::-webkit-scrollbar, ::-webkit-scrollbar-track {
+    background: hsla(0,0%,100%,0);
+    opacity: 0;
+}
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.2);
+    border-radius: 5px;
+}
+::-webkit-scrollbar, ::-webkit-scrollbar-track {
+    background: hsla(0,0%,100%,0);
+}

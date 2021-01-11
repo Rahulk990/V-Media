@@ -162,6 +162,12 @@
     cursor: pointer;
 }
 
+.navbar__settingsNotification .MuiBadge-badge{
+    position: absolute;
+    right: 5px;
+    top:10px;
+    font-size: 12px;
+}
 .navbar__settingsNotification--disable > button {
     color: #1a1919;
     background-color: #f1f2f5;
