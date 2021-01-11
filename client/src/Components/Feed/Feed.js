@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './Feed.css'
-
 import axios from '../Misc/axios'
 import PostSender from './PostSender'
 import Post from './Post'

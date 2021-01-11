@@ -53,7 +53,7 @@ app.get('/retrieve/posts', (req, res) => {
       res.status(500).send(err)
     } else {
       data.sort((a, b) => { return b.timestamp - a.timestamp })
-      res.status(200).send(data)
+      res.send(data)
     }
   })
 })
