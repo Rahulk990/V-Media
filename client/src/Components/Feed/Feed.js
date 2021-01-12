@@ -4,7 +4,8 @@ import './Feed.css'
 import axios from '../Misc/axios'
 import PostSender from './PostSender'
 import Post from './Post'
-import Pusher from 'pusher-js'
+// import Pusher from 'pusher-js'
+import socketIOClient from 'socket.io-client'
 
 const Feed = ({ isAdmin }) => {
     const [postsData, setPostsData] = useState([])
@@ -18,21 +19,17 @@ const Feed = ({ isAdmin }) => {
     }
 
     useEffect(() => {
-        const channel = pusher.subscribe('posts');
-        channel.bind('inserted', function (data) {
-            syncFeed()
-        });
-    })
-
-    useEffect(() => {
         syncFeed();
     }, [])
 
-    const pusher = new Pusher('9cb709a278c38e8892bd', {
-        cluster: 'ap2'
-    });
-
-
+    useEffect(() => {
+        const socket = socketIOClient('http://localhost:8000')
+        socket.on('refresh', data => {
+            console.log(data)
+            syncFeed()
+        })
+        return () => socket.disconnect();
+    }, [])
 
     return (
         <div className='feed'>

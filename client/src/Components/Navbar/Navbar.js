@@ -119,11 +119,11 @@ const Navbar = ({ setPath }) => {
 							onClick={() => showNotificationList()}
 						>
 							<IconButton>
-								<Badge badgeContent={4} color="primary">
+								{/* <Badge badgeContent={4} color="primary"> */}
 									<NotificationsActive
 										style={{ height: "20px", width: "20px" }}
 									/>
-								</Badge>
+								{/* </Badge> */}
 							</IconButton>
 
 							{notificationDropdown && (
