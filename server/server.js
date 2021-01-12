@@ -12,6 +12,14 @@ import mongoPosts from './mongoPosts.js'
 const app = express()
 const port = process.env.PORT || 8000
 
+const pusher = new Pusher({
+  appId: "1136528",
+  key: "9cb709a278c38e8892bd",
+  secret: "77252ebc2e1a9dbe5910",
+  cluster: "ap2",
+  useTLS: true
+});
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -27,6 +35,22 @@ mongoose.connect(mongoURI, {
 
 mongoose.connection.once('open', () => {
   console.log('DB Connected')
+
+  const changeStream = mongoose.connection.collection('posts').watch()
+  changeStream.on('change', (change) => {
+    console.log(change)
+
+    if (change.operationType === 'insert') {
+      console.log('Triggering Pusher')
+      pusher.trigger('posts', 'inserted', {
+        change: change
+      })
+    } else {
+      console.log('Error Triggering Pusher')
+    }
+
+  })
+
 })
 
 // API Routes
