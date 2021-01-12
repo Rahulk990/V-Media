@@ -47,7 +47,8 @@
     align-items: stretch;
     justify-content: center;
     width: calc(100% - 60px);
-    border-bottom: 1px solid lightgray;
+    box-shadow: 0 3px 6px -6px black inset;
+    /* box-shadow: 0 -3px 6px -6px black inset; */
 }
 
 .createNewEvent__body .MuiFormControl-root {

@@ -2,7 +2,7 @@
     padding: 30px 10px;
     flex: 0.4;
     z-index: 10;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 115px);
     overflow: auto;
     position: sticky;
     top: 55px;

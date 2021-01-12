@@ -1,4 +1,4 @@
-.inbox__groupinfo {
+.roomSettings {
     padding: 10px 10px;
     margin: 5px 0;
     background-color: white;
@@ -12,7 +12,7 @@
     box-shadow: 0 0 10px -3px rgba(0,0,0,0.75);
 }
 
-.inbox__groupinfo__selectListOption {
+.roomSettings__selectListOption {
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -22,11 +22,11 @@
     padding: 5px 10px;
 }
 
-.inbox__groupinfo__selectListOption:hover {
+.roomSettings__selectListOption:hover {
     background-color: #E4E6EB;
 }
 
-.inbox__groupinfo__selectListOption > p {
+.roomSettings__selectListOption > p {
     padding: 5px;
     font-size: 15px;
     font-weight: 600;

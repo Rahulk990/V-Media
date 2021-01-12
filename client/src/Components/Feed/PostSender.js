@@ -26,13 +26,11 @@ const PostSender = () => {
     }
 
     const savePost = async (postData) => {
-        console.log('in saveData');
         await axios.post('/upload/post', postData)
             .then((res) => {
-                console.log(res)
+                // console.log(res)
             })
     }
-
 
     return (
         <div className='postSender'>

@@ -4,7 +4,6 @@ import './Feed.css'
 import axios from '../Misc/axios'
 import PostSender from './PostSender'
 import Post from './Post'
-// import Pusher from 'pusher-js'
 import socketIOClient from 'socket.io-client'
 
 const Feed = ({ isAdmin }) => {
@@ -13,21 +12,20 @@ const Feed = ({ isAdmin }) => {
     const syncFeed = () => {
         axios.get('retrieve/posts')
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setPostsData(res.data);
             })
     }
 
     useEffect(() => {
         syncFeed();
-    }, [])
 
-    useEffect(() => {
         const socket = socketIOClient('http://localhost:8000')
         socket.on('refresh', data => {
-            console.log(data)
+            // console.log(data)
             syncFeed()
         })
+
         return () => socket.disconnect();
     }, [])
 

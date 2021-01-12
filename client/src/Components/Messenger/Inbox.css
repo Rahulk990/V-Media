@@ -1,76 +1,121 @@
-.inbox{
-    display:flex;
-    position: relative;
-    flex:0.7;
-    background-image: url("https://preview.redd.it/qwd83nc4xxf41.jpg?width=640&crop=smart&auto=webp&s=e82767fdf47158e80604f407ce4938e44afc6c25");
-}
-.inbox__navbar{
-    display: flex;
-    position: sticky;
-    align-items: center;
-    padding: 5px;
-    height: 40px;
-    width: 100%;
-    justify-content: space-between;
-    background-color: azure;
-}
-.inbox__navbar__left{
-    display: flex;
-    margin-left:20px;
-    align-items: center;
-}
-.inbox__navbar__left > p{
-    margin-left: 20px;
-}
-.inbox__navbar__right{
-    margin-right: 20px;
+.inbox {
+  flex: 0.75;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  
+  height: calc(100vh - 55px);
+  overflow: auto;
+  top: 55px;
+
+  background-color: #ffffff;
 }
 
-.inbox__input{
-    display: flex;
-    position: absolute;
-    bottom: 0px;
-    align-items: center;
-    background-color: #000;
-    width: 100%;
-    height: 48px;
+.inbox__navbar {
+  flex: 0.1;
+  display: flex;
+  position: sticky;
+  align-items: center;
+  justify-content: space-between;
+
+  position: sticky;
+
+  padding: 10px 10px 10px 10px;
+  max-height: 40px;
+  justify-content: space-between;
+  box-shadow: 0 3px 6px -6px black;
 }
 
-.inbox__input > .MuiIconButton-root{
-    font-size: 22px;
-    color: grey;
+.inbox__navbarLeft {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
 }
 
-.inbox__input  .inbox__input__textbox{
-    display: flex;
-    align-items: center;
-    border: none;
-    outline-width: 0;
-    background-color: #eff2f5;
-    border-radius: 33px;
-    height: 27px;
-    width: 90%
+.inbox__navbarLeft > p {
+  margin-left: 10px;
+  font-weight: 500;
 }
-.inbox__input__textbox > input{
-    margin-left: 10px;
-    width:75%;
-    border: none;
-    outline-width: 0;
-    background-color: #eff2f5;
-}
-/* =-------------- */
 
-::-webkit-scrollbar, ::-webkit-scrollbar-track {
-    background: hsla(0,0%,100%,0);
-    opacity: 0;
+.inbox__navbarRight {
+  margin-right: 10px;
 }
-::-webkit-scrollbar {
-    width: 6px;
+
+.inbox__navbarRight .MuiIconButton-root {
+  padding: 5px;
+  background-color: #dae6f1;
 }
-::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,.2);
-    border-radius: 5px;
+
+.inbox__navbarRight .MuiSvgIcon-root {
+  font-size: 25px;
+  color: #2e81f4;
+  padding: 0;
 }
-::-webkit-scrollbar, ::-webkit-scrollbar-track {
-    background: hsla(0,0%,100%,0);
+
+.inbox__navbarRight--disable .MuiIconButton-root {
+  background-color: #f0f2f5;
+}
+
+.inbox__navbarRight--disable .MuiSvgIcon-root {
+  color: gray;
+}
+
+/* Body */
+
+.inbox__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+}
+
+/* Bottom */
+
+.inbox__bottom {
+  display: flex;
+  flex: 0.1;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  justify-items: center;
+}
+
+.inbox__bottomInput {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  outline-width: 0;
+  background-color: #f0f2f5;
+  border-radius: 30px;
+  width: 100%;
+}
+
+.inbox__bottomInput .MuiIconButton-root {
+  padding: 2px;
+  margin: 7px;
+}
+
+.inbox__bottomInput .MuiSvgIcon-root {
+  font-size: 25px;
+  color: #2e81f4;
+  padding: 3px;
+}
+
+.inbox__bottomInput form {
+  flex: 1;
+  margin-left: 5px;
+}
+
+.inbox__bottomInput input {
+  border: none;
+  outline-width: 0;
+  background-color: #eff2f5;
+  font-size: 14px;
+}
+
+.inbox__bottomInput .submit--hidden {
+  display: none;
 }
