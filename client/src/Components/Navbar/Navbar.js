@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 
 import Badge from "@material-ui/core/Badge";
@@ -17,10 +17,15 @@ import {
 } from "@material-ui/icons";
 
 const Navbar = ({ setPath }) => {
+
 	const centerOnClickHandler = (id) => {
 		setPath(id);
 		centerOptionHandler(id);
 	};
+
+	useEffect(() => {
+		centerOnClickHandler('home')
+	}, [])
 
 	const [notificationDropdown, setNotificationDropdown] = useState(false);
 	const showNotificationList = () => {
