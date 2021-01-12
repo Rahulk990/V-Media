@@ -41,11 +41,11 @@
   background-color: #2e81f4;
 }
 
-.messengerLeft__navbarBtn:hover {
+/* .messengerLeft__navbarBtn:hover {
   color: #fff;
   background-color: #2e81f4;
   transition-duration: 0.25s;
-}
+} */
 
 .messengerLeft__search {
   display: flex;
