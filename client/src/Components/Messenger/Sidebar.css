@@ -3,7 +3,6 @@
     padding:0;
     z-index: 0;
     background-color: aqua;
-    height: calc(100vh - 55px);
 }
 
 .sidebar__info {
@@ -23,6 +22,7 @@
    padding:10px 0;
    text-align: center;
    border-radius: 33px;
+   cursor: pointer;
 }
 .sidebar__btn:hover {
     color: #fff;
@@ -37,15 +37,24 @@
     justify-items: center;
     background-color: #000;
 }
-.message > input{
+
+.message .message__input{
+    display: flex;
+    align-items: center;
     border: none;
     outline-width: 0;
-    background-color: #fff;
+    background-color: #eff2f5;
     border-radius: 33px;
     width:80%;
     height: 22px;
 }
-
+.message__input > input{
+    margin-left: 10px;
+    border: none;
+    outline-width: 0;
+    width:75%;
+    background-color: #eff2f5;
+}
 .message > .MuiIconButton-root{
     font-size: 20px;
     color: grey;

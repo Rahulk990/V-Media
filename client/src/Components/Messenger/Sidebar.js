@@ -24,10 +24,12 @@ const Sidebar = () => {
             </div>
 
             <div className="message">
-            <IconButton >
-                <Search />
-            </IconButton>
+                <IconButton >
+                    <Search />
+                </IconButton>
+                <div className='message__input'> 
                 <input autocomplete="off" placeholder="      Search Message" />
+                </div>
             </div>
 
             <div className='contact__info'>

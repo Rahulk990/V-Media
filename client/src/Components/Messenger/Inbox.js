@@ -50,7 +50,10 @@ const Inbox = () => {
                     <IconButton >
                         <EmojiEmotions />
                     </IconButton>
+                <div className='inbox__input__textbox'>
                     <input placeholder="   Enter your message" />
+                </div>
+
                 </div>
 
         </div>

@@ -2,13 +2,11 @@
     display:flex;
     position: relative;
     flex:0.7;
-    height: calc(100vh - 55px);
     background-image: url("https://preview.redd.it/qwd83nc4xxf41.jpg?width=640&crop=smart&auto=webp&s=e82767fdf47158e80604f407ce4938e44afc6c25");
 }
 .inbox__navbar{
     display: flex;
     position: sticky;
-    top:55px;
     align-items: center;
     padding: 5px;
     height: 40px;
@@ -35,7 +33,7 @@
     align-items: center;
     background-color: #000;
     width: 100%;
-    height: 40px;
+    height: 48px;
 }
 
 .inbox__input > .MuiIconButton-root{
@@ -43,13 +41,22 @@
     color: grey;
 }
 
-.inbox__input > input{
+.inbox__input  .inbox__input__textbox{
+    display: flex;
+    align-items: center;
     border: none;
     outline-width: 0;
     background-color: #eff2f5;
     border-radius: 33px;
-    height: 25px;
+    height: 27px;
     width: 90%
+}
+.inbox__input__textbox > input{
+    margin-left: 10px;
+    width:75%;
+    border: none;
+    outline-width: 0;
+    background-color: #eff2f5;
 }
 /* =-------------- */
 
