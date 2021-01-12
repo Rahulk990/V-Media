@@ -8,6 +8,8 @@ import bodyParser from 'body-parser'
 import * as socketIo from 'socket.io'
 import mongoPosts from './mongoPosts.js'
 
+//---messenger--
+import Messages from './dbMessages.js'
 // App Config
 const app = express()
 const port = process.env.PORT || 8000
@@ -74,7 +76,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/upload/post', (req, res) => {
-  const dbPost = req.body
+  const dbPost = req.body;
+  console.log("here "+ dbPost);
   mongoPosts.create(dbPost, (err, data) => {
     if (err) {
       res.status(500).send(err)
@@ -94,4 +97,25 @@ app.get('/retrieve/posts', (req, res) => {
     }
   })
 })
+//------------ messenger-----
 
+app.post('/messages/new', (req, res) => {
+  const dbMessage = req.body;
+  console.log(dbMessage + " here chat");
+  Messages.create(dbMessage, (err, data) =>{
+    if(err) console.log(err);
+    else
+    {
+      res.status(201).send(`New message created: \n ${data}`)
+    }
+  })
+})
+
+app.get('/messages/sync', (req, res) =>{
+  Messages.find((err, data) => {
+    if(err) console.log(err);
+    else{
+      res.status(200).send(data);
+    }
+  })
+})

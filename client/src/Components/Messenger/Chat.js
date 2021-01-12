@@ -5,7 +5,7 @@ import { Avatar } from "@material-ui/core";
 
 const Chat = () =>{
     return (
-        <div className='chat__message'>
+        <div className='chat__message chat__message__receiver'>
             <div className='author__avatar'>
                 <Avatar/>
             </div>
@@ -18,7 +18,7 @@ const Chat = () =>{
                 </div>
             </div>
             <div className='chat__message__timestamp'>
-                {new Date().toUTCString()}
+                {/* {new Date().toUTCString()} */}
             </div>
         </div>
     )

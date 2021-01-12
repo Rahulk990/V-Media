@@ -1,0 +1,26 @@
+.chat__message{
+    display: flex;
+    padding: 10px;
+    width: fit-content;
+    background-color: greenyellow;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+.chat__message__body{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    margin-left: 10px;
+}
+.chat__message__timestamp{
+    display: flex;
+    flex: .2;
+    font-size: 8px;
+    align-items: flex-end;
+}
+
+.chat__message__receiver{
+    background-color: hotpink;
+    margin-left: auto;
+}
