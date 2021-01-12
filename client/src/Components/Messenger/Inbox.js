@@ -1,8 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 import './Inbox.css';
+
+import Chat from './Chat'
 import Groupinfo from './Groupinfo'
 import OutsideAlerter from '../Misc/OutsideAlerter'
+
 import { Avatar, IconButton, Tooltip } from "@material-ui/core";
 import { EmojiEmotions, MoreVert } from '@material-ui/icons';
 
@@ -46,6 +49,7 @@ const Inbox = () => {
                         </div>
             </Tooltip>
             </div>
+           
                 <div className="inbox__input">
                     <IconButton >
                         <EmojiEmotions />
