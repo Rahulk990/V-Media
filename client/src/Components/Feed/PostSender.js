@@ -13,7 +13,6 @@ const PostSender = () => {
         e.preventDefault();
 
         // if (image) {
-
         // }
 
         const postData = {
@@ -22,10 +21,7 @@ const PostSender = () => {
             avatar: '',
             timestamp: Date.now()
         }
-
-        console.log(postData)
         savePost(postData)
-
         setPostInput('');
     }
 

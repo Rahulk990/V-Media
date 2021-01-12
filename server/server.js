@@ -3,26 +3,45 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import path from 'path'
-import Pusher from 'pusher'
-
+// import path from 'path'
+// import Pusher from 'pusher'
+import * as socketIo from 'socket.io'
 import mongoPosts from './mongoPosts.js'
 
 // App Config
 const app = express()
 const port = process.env.PORT || 8000
 
-const pusher = new Pusher({
-  appId: "1136528",
-  key: "9cb709a278c38e8892bd",
-  secret: "77252ebc2e1a9dbe5910",
-  cluster: "ap2",
-  useTLS: true
-});
-
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+
+// Listener
+const server = app.listen(port, () => {
+  console.log(`listening at http://localhost:${port}`)
+})
+
+// Socket Setup
+
+const io = new socketIo.Server(server, {
+  cors: {
+    origin: "*",
+    credentials: true
+  }
+})
+
+io.on('connection', (socket) => {
+  console.log('User Connected')
+
+  socket.emit('temp', {
+    data: 'ABCD'
+  }, 1000)
+
+  socket.on('disconnect', () => {
+    console.log('User Disconnected')
+  })
+})
+
 
 // DB Config
 const mongoURI = 'mongodb+srv://admin:KsDmm1u8B2RKgKCj@cluster0.f9hlo.mongodb.net/fbdb?retryWrites=true&w=majority'
@@ -38,13 +57,9 @@ mongoose.connection.once('open', () => {
 
   const changeStream = mongoose.connection.collection('posts').watch()
   changeStream.on('change', (change) => {
-    console.log(change)
 
     if (change.operationType === 'insert') {
-      console.log('Triggering Pusher')
-      pusher.trigger('posts', 'inserted', {
-        change: change
-      })
+      io.emit('refresh', {body: 'DB Changed'})
     } else {
       console.log('Error Triggering Pusher')
     }
@@ -60,8 +75,6 @@ app.get('/', (req, res) => {
 
 app.post('/upload/post', (req, res) => {
   const dbPost = req.body
-  console.log(dbPost);
-
   mongoPosts.create(dbPost, (err, data) => {
     if (err) {
       res.status(500).send(err)
@@ -80,10 +93,5 @@ app.get('/retrieve/posts', (req, res) => {
       res.send(data)
     }
   })
-})
-
-// // Listener
-app.listen(port, () => {
-  console.log(`listening at http://localhost:${port}`)
 })
 
