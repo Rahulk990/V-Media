@@ -4,12 +4,36 @@ import './CreateNewEvent.css'
 import StyledDialog from '../Misc/StyledDialog'
 import { Close } from '@material-ui/icons'
 import { Button, IconButton, TextField } from '@material-ui/core'
+import axios from '../Misc/axios'
 
-const CreateNewEvent = ({ open, onClose }) => {
+const CreateNewEvent = ({ open, onClose, reSync, userId }) => {
 
     const [heading, setHeading] = useState('');
     const [description, setDescription] = useState('');
-    const [datetime, setDatetime] = useState('2017-05-24T12:00');
+    const [datetime, setDatetime] = useState('2021-01-01T12:00');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const eventData = {
+            heading: heading,
+            description: description,
+            timestamp: datetime
+        }
+
+        savePost(eventData)
+        onClose();
+    }
+
+    const savePost = async (eventData) => {
+        await axios.post('/upload/event', {
+            data: eventData,
+            userId: userId
+        })
+            .then((res) => {
+                reSync(res.data.eventsArray)
+            })
+    }
 
     return (
         <StyledDialog
@@ -51,14 +75,16 @@ const CreateNewEvent = ({ open, onClose }) => {
                                     label="Event Timing"
                                     type="datetime-local"
                                     value={datetime}
-                                    onChange={(e) => setDatetime(e.target.value)}
+                                    onChange={(e) => { setDatetime(e.target.value); console.log(e.target.value) }}
                                 />
                             </div>
 
                         </div>
 
                         <div className='createNewEvent__bottom'>
-                            <Button >
+                            <Button
+                                type='submit'
+                                onClick={handleSubmit}>
                                 <p> Create </p>
                             </Button>
                         </div>

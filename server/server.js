@@ -3,13 +3,11 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-// import path from 'path'
-// import Pusher from 'pusher'
 import * as socketIo from 'socket.io'
 import mongoPosts from './mongoPosts.js'
-
-//---messenger--
+import mongoUsers from './mongoUsers.js'
 import Messages from './dbMessages.js'
+
 // App Config
 const app = express()
 const port = process.env.PORT || 8000
@@ -47,6 +45,7 @@ io.on('connection', (socket) => {
 
 // DB Config
 const mongoURI = 'mongodb+srv://admin:KsDmm1u8B2RKgKCj@cluster0.f9hlo.mongodb.net/fbdb?retryWrites=true&w=majority'
+mongoose.set('useFindAndModify', false);
 
 mongoose.connect(mongoURI, {
   useCreateIndex: true,
@@ -61,7 +60,7 @@ mongoose.connection.once('open', () => {
   changeStream.on('change', (change) => {
 
     if (change.operationType === 'insert') {
-      io.emit('refresh', {body: 'DB Changed'})
+      io.emit('refresh', { body: 'DB Changed' })
     } else {
       console.log('Error Triggering Pusher')
     }
@@ -77,7 +76,6 @@ app.get('/', (req, res) => {
 
 app.post('/upload/post', (req, res) => {
   const dbPost = req.body;
-  console.log("here "+ dbPost);
   mongoPosts.create(dbPost, (err, data) => {
     if (err) {
       res.status(500).send(err)
@@ -97,24 +95,54 @@ app.get('/retrieve/posts', (req, res) => {
     }
   })
 })
+
+app.post('/upload/event', (req, res) => {
+  console.log(req.body)
+
+  mongoUsers.findOneAndUpdate(
+    { _id: req.body.userId },
+    { $push: { eventsArray: req.body.data } },
+    { returnOriginal: false },
+    (err, data) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.status(201).send(data)
+      }
+    }
+  )
+})
+
+app.get('/retrieve/events', (req, res) => {
+
+  mongoUsers.findOne({ _id: req.query.userId }, (err, data) => {
+
+    if (err) {
+      res.status(500).send(err)
+    } else {
+      res.send(data.eventsArray)
+    }
+
+  })
+})
+
 //------------ messenger-----
 
 app.post('/messages/new', (req, res) => {
   const dbMessage = req.body;
   console.log(dbMessage + " here chat");
-  Messages.create(dbMessage, (err, data) =>{
-    if(err) console.log(err);
-    else
-    {
+  Messages.create(dbMessage, (err, data) => {
+    if (err) console.log(err);
+    else {
       res.status(201).send(`New message created: \n ${data}`)
     }
   })
 })
 
-app.get('/messages/sync', (req, res) =>{
+app.get('/messages/sync', (req, res) => {
   Messages.find((err, data) => {
-    if(err) console.log(err);
-    else{
+    if (err) console.log(err);
+    else {
       res.status(200).send(data);
     }
   })

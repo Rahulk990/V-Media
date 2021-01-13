@@ -4,7 +4,7 @@ export const appSlice = createSlice({
     name: 'app',
 
     initialState: {
-        userId: '',
+        userId: '5ffebe029b50ff28646bdb81',
         username: 'User Name Long',
         avatarSrc: 'are'
     },

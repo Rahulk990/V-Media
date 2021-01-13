@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Event.css'
+
+import ShowEvent from './ShowEvent'
 
 const Event = ({ type, teamId, heading, description, timestamp }) => {
 
+    const [showEvent, setShowEvent] = useState(false)
+
     const getOrigin = () => {
-        if (type === 1) return 'Individual';
+        if (type === 1) return 'Company';
         else if (type === 2) return ('Team: ' + teamId);
-        return 'Company';
+        return 'You';
     }
 
     const getColor = () => {
@@ -16,18 +20,35 @@ const Event = ({ type, teamId, heading, description, timestamp }) => {
     }
 
     return (
-        <div className='event' style={{ 'backgroundColor': getColor()[0] }}>
+        <div>
+            <div
+                className='event'
+                style={{ 'backgroundColor': getColor()[0] }}
+                onClick={() => setShowEvent(true)}
+            >
 
-            <div className='event__top' style={{ 'color': getColor()[1] }}>
-                <p>{getOrigin()}</p>
-                <p>{timestamp}</p>
-            </div>
+                <div className='event__top' style={{ 'color': getColor()[1] }}>
+                    <p>{getOrigin()}</p>
+                    <p>{timestamp}</p>
+                </div>
 
-            <div className='event__bottom' style={{ 'color': getColor()[1] }}>
-                <p>{heading}</p>
-            </div>
+                <div className='event__bottom' style={{ 'color': getColor()[1] }}>
+                    <p>{heading}</p>
+                </div>
 
-        </div >
+            </div >
+
+            { showEvent && <ShowEvent
+                open={showEvent}
+                onClose={() => setShowEvent(false)}
+                origin={getOrigin()}
+                heading={heading}
+                description={description}
+                timestamp={timestamp}
+            />
+            }
+
+        </div>
     )
 }
 
