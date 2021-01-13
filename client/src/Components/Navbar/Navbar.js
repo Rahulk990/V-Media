@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import "./Navbar.css";
 
 import Badge from "@material-ui/core/Badge";
-import { centerOptionHandler } from "./TabHandler";
 import OutsideAlerter from "../Misc/OutsideAlerter";
 import NotificationList from "./NotificationList";
 import SettingsList from "./SettingsList";
@@ -18,18 +18,19 @@ import {
 	ExpandMoreOutlined,
 } from "@material-ui/icons";
 
-const Navbar = ({ setPath }) => {
+const Navbar = () => {
 
-	const [userId, username, avatarSrc] = useSelector(selectUser)
-
-	const centerOnClickHandler = (id) => {
-		setPath(id);
-		centerOptionHandler(id);
-	};
+	const user = useSelector(selectUser)
+	let history = useHistory();
+	let location = useLocation();
 
 	useEffect(() => {
-		centerOnClickHandler('home')
-	}, [])
+		const id = location.pathname
+		document.getElementById('home').classList.remove("navbar__option--active");
+		document.getElementById('teams').classList.remove("navbar__option--active");
+		document.getElementById('messenger').classList.remove("navbar__option--active");
+		document.getElementById(id.slice(1)).classList.toggle("navbar__option--active");
+	}, [location])
 
 	const [notificationDropdown, setNotificationDropdown] = useState(false);
 	const showNotificationList = () => {
@@ -69,7 +70,7 @@ const Navbar = ({ setPath }) => {
 		<div className="navbar">
 			<div className="navbar__left">
 				<div className="navbar__logo">
-					<Avatar src="https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo-500x350.png" />
+					<Avatar src="https://upload.wikimedia.org/wikipedia/commons/a/aa/V-logo.svg" />
 				</div>
 
 				<div className="navbar__input">
@@ -82,8 +83,8 @@ const Navbar = ({ setPath }) => {
 				<Tooltip title="Home" enterDelay={1000}>
 					<div
 						id="home"
-						className="navbar__option navbar__option--active"
-						onClick={() => centerOnClickHandler("home")}
+						className="navbar__option"
+						onClick={() => history.push("/home")}
 					>
 						<Home />
 					</div>
@@ -93,7 +94,7 @@ const Navbar = ({ setPath }) => {
 					<div
 						id="teams"
 						className="navbar__option "
-						onClick={() => centerOnClickHandler("teams")}
+						onClick={() => history.push("/teams")}
 					>
 						<People />
 					</div>
@@ -103,7 +104,7 @@ const Navbar = ({ setPath }) => {
 					<div
 						id="messenger"
 						className="navbar__option"
-						onClick={() => centerOnClickHandler("messenger")}
+						onClick={() => history.push("/messenger")}
 					>
 						<Telegram />
 					</div>
@@ -113,10 +114,10 @@ const Navbar = ({ setPath }) => {
 			<div className="navbar__right">
 				<div className="navbar__info">
 					<Avatar
-						src={avatarSrc}
+						src={user.avatarSrc}
 						style={{ height: "25px", width: "25px" }}
 					/>
-					<p> {username} </p>
+					<p> {user.username} </p>
 				</div>
 
 				<div className="navbar__settings">

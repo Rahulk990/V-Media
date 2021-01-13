@@ -14,12 +14,12 @@ import axios from '../Misc/axios'
 const HomeRight = () => {
 
     const [eventData, setEventData] = useState([])
-    const [userId, username, avatarSrc] = useSelector(selectUser)
+    const user = useSelector(selectUser)
 
     const syncEvents = () => {
         axios.get('retrieve/events', {
             params: {
-                userId: userId
+                userId: user.userId
             }
         })
             .then((res) => {
@@ -72,7 +72,7 @@ const HomeRight = () => {
                 open={newEvent}
                 onClose={() => setNewEvent(false)}
                 reSync={setEventData}
-                userId={userId}
+                userId={user.userId}
             />
             }
 

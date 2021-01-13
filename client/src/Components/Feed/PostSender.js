@@ -4,10 +4,13 @@ import './PostSender.css'
 import { Avatar, Button } from '@material-ui/core'
 import { InsertEmoticon, PhotoLibrary, Videocam } from '@material-ui/icons'
 import axios from '../Misc/axios'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../ReduxStore/appSlice'
 
 const PostSender = () => {
 
     const [postInput, setPostInput] = useState('');
+    const user = useSelector(selectUser)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +38,7 @@ const PostSender = () => {
     return (
         <div className='postSender'>
             <div className='postSender__top'>
-                <Avatar />
+                <Avatar src={user.avatarSrc} />
 
                 <form>
                     <input

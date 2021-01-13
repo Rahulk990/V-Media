@@ -9,11 +9,11 @@ import { selectUser } from '../ReduxStore/appSlice'
 
 const HomeLeft = () => {
 
-    const [userId, username, avatarSrc] = useSelector(selectUser)
+    const user = useSelector(selectUser)
 
     return (
         <div className='homeLeft'>
-            <HomeLeftRow src={avatarSrc} title={username} />
+            <HomeLeftRow src={user.avatarSrc} title={user.username} />
             <HomeLeftRow Icon={FlagIcon} title='Pages' />
             <HomeLeftRow Icon={PeopleIcon} title='People' />
         </div>

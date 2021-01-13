@@ -4,27 +4,25 @@ export const appSlice = createSlice({
     name: 'app',
 
     initialState: {
-        userId: '5ffebe029b50ff28646bdb81',
-        username: 'User Name Long',
-        avatarSrc: 'are'
+        user: null
     },
 
     reducers: {
         login: (state, action) => {
-            state.userId = action.payload.userId
-            state.username = action.payload.username
-            state.avatarSrc = action.payload.avatarSrc
+            state.user = {
+                userId: action.payload.userId,
+                username: action.payload.username,
+                avatarSrc: action.payload.avatarSrc
+            }
         },
         logout: (state) => {
-            state.userId = ''
-            state.username = ''
-            state.avatarSrc = ''
+            state.user = null
         },
     },
 });
 
-export const {login, logout} = appSlice.actions;
+export const { login, logout } = appSlice.actions;
 
-export const selectUser = state => [state.app.userId, state.app.username, state.app.avatarSrc];
+export const selectUser = state => state.app.user;
 
 export default appSlice.reducer;
