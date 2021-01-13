@@ -12,7 +12,7 @@ const PostSender = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // if (image) {
+        // if (image) { 1:32 snap
         // }
 
         const postData = {

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './MessengerLeft.css'
 
 import Room from './Room'
-import { Avatar, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import { Add } from '@material-ui/icons';
 
 const contactRooms = [

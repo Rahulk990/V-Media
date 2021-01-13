@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
+import { useSelector } from 'react-redux'
 import "./Navbar.css";
 
 import Badge from "@material-ui/core/Badge";
@@ -6,6 +7,7 @@ import { centerOptionHandler } from "./TabHandler";
 import OutsideAlerter from "../Misc/OutsideAlerter";
 import NotificationList from "./NotificationList";
 import SettingsList from "./SettingsList";
+import { selectUser } from '../ReduxStore/appSlice'
 import { Avatar, Tooltip, IconButton } from "@material-ui/core";
 import {
 	Search,
@@ -17,6 +19,8 @@ import {
 } from "@material-ui/icons";
 
 const Navbar = ({ setPath }) => {
+
+	const [userId, username, avatarSrc] = useSelector(selectUser)
 
 	const centerOnClickHandler = (id) => {
 		setPath(id);
@@ -108,8 +112,11 @@ const Navbar = ({ setPath }) => {
 
 			<div className="navbar__right">
 				<div className="navbar__info">
-					<Avatar style={{ height: "25px", width: "25px" }} />
-					<p> Username </p>
+					<Avatar
+						src={avatarSrc}
+						style={{ height: "25px", width: "25px" }}
+					/>
+					<p> {username} </p>
 				</div>
 
 				<div className="navbar__settings">
@@ -120,9 +127,9 @@ const Navbar = ({ setPath }) => {
 						>
 							<IconButton>
 								{/* <Badge badgeContent={4} color="primary"> */}
-									<NotificationsActive
-										style={{ height: "20px", width: "20px" }}
-									/>
+								<NotificationsActive
+									style={{ height: "20px", width: "20px" }}
+								/>
 								{/* </Badge> */}
 							</IconButton>
 
