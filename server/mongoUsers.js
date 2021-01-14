@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { roomModel } from './MongoRooms.js'
+// import { roomModel } from './MongoRooms.js'
 
 const eventModel = mongoose.Schema({
     heading: String,
@@ -13,7 +13,7 @@ const userModel = mongoose.Schema({
     avatar: String,
     email: String,
     eventsArray: [eventModel],
-    roomsArray: [roomModel]
+    roomsArray: [String]
 });
 
 export default mongoose.model("users", userModel);

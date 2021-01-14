@@ -1,12 +1,12 @@
 import React from 'react'
 import './Chat.css'
 
-import { Avatar } from "@material-ui/core";
+import { Avatar, IconButton } from "@material-ui/core";
 
-const Chat = () =>{
+const Chat = (props) =>{
+    console.log("called chat");
     return (
-    
-        <div className='chat__message chat__message__sent'>
+        <div className='chat__message chat__message__received'>
             <div className='author__avatar'>
                 <Avatar/>
             </div>
@@ -15,11 +15,16 @@ const Chat = () =>{
                     Puneet
                 </div>
                 <div className='message__content'>
-                    hello there
+                    {props.content}
                 </div>
             </div>
             <div className='chat__message__timestamp'>
-                {/* {new Date().toUTCString()} */}
+                {new Date().toLocaleDateString()}
+            </div>
+            <div>
+                <IconButton>
+                    
+                </IconButton>
             </div>
         </div>
 

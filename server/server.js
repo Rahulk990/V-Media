@@ -6,11 +6,19 @@ import bodyParser from 'body-parser'
 import * as socketIo from 'socket.io'
 import mongoPosts from './mongoPosts.js'
 import mongoUsers from './mongoUsers.js'
-// import mongoRooms from './mongoRooms.js'
-
+import mongoRooms from './mongoRooms.js'
+import Pusher from 'pusher'
 // App Config
 const app = express()
 const port = process.env.PORT || 8000
+// -----pusher-------
+const pusher = new Pusher({
+  appId: "1138234",
+  key: "d24ba3df0d30f4d2c95e",
+  secret: "e367a842ed6aa6866991",
+  cluster: "ap2",
+  useTLS: true
+});
 
 // Middleware
 app.use(cors());
@@ -41,7 +49,13 @@ io.on('connection', (socket) => {
     console.log('User Disconnected')
   })
 })
-
+//==messenger
+// app.use((req, res, next) =>{
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Headers", "*");
+//   next();
+// })
+//==messenger
 
 // DB Config
 const mongoURI = 'mongodb+srv://admin:KsDmm1u8B2RKgKCj@cluster0.f9hlo.mongodb.net/fbdb?retryWrites=true&w=majority'
@@ -66,7 +80,25 @@ mongoose.connection.once('open', () => {
     }
 
   })
+//-----messenger------
+  const msgCollection = mongoose.connection.collection("rooms");
+  const changeStream1 = msgCollection.watch();
+  changeStream1.on('change', (change) => {
+      console.log(change);
+    if (change.operationType === 'insert') {
+      const messageDetails = change.fullDocument;
+      pusher.trigger('messages','inserted',
+        {
+          title:  messageDetails.title, // Title
+          roomId: messageDetails.roomId,
+          type:   messageDetails.type,
+          usersArray: messageDetails.usersArray, // Users Ids
+          messagesArray: messageDetails.messagesArray  
+        }
+      );
+    }
 
+  })
 })
 
 // API Routes
@@ -134,22 +166,21 @@ app.get('/retrieve/events', (req, res) => {
 
 //------------ messenger-----
 
-// app.post('/messages/new', (req, res) => {
-//   const dbMessage = req.body;
-//   console.log(dbMessage + " here chat");
-//   Messages.create(dbMessage, (err, data) => {
-//     if (err) console.log(err);
-//     else {
-//       res.status(201).send(`New message created: \n ${data}`)
-//     }
-//   })
-// })
-
-// app.get('/messages/sync', (req, res) => {
-//   Messages.find((err, data) => {
-//     if (err) console.log(err);
-//     else {
-//       res.status(200).send(data);
-//     }
-//   })
-// })
+app.post('/messages/new', (req, res) => {
+  const dbMessage = req.body;
+  mongoRooms.create(dbMessage, (err, data) => {
+    if (err) console.log(err);
+    else {
+      res.status(201).send(`New message created: \n ${data}`)
+    }
+  })
+})
+ 
+app.get('/messages/sync', (req, res) => {
+  mongoRooms.find((err, data) => {
+    if (err) console.log(err);
+    else {
+      res.status(200).send(data);
+    }
+  })
+})

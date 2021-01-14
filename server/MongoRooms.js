@@ -12,6 +12,6 @@ export const roomModel = mongoose.Schema({
     type: String,
     usersArray: [String], // Users Ids
     messagesArray: [messageModel]
-})
+});
 
 export default mongoose.model('rooms', roomModel);

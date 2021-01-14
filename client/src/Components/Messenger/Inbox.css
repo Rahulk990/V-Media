@@ -62,13 +62,18 @@
 
 /* Body */
 
-.inbox__body {
+.inbox__body__container {
   display: flex;
   flex: 1;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 10px;
+  height:calc(100vh - 175px);
+}
+
+.inbox__body {
+  
+  height:calc(100vh - 175px);
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  width: 100%;
 }
 
 /* Bottom */
