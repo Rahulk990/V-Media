@@ -76,12 +76,12 @@ const HomeRight = () => {
             />
             }
 
-            <div className='homeRight__select homeRight__select--disable'>
+            {/* <div className='homeRight__select homeRight__select--disable'>
                 <Button onClick={showDropdown}>
                     <p> {option} </p>
                     <ExpandMore />
                 </Button>
-            </div>
+            </div> */}
 
             { optionDropdown && <OutsideAlerter
                 outsideHandler={handleSelection}

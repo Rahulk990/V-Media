@@ -36,11 +36,12 @@ const Feed = ({ isAdmin }) => {
             {
                 postsData.map(entry => (
                     <Post
-                        profilePic={entry.avatar}
+                        userId={entry.userId}
+                        username={entry.username}
+                        avatar={entry.avatar}
                         text={entry.text}
-                        timestamp={entry.timestamp}
                         imgName={entry.imgName}
-                        username={entry.user}
+                        timestamp={entry.timestamp}
                     />
                 ))
             }

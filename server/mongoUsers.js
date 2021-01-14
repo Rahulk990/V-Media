@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { roomModel } from './MongoRooms.js'
 
 const eventModel = mongoose.Schema({
     heading: String,
@@ -7,9 +8,12 @@ const eventModel = mongoose.Schema({
 })
 
 const userModel = mongoose.Schema({
-	name: String,
+    userId: String,
+    name: String,
     avatar: String,
-    eventsArray: [eventModel]
+    email: String,
+    eventsArray: [eventModel],
+    roomsArray: [roomModel]
 });
 
 export default mongoose.model("users", userModel);

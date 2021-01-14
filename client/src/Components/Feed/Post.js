@@ -4,13 +4,13 @@ import './Post.css'
 import { Avatar } from '@material-ui/core'
 import { ChatBubbleOutline, NearMe, ThumbUp } from '@material-ui/icons'
 
-const Post = ({ profilePic, username, timestamp, text, image }) => {
+const Post = ({ userId, username, avatar, text, image, timestamp }) => {
     return (
         <div className='post'>
             <div className='post__top'>
                 <Avatar
                     className='post__avatar'
-                    src={profilePic}
+                    src={avatar}
                 />
 
                 <div className='post__topInfo'>

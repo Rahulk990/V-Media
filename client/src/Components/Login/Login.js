@@ -6,24 +6,36 @@ import { useHistory } from 'react-router-dom'
 import { Button } from '@material-ui/core'
 import { auth, provider } from '../../firebase'
 import { login } from '../ReduxStore/appSlice'
+import axios from '../Misc/axios'
 
 const Login = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const signIn = () => {
-        auth.signInWithPopup(provider)
+    const signIn = async () => {
+        await auth.signInWithPopup(provider)
             .then(result => {
-                dispatch(login({
-                    userId: '5ffebe029b50ff28646bdb81',
-                    username: result.user.displayName,
-                    avatarSrc: result.user.photoURL
-                }))
+                const userData = {
+                    userId: result.user.uid,
+                    name: result.user.displayName,
+                    avatar: result.user.photoURL,
+                    email: result.user.email
+                }
+                saveData(userData)
             })
             .catch(err => console.log(err.message))
+
         history.replace('/home')
     }
+
+    const saveData = async (userData) => {
+        await axios.post('/upload/user', userData)
+            .then((res) => {
+                // console.log(res)
+            })
+    }
+
 
     return (
         <div className='login'>

@@ -25,7 +25,6 @@ const Navbar = () => {
 	let location = useLocation();
 
 	useEffect(() => {
-		console.log(location)
 		const id = (location.pathname === '/login') ?  ('/home') : (location.pathname)
 		document.getElementById('home').classList.remove("navbar__option--active");
 		// document.getElementById('teams').classList.remove("navbar__option--active");

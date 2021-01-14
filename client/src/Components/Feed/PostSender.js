@@ -19,9 +19,10 @@ const PostSender = () => {
         // }
 
         const postData = {
+            userid: user.userId,
             text: postInput,
-            user: 'Rahul',
-            avatar: '',
+            username: user.username,
+            avatar: user.avatarSrc,
             timestamp: Date.now()
         }
         savePost(postData)

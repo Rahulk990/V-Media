@@ -24,11 +24,12 @@
 }
 
 .post__topInfo > h3 {
-    font-size: medium;
+    font-size: 15px;
+    font-weight: 650;
 }
 
 .post__topInfo > p {
-    font-size: small;
+    font-size: 12px;
     color: gray;
 }
 

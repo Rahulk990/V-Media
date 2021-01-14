@@ -22,7 +22,7 @@ function App() {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         dispatch(login({
-          userId: '5ffebe029b50ff28646bdb81',
+          userId: authUser.uid,
           username: authUser.displayName,
           avatarSrc: authUser.photoURL
         }))

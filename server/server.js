@@ -6,7 +6,7 @@ import bodyParser from 'body-parser'
 import * as socketIo from 'socket.io'
 import mongoPosts from './mongoPosts.js'
 import mongoUsers from './mongoUsers.js'
-import Messages from './dbMessages.js'
+// import mongoRooms from './mongoRooms.js'
 
 // App Config
 const app = express()
@@ -70,8 +70,17 @@ mongoose.connection.once('open', () => {
 })
 
 // API Routes
-app.get('/', (req, res) => {
-  res.status(200).send('Hello World Hp')
+app.post('/upload/user', (req, res) => {
+  mongoUsers.findOneAndUpdate(
+    { userId: req.body.userId }, req.body,
+    { returnOriginal: false, upsert: true },
+    (err, data) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.status(201).send(data)
+      }
+    })
 })
 
 app.post('/upload/post', (req, res) => {
@@ -97,10 +106,8 @@ app.get('/retrieve/posts', (req, res) => {
 })
 
 app.post('/upload/event', (req, res) => {
-  console.log(req.body)
-
   mongoUsers.findOneAndUpdate(
-    { _id: req.body.userId },
+    { userId: req.body.userId },
     { $push: { eventsArray: req.body.data } },
     { returnOriginal: false },
     (err, data) => {
@@ -114,8 +121,7 @@ app.post('/upload/event', (req, res) => {
 })
 
 app.get('/retrieve/events', (req, res) => {
-
-  mongoUsers.findOne({ _id: req.query.userId }, (err, data) => {
+  mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
 
     if (err) {
       res.status(500).send(err)
@@ -128,22 +134,22 @@ app.get('/retrieve/events', (req, res) => {
 
 //------------ messenger-----
 
-app.post('/messages/new', (req, res) => {
-  const dbMessage = req.body;
-  console.log(dbMessage + " here chat");
-  Messages.create(dbMessage, (err, data) => {
-    if (err) console.log(err);
-    else {
-      res.status(201).send(`New message created: \n ${data}`)
-    }
-  })
-})
+// app.post('/messages/new', (req, res) => {
+//   const dbMessage = req.body;
+//   console.log(dbMessage + " here chat");
+//   Messages.create(dbMessage, (err, data) => {
+//     if (err) console.log(err);
+//     else {
+//       res.status(201).send(`New message created: \n ${data}`)
+//     }
+//   })
+// })
 
-app.get('/messages/sync', (req, res) => {
-  Messages.find((err, data) => {
-    if (err) console.log(err);
-    else {
-      res.status(200).send(data);
-    }
-  })
-})
+// app.get('/messages/sync', (req, res) => {
+//   Messages.find((err, data) => {
+//     if (err) console.log(err);
+//     else {
+//       res.status(200).send(data);
+//     }
+//   })
+// })
