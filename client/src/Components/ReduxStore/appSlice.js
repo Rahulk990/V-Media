@@ -9,11 +9,7 @@ export const appSlice = createSlice({
 
     reducers: {
         login: (state, action) => {
-            state.user = {
-                userId: action.payload.userId,
-                username: action.payload.username,
-                avatarSrc: action.payload.avatarSrc
-            }
+            state.user = action.payload
         },
         logout: (state) => {
             state.user = null

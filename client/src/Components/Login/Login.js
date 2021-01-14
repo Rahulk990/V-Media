@@ -1,15 +1,28 @@
-import { Button } from '@material-ui/core';
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import './Login.css'
+
+import { useHistory } from 'react-router-dom'
+import { Button } from '@material-ui/core'
+import { auth, provider } from '../../firebase'
+import { login } from '../ReduxStore/appSlice'
 
 const Login = () => {
 
-    const history = useHistory();
-    history.replace('/login')
+    const dispatch = useDispatch()
+    const history = useHistory()
 
     const signIn = () => {
-
+        auth.signInWithPopup(provider)
+            .then(result => {
+                dispatch(login({
+                    userId: '5ffebe029b50ff28646bdb81',
+                    username: result.user.displayName,
+                    avatarSrc: result.user.photoURL
+                }))
+            })
+            .catch(err => console.log(err.message))
+        history.replace('/home')
     }
 
     return (

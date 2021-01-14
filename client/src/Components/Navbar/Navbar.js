@@ -25,9 +25,10 @@ const Navbar = () => {
 	let location = useLocation();
 
 	useEffect(() => {
-		const id = location.pathname
+		console.log(location)
+		const id = (location.pathname === '/login') ?  ('/home') : (location.pathname)
 		document.getElementById('home').classList.remove("navbar__option--active");
-		document.getElementById('teams').classList.remove("navbar__option--active");
+		// document.getElementById('teams').classList.remove("navbar__option--active");
 		document.getElementById('messenger').classList.remove("navbar__option--active");
 		document.getElementById(id.slice(1)).classList.toggle("navbar__option--active");
 	}, [location])
@@ -57,9 +58,6 @@ const Navbar = () => {
 			.classList.remove("navbar__settingsSetting--disable");
 	};
 	const handleSettingSelection = (id) => {
-		if (id) {
-			// Do related work
-		}
 		setSettingsDropdown(false);
 		document
 			.getElementsByClassName("navbar__settingsSetting")[0]
@@ -90,7 +88,7 @@ const Navbar = () => {
 					</div>
 				</Tooltip>
 
-				<Tooltip title="Teams" enterDelay={1000}>
+				{/* <Tooltip title="Teams" enterDelay={1000}>
 					<div
 						id="teams"
 						className="navbar__option "
@@ -98,7 +96,7 @@ const Navbar = () => {
 					>
 						<People />
 					</div>
-				</Tooltip>
+				</Tooltip> */}
 
 				<Tooltip title="Messenger" enterDelay={1000}>
 					<div
@@ -155,7 +153,11 @@ const Navbar = () => {
 							{settingsDropdown && (
 								<OutsideAlerter
 									outsideHandler={handleSettingSelection}
-									component={<SettingsList />}
+									component={
+									<SettingsList 
+										outsideHandler = {handleSettingSelection}
+									/>
+									}
 								/>
 							)}
 						</div>
