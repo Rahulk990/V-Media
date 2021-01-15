@@ -1,33 +1,32 @@
 import React from 'react'
 import './Chat.css'
 
-import { Avatar, IconButton } from "@material-ui/core";
+import { IconButton, Tooltip } from "@material-ui/core";
+import { Reply } from '@material-ui/icons';
 
-const Chat = (props) =>{
-    console.log("called chat");
+const Chat = (props) => {
     return (
-        <div className='chat__message chat__message__received'>
-            <div className='author__avatar'>
-                <Avatar/>
-            </div>
-            <div className='chat__message__body'>
-                <div className='author__name'>
-                    Puneet
-                </div>
-                <div className='message__content'>
-                    {props.content}
-                </div>
-            </div>
-            <div className='chat__message__timestamp'>
-                {new Date().toLocaleDateString()}
-            </div>
-            <div>
-                <IconButton>
-                    
-                </IconButton>
-            </div>
-        </div>
+        <div className='chat'>
+            <div className='chat__container'>
+                <p> Name </p>
 
+                <div className='chat__message'>
+                    <Tooltip title={new Date().toLocaleString()} enterDelay={1000} >
+
+                        <div className='chat__messageBody'>
+                            <p> {props.content} </p>
+                        </div>
+                    </Tooltip>
+
+                    <div className='chat__forward'>
+                        <IconButton>
+                            <Reply />
+                        </IconButton>
+                    </div>
+                </div>
+
+            </div>
+        </div >
     )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './Inbox.css';
 
 import Chat from './Chat.js'
@@ -7,7 +7,8 @@ import OutsideAlerter from '../Misc/OutsideAlerter'
 import { Avatar, IconButton, Tooltip } from "@material-ui/core";
 import { EmojiEmotions, MoreVert, Send } from '@material-ui/icons';
 import Pusher from 'pusher-js';
-import axios from './Axios';
+import axios from '../Misc/axios';
+
 const Inbox = () => {
 
     const [settingsDropdown, setSettingsDropdown] = useState(false);
@@ -33,34 +34,34 @@ const Inbox = () => {
     }
     // new-----
     const [msg, setMsg] = useState([]);
-    useEffect( ()=>{
+    useEffect(() => {
         axios.get('/messages/sync')
-        .then(response =>{
-            setMsg(response.data);
-        })
+            .then(response => {
+                setMsg(response.data);
+            })
     }, [])
-    useEffect( ()=>{
+    useEffect(() => {
         const pusher = new Pusher('d24ba3df0d30f4d2c95e', {
             cluster: 'ap2'
-          });
-          
-          const channel = pusher.subscribe('messages');
-          channel.bind('inserted', function(data) {
+        });
+
+        const channel = pusher.subscribe('messages');
+        channel.bind('inserted', function (data) {
             // alert(JSON.stringify(data));
             setMsg([...msg, data]);
-          });
-          updateScroll();
-          return () =>{
-              channel.unbind_all();
-              channel.unsubscribe();
-          }
+        });
+        updateScroll();
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        }
     }, [msg]);
 
     console.log(msg);
     // -----new------
 
     //---- time pass function
-    function updateScroll(){
+    function updateScroll() {
         var element = document.getElementsByClassName("inbox__body")[0];
         element.scrollTop = element.scrollHeight;
     }
@@ -72,7 +73,7 @@ const Inbox = () => {
                     <Avatar
                         style={{ "height": "30px", "width": "30px" }}
                     />
-                    <p>Group Name</p>
+                    <p>Title</p>
                 </div>
 
                 <Tooltip
@@ -96,13 +97,28 @@ const Inbox = () => {
                 </Tooltip>
             </div>
 
-            <div className='inbox__body__container'>
+            <div className='inbox__bodyContainer'>
                 <div className='inbox__body'>
-                {
+                    <Chat content='hello' />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+                    <Chat />
+
+                    {/* {
                     msg.map( obj => (
                         <Chat content={obj.title} />
                     ))
-                }
+                } */}
                 </div>
             </div>
 
@@ -114,6 +130,7 @@ const Inbox = () => {
                     </IconButton>
 
                     <form>
+
                         <input
                             value={message}
                             placeholder="Enter your message"

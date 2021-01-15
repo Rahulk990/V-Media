@@ -1,51 +1,15 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import './MessengerLeft.css'
 
 import Room from './Room'
-import { IconButton } from "@material-ui/core";
-import { Add } from '@material-ui/icons';
-
-const contactRooms = [
-    {
-        'roomId': '1234',
-        'userId': '12334',
-        'avatar': '',
-        'title': 'Rahul'
-    },
-    {
-        'roomId': '1234',
-        'userId': '12334',
-        'avatar': '',
-        'title': 'Puneet'
-    },
-    {
-        'roomId': '1234',
-        'userId': '12334',
-        'avatar': '',
-        'title': 'Pagal'
-    }
-]
-
-const groupRooms = [
-    {
-        'roomId': '1234',
-        'groupId': '12334',
-        'title': 'A4'
-    },
-    {
-        'roomId': '1234',
-        'groupId': '12334',
-        'title': 'GEC'
-    },
-    {
-        'roomId': '1234',
-        'groupId': '12334',
-        'title': 'OEC'
-    }
-]
+import { IconButton } from "@material-ui/core"
+import { Add } from '@material-ui/icons'
+import { getRooms } from '../ReduxStore/roomSlice'
 
 const MessengerLeft = () => {
 
+    const roomsArray = useSelector(getRooms)
     const [option, setOption] = useState('contact')
     const selectOption = (id) => {
         setOption(id);
@@ -83,30 +47,30 @@ const MessengerLeft = () => {
                     <IconButton >
                         <Add />
                     </IconButton>
-                    <input autocomplete="off" placeholder="Enter UserID" />
+                    <input autocomplete="off" placeholder="Enter User Email" />
 
                 </div>
             </div>
 
             <div className='messengerLeft__rooms'>
 
-                {(option === 'contact') && contactRooms.map(room => (
-                    <Room
-                        roomId={room.roomId}
-                        userId={room.userId}
-                        avatar={room.avatar}
-                        title={room.title}
-                    />
-                ))
+                {(option === 'contact') &&
+                    roomsArray.map(room => (
+                        !room.title &&
+                        <Room
+                            roomId={room._id}
+                        />
+                    ))
                 }
 
-                {(option === 'group') && groupRooms.map(room => (
-                    <Room
-                        roomId={room.roomId}
-                        groupId={room.groupId}
-                        title={room.title}
-                    />
-                ))
+                {(option === 'group') &&
+                    roomsArray.map(room => (
+                        room.title &&
+                        <Room
+                            roomId={room._id}
+                            title={room.title}
+                        />
+                    ))
                 }
 
             </div>

@@ -25,11 +25,13 @@ const Navbar = () => {
 	let location = useLocation();
 
 	useEffect(() => {
-		const id = (location.pathname === '/login') ?  ('/home') : (location.pathname)
+		const path = (location.pathname).split('/')
+		const id = (path[1] === 'login') ? ('home') : (path[1])
+
 		document.getElementById('home').classList.remove("navbar__option--active");
 		// document.getElementById('teams').classList.remove("navbar__option--active");
 		document.getElementById('messenger').classList.remove("navbar__option--active");
-		document.getElementById(id.slice(1)).classList.toggle("navbar__option--active");
+		document.getElementById(id).classList.toggle("navbar__option--active");
 	}, [location])
 
 	const [notificationDropdown, setNotificationDropdown] = useState(false);
@@ -153,9 +155,9 @@ const Navbar = () => {
 								<OutsideAlerter
 									outsideHandler={handleSettingSelection}
 									component={
-									<SettingsList 
-										outsideHandler = {handleSettingSelection}
-									/>
+										<SettingsList
+											outsideHandler={handleSettingSelection}
+										/>
 									}
 								/>
 							)}

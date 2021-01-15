@@ -58,7 +58,7 @@ function App() {
                     <Team />
                   </Route> */}
 
-                  <Route exact path="/messenger">
+                  <Route path="/messenger">
                     <Messenger />
                   </Route>
 

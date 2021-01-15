@@ -1,32 +1,70 @@
-
-.chat__message{
-    display: flex;
-    padding: 13px;
-    position: relative;
-    width: fit-content;
-    background-color: greenyellow;
-    border-radius: 12px;
+.chat {
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
 }
 
-.chat__message__body{
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    margin-left: 10px;
+.chat__container {
+  display: flex;
+  flex-direction: column;
 }
-.chat__message__timestamp{
-    display: flex;
-    position: absolute;
-    height: fit-content;
-    font-size: 10px;
-    bottom:2px;
-    right: 8px;
-}
-.chat__message__sent{
-    margin-left: auto;
-}
-.chat__message__received{
 
-    background-color: hotpink;
-    margin-right: auto;
+.chat__container > p {
+  margin-left: 10px;
+  margin-right: auto;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.chat__message {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.chat__messageBody {
+  display: flex;
+  padding: 10px 15px;
+  max-width: 75%;
+  align-content: space-between;
+  background-color: #dae6f1;
+  border-radius: 20px;
+}
+
+.chat__messageBody > p {
+  font-size: 14px;
+  word-wrap: break-word;
+  text-align: justify;
+}
+
+.chat__forward .MuiIconButton-root {
+  padding: 4px;
+  margin: 0 10px;
+  background-color: lightgray;
+  visibility: hidden;
+}
+
+.chat:hover .chat__forward .MuiIconButton-root {
+  visibility: visible;
+}
+
+/* For Chat Sent */
+
+.chat__sent {
+  flex-direction: row-reverse;
+}
+
+.chat__sent .chat__container > p {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.chat__sent .chat__message {
+  flex-direction: row-reverse;
+}
+
+.chat__sent .chat__messageBody {
+  background-color: #2e81f4;
+  color: white;
 }
