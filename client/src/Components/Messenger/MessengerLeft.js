@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './MessengerLeft.css'
 
@@ -8,6 +8,7 @@ import { Add } from '@material-ui/icons'
 import { getRooms, setData } from '../ReduxStore/roomSlice'
 import axios from '../Misc/axios'
 import { selectUser } from '../ReduxStore/appSlice'
+import Pusher from 'pusher-js';
 
 const MessengerLeft = ({ roomSelector }) => {
 
@@ -17,6 +18,43 @@ const MessengerLeft = ({ roomSelector }) => {
     const [userInput, setUserInput] = useState('')
     const [option, setOption] = useState('contact')
 
+    const syncRooms = async () => {
+        await axios.get('retrieve/rooms', {
+            params: {
+                userId: user.userId
+            }
+        })
+            .then((res) => {
+                console.log('in response to retrieve Rooms');
+                axios.get('retrieve/roomsData', {
+                    params: {
+                        roomIds: res.data
+                    }
+                })
+                    .then((res2) => {
+                        dispatch(setData(res2.data))
+                    })
+            })
+    }
+
+    useEffect(() => {
+        syncRooms()
+
+        const pusher = new Pusher('d24ba3df0d30f4d2c95e', {
+            cluster: 'ap2'
+        });
+
+        const channel = pusher.subscribe('messages');
+        channel.bind('inserted', function (data) {
+            syncRooms()
+        });
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        }
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -25,13 +63,20 @@ const MessengerLeft = ({ roomSelector }) => {
                 userId: user.userId,
                 userEmail: userInput
             }
-            setUserInput('')
             await axios.post('/create/roomContact', queryData)
                 .then((res) => {
-                    console.log('In response')
                     if (res.data === 'No such user exists!') {
                         alert(res.data)
-                    } 
+                    } else {
+                        axios.get('retrieve/roomsData', {
+                            params: {
+                                roomIds: res.data
+                            }
+                        })
+                            .then((res2) => {
+                                dispatch(setData(res2.data))
+                            })
+                    }
                 })
         } else {
             const queryData = {
@@ -40,7 +85,19 @@ const MessengerLeft = ({ roomSelector }) => {
             }
             setUserInput('');
             await axios.post('/create/roomGroup', queryData)
+                .then((res) => {
+                    axios.get('retrieve/roomsData', {
+                        params: {
+                            roomIds: res.data
+                        }
+                    })
+                        .then((res2) => {
+                            dispatch(setData(res2.data))
+                        })
+                })
         }
+
+        setUserInput('');
     }
 
     const selectOption = (id) => {
@@ -82,7 +139,7 @@ const MessengerLeft = ({ roomSelector }) => {
                     <form>
 
                         <input
-                            autoComplete="off"
+                            autocomplete="off"
                             placeholder={(option === 'contact') ? ("Enter User Email") : ("Enter Group Name")}
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
