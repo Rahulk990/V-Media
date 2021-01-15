@@ -9,7 +9,7 @@ const Chat = ({ userId, authorId, username, content, timestamp }) => {
     return (
         <>
             {(userId === authorId) ? (
-                <div className='chat chat__sent'>
+                <div  className='chat chat__sent'>
                     <div className='chat__container'>
                         <p> {username} </p>
 
@@ -31,7 +31,7 @@ const Chat = ({ userId, authorId, username, content, timestamp }) => {
                     </div>
                 </div >
             ) : (
-                    <div className='chat'>
+                    <div  className='chat'>
                         <div className='chat__container'>
                             <p> {username} </p>
 

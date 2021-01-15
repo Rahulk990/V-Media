@@ -42,6 +42,7 @@ const Feed = ({ isAdmin }) => {
                         text={entry.text}
                         imgName={entry.imgName}
                         timestamp={entry.timestamp}
+                        likes={entry.likes}
                     />
                 ))
             }

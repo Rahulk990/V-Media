@@ -23,7 +23,9 @@ const PostSender = () => {
             text: postInput,
             username: user.username,
             avatar: user.avatarSrc,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            likes:[""],
+            comments:[{}]
         }
         savePost(postData)
         setPostInput('');

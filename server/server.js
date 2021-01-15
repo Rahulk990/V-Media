@@ -193,7 +193,7 @@ app.post('/create/roomContact', (req, res) => {
           
           mongoUsers.findOneAndUpdate(
             { userId: req.body.userId },
-            { $push: { roomsArray: roomId } },
+            { $push: { roomsArray: roomId } },{returnOriginal:false},
             (err3, data3) => {
               if (err3) {
                 console.log(err)

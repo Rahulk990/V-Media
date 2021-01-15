@@ -127,7 +127,7 @@ const Inbox = ({ roomId, roomInfo }) => {
 
                         {settingsDropdown && <OutsideAlerter
                             outsideHandler={handleSettingSelection}
-                            component={<RoomSettings />}
+                            component={<RoomSettings isgroup={roomInfo.isgroup} />}
                         />
                         }
                     </div>

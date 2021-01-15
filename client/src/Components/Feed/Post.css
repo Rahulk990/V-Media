@@ -76,3 +76,6 @@
     border-radius: 20px;
     background-color: #eff2f5;
 }
+.active__like{
+    color: red;
+}

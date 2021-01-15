@@ -8,7 +8,7 @@ import { selectUser } from '../ReduxStore/appSlice'
 import axios from '../Misc/axios'
 
 const Room = ({ roomId, title, usersArray, roomSelector }) => {
-
+    const temp_title = title;
     const history = useHistory()
     const user = useSelector(selectUser)
     const [newUser, setNewUser] = useState({})
@@ -37,7 +37,8 @@ const Room = ({ roomId, title, usersArray, roomSelector }) => {
         <div className='room' onClick={() => {
             roomSelector({
                 title: newUser.name,
-                avatar: newUser.avatar
+                avatar: newUser.avatar,
+                isgroup: (temp_title === null)?false:true
             })
             history.push('/messenger/' + roomId)
             }}>
