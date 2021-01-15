@@ -11,7 +11,6 @@ import { EmojiEmotions, MoreVert, Send } from '@material-ui/icons';
 import Pusher from 'pusher-js';
 import axios from '../Misc/axios';
 import { selectUser } from '../ReduxStore/appSlice'
-import { setData } from '../ReduxStore/roomSlice';
 
 const Inbox = ({ roomId, roomInfo }) => {
 
@@ -77,25 +76,6 @@ const Inbox = ({ roomId, roomInfo }) => {
         updateScroll();
     }
 
-    const syncRooms = async () => {
-        await axios.get('retrieve/rooms', {
-            params: {
-                userId: user.userId
-            }
-        })
-            .then((res) => {
-                console.log('in response to retrieve Rooms');
-                axios.get('retrieve/roomsData', {
-                    params: {
-                        roomIds: res.data
-                    }
-                })
-                    .then((res2) => {
-                        dispatch(setData(res2.data))
-                    })
-            })
-    }
-
     useEffect(() => {
         syncMessages()
 
@@ -104,12 +84,7 @@ const Inbox = ({ roomId, roomInfo }) => {
         });
 
         const channel = pusher.subscribe('messages');
-        channel.bind('inserted', function (data) {
-            console.log('In Trigger')
-            syncRooms()
-        });
         channel.bind('updated', function (data) {
-            console.log('In Updated')
             syncMessages()
         });
 

@@ -23,29 +23,10 @@ import axios from '../Misc/axios'
 const Navbar = () => {
 
 	const user = useSelector(selectUser)
-	const dispatch = useDispatch()
 	let history = useHistory();
 	let location = useLocation();
 
-	useEffect(() => {
-
-		axios.get('retrieve/rooms', {
-			params: {
-				userId: user.userId
-			}
-		})
-			.then((res) => {
-				axios.get('retrieve/roomsData', {
-					params: {
-						roomIds: res.data
-					}
-				})
-					.then((res2) => {
-						dispatch(setData(res2.data))
-					})
-			})
-
-		
+	useEffect(() => {		
 		const path = (location.pathname).split('/')
 		const id = (path[1] === 'login') ? ('home') : (path[1])
 
