@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import './Inbox.css';
 
 import Chat from './Chat.js'
@@ -8,9 +10,14 @@ import { Avatar, IconButton, Tooltip } from "@material-ui/core";
 import { EmojiEmotions, MoreVert, Send } from '@material-ui/icons';
 import Pusher from 'pusher-js';
 import axios from '../Misc/axios';
+import { selectUser } from '../ReduxStore/appSlice'
+import { setData } from '../ReduxStore/roomSlice';
 
-const Inbox = () => {
+const Inbox = ({ roomId, roomInfo }) => {
 
+    const user = useSelector(selectUser)
+    const dispatch = useDispatch()
+    const history = useHistory()
     const [settingsDropdown, setSettingsDropdown] = useState(false);
     const showSettingList = () => {
         setSettingsDropdown(true);
@@ -25,39 +32,92 @@ const Inbox = () => {
         document.getElementsByClassName('inbox__navbarRight')[0].classList.add('inbox__navbarRight--disable');
     }
 
-    const [message, setMessage] = useState('')
+    const [newMessage, setNewMessage] = useState('')
     const messageSender = async (e) => {
         e.preventDefault();
 
-        // console.log(message);
-        setMessage('')
+        const messageData = {
+            userId: user.userId,
+            username: user.username,
+            content: newMessage,
+            timestamp: Date.now()
+        }
+
+        saveMessage(messageData)
+        setNewMessage('')
     }
-    // new-----
-    const [msg, setMsg] = useState([]);
-    useEffect(() => {
-        axios.get('/messages/sync')
-            .then(response => {
-                setMsg(response.data);
+
+    const saveMessage = async (messageData) => {
+        await axios.post('/upload/message', {
+            data: messageData,
+            roomId: roomId
+        })
+            .then((res) => {
+                // console.log(res)
             })
-    }, [])
+    }
+
+    // new-----
+
+    const [messages, setMessages] = useState([]);
+    const syncMessages = async () => {
+        await axios.get('retrieve/messages', {
+            params: {
+                roomId: roomId
+            }
+        })
+            .then((res) => {
+                if (res) {
+                    setMessages(res.data.messagesArray);
+                } else {
+                    history.replace('/messenger')
+                    setMessages(null)
+                }
+            })
+        updateScroll();
+    }
+
+    const syncRooms = async () => {
+        await axios.get('retrieve/rooms', {
+            params: {
+                userId: user.userId
+            }
+        })
+            .then((res) => {
+                console.log('in response to retrieve Rooms');
+                axios.get('retrieve/roomsData', {
+                    params: {
+                        roomIds: res.data
+                    }
+                })
+                    .then((res2) => {
+                        dispatch(setData(res2.data))
+                    })
+            })
+    }
+
     useEffect(() => {
+        syncMessages()
+
         const pusher = new Pusher('d24ba3df0d30f4d2c95e', {
             cluster: 'ap2'
         });
 
         const channel = pusher.subscribe('messages');
         channel.bind('inserted', function (data) {
-            // alert(JSON.stringify(data));
-            setMsg([...msg, data]);
+            console.log('In Trigger')
+            syncRooms()
         });
-        updateScroll();
+        channel.bind('updated', function (data) {
+            console.log('In Updated')
+            syncMessages()
+        });
+
         return () => {
             channel.unbind_all();
             channel.unsubscribe();
         }
-    }, [msg]);
-
-    console.log(msg);
+    }, [roomId]);
     // -----new------
 
     //---- time pass function
@@ -65,6 +125,7 @@ const Inbox = () => {
         var element = document.getElementsByClassName("inbox__body")[0];
         element.scrollTop = element.scrollHeight;
     }
+
     return (
         <div className='inbox'>
             <div className='inbox__navbar'>
@@ -72,8 +133,9 @@ const Inbox = () => {
                 <div className='inbox__navbarLeft'>
                     <Avatar
                         style={{ "height": "30px", "width": "30px" }}
+                        src={roomInfo.avatar}
                     />
-                    <p>Title</p>
+                    <p>{roomInfo.title}</p>
                 </div>
 
                 <Tooltip
@@ -99,26 +161,16 @@ const Inbox = () => {
 
             <div className='inbox__bodyContainer'>
                 <div className='inbox__body'>
-                    <Chat content='hello' />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-                    <Chat />
-
-                    {/* {
-                    msg.map( obj => (
-                        <Chat content={obj.title} />
-                    ))
-                } */}
+                    {
+                        messages.map(obj => (
+                            <Chat
+                                userId={user.userId}
+                                authorId={obj.userId}
+                                username={obj.username}
+                                content={obj.content}
+                                timestamp={obj.timestamp} />
+                        ))
+                    }
                 </div>
             </div>
 
@@ -132,9 +184,9 @@ const Inbox = () => {
                     <form>
 
                         <input
-                            value={message}
+                            value={newMessage}
                             placeholder="Enter your message"
-                            onChange={(e) => setMessage(e.target.value)}
+                            onChange={(e) => setNewMessage(e.target.value)}
                         />
                         <button
                             className='submit--hidden'

@@ -8,6 +8,8 @@
   justify-content: center;
   flex-direction: column;
   width: 100%;
+  flex: 0.75;
+  height: calc(100vh - 55px);
 }
 
 .messenger__initial img {

@@ -78,12 +78,21 @@
   padding: 0;
 }
 
-.messengerLeft__searchInput input {
+.messengerLeft__searchInput form {
   margin-left: 5px;
+  background-color: #eff2f5;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  padding-right: 20px;
+}
+
+.messengerLeft__searchInput input {
   border: none;
   outline-width: 0;
   background-color: #eff2f5;
   font-size: 14px;
+  width: 100%;
 }
 
 .messengerLeft__rooms {

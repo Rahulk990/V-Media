@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, useHistory, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import './App.css';
 
 import Navbar from './Components/Navbar/Navbar'
@@ -9,6 +9,7 @@ import Team from './Components/Teams/Team'
 import Messenger from './Components/Messenger/Messenger'
 import Profile from './Components/Profile/Profile'
 import { login, logout, selectUser } from './Components/ReduxStore/appSlice';
+import { setData } from './Components/ReduxStore/roomSlice'
 import Login from './Components/Login/Login'
 import { auth } from './firebase';
 

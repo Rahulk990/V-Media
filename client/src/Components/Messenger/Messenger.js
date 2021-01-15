@@ -9,23 +9,24 @@ const Messenger = () => {
 
     const location = useLocation()
     const [roomPath, setRoomPath] = useState(null)
+    const [roomInfo, setRoomInfo] = useState(null)
 
     useEffect(() => {
         const path = (location.pathname).split('/')
+        console.log(path)
         if (path.length > 2) {
             setRoomPath(path[2])
         }
         else {
             setRoomPath(null)
         }
-
     }, [location])
 
     return (
         <div className='messenger'>
-            <MessengerLeft />
+            <MessengerLeft roomSelector={setRoomInfo} />
             {roomPath ? (
-                <Inbox />
+                <Inbox roomId={roomPath} roomInfo={roomInfo}/>
             ) : (
                     <div className='messenger__initial'>
                         <img

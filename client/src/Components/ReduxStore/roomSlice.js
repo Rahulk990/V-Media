@@ -4,20 +4,7 @@ export const roomSlice = createSlice({
     name: 'room',
 
     initialState: {
-        roomsArray: [
-            {
-                _id: '123123',
-                title: null,
-                usersArray: [],
-                messagesArray: []
-            },
-            {
-                _id: '123412314',
-                title: 'Groups2',
-                usersArray: [],
-                messagesArray: []
-            }
-        ]
+        roomsArray: null
     },
 
     reducers: {

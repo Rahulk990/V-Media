@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import "./Navbar.css";
 
@@ -17,14 +17,35 @@ import {
 	NotificationsActive,
 	ExpandMoreOutlined,
 } from "@material-ui/icons";
+import { setData } from "../ReduxStore/roomSlice";
+import axios from '../Misc/axios'
 
 const Navbar = () => {
 
 	const user = useSelector(selectUser)
+	const dispatch = useDispatch()
 	let history = useHistory();
 	let location = useLocation();
 
 	useEffect(() => {
+
+		axios.get('retrieve/rooms', {
+			params: {
+				userId: user.userId
+			}
+		})
+			.then((res) => {
+				axios.get('retrieve/roomsData', {
+					params: {
+						roomIds: res.data
+					}
+				})
+					.then((res2) => {
+						dispatch(setData(res2.data))
+					})
+			})
+
+		
 		const path = (location.pathname).split('/')
 		const id = (path[1] === 'login') ? ('home') : (path[1])
 

@@ -80,24 +80,15 @@ mongoose.connection.once('open', () => {
     }
 
   })
-//-----messenger------
+  //-----messenger------
   const msgCollection = mongoose.connection.collection("rooms");
   const changeStream1 = msgCollection.watch();
   changeStream1.on('change', (change) => {
-      console.log(change);
     if (change.operationType === 'insert') {
-      const messageDetails = change.fullDocument;
-      pusher.trigger('messages','inserted',
-        {
-          title:  messageDetails.title, // Title
-          roomId: messageDetails.roomId,
-          type:   messageDetails.type,
-          usersArray: messageDetails.usersArray, // Users Ids
-          messagesArray: messageDetails.messagesArray  
-        }
-      );
+      pusher.trigger('messages', 'inserted', 'Update Rooms');
+    } else if (change.operationType === 'update') {
+      pusher.trigger('messages', 'updated', 'Update Messages');
     }
-
   })
 })
 
@@ -113,6 +104,19 @@ app.post('/upload/user', (req, res) => {
         res.status(201).send(data)
       }
     })
+})
+
+app.get('/retrieve/user', (req, res) => {
+  mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
+    if (err) {
+      res.status(500).send(err)
+    } else {
+      res.send({
+        name: data.name,
+        avatar: data.avatar
+      })
+    }
+  })
 })
 
 app.post('/upload/post', (req, res) => {
@@ -154,33 +158,146 @@ app.post('/upload/event', (req, res) => {
 
 app.get('/retrieve/events', (req, res) => {
   mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
-
     if (err) {
       res.status(500).send(err)
     } else {
       res.send(data.eventsArray)
     }
-
   })
 })
 
-//------------ messenger-----
+app.post('/create/roomContact', (req, res) => {
+  (async function () {
+    console.log(req.body)
+    mongoUsers.findOne({ email: req.body.userEmail }, (err, data) => {
+      if (err || (data === null)) {
+        res.send('No such user exists!')
+      } else {
 
-app.post('/messages/new', (req, res) => {
-  const dbMessage = req.body;
-  mongoRooms.create(dbMessage, (err, data) => {
-    if (err) console.log(err);
-    else {
-      res.status(201).send(`New message created: \n ${data}`)
+        const roomData = {
+          usersArray: [req.body.userId, data.userId]
+        }
+
+        console.log(roomData)
+        mongoRooms.create(roomData, (err2, data2) => {
+          if (err2) {
+            res.status(500).send('Unable to create Room')
+          } else {
+            const roomId = data2._id
+
+            console.log('room created', roomId)
+            mongoUsers.findOneAndUpdate(
+              { userId: data.userId },
+              { $push: { roomsArray: roomId } },
+              (err3, data3) => {
+                if (err3) {
+                  console.log(err)
+                }
+              }
+            )
+
+            mongoUsers.findOneAndUpdate(
+              { userId: req.body.userId },
+              { $push: { roomsArray: roomId } },
+              (err3, data3) => {
+                if (err3) {
+                  res.status(201).send(data3.roomsArray)
+                }
+              }
+            )
+
+          }
+        })
+      }
+    })
+  })();
+})
+
+app.post('/create/roomGroup', (req, res) => {
+  const roomData = {
+    title: req.body.title,
+    usersArray: [req.body.userId]
+  }
+
+  mongoRooms.create(roomData, (err2, data2) => {
+    if (err2) {
+      res.status(500).send('Unable to create Room')
+    } else {
+      const roomId = data2._id
+      mongoUsers.findOneAndUpdate(
+        { userId: req.body.userId },
+        { $push: { roomsArray: roomId } },
+        { returnOriginal: false },
+        (err3, data3) => {
+          if (err3) {
+            console.log(err)
+          } else {
+            res.status(201).send(data3.roomsArray)
+          }
+        }
+      )
+
     }
   })
 })
- 
-app.get('/messages/sync', (req, res) => {
-  mongoRooms.find((err, data) => {
-    if (err) console.log(err);
-    else {
-      res.status(200).send(data);
+
+app.get('/retrieve/rooms', (req, res) => {
+  mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
+    if (err) {
+      res.status(500).send(err)
+    } else {
+      res.send(data.roomsArray)
     }
   })
+})
+
+app.post('/upload/message', (req, res) => {
+  mongoRooms.findOneAndUpdate(
+    { _id: req.body.roomId },
+    { $push: { messagesArray: req.body.data } },
+    { returnOriginal: false },
+    (err, data) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.status(201).send(data)
+      }
+    }
+  )
+})
+
+app.get('/retrieve/messages', (req, res) => {
+  mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
+    if (err) {
+      res.status(500).send(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+  
+
+app.get('/retrieve/roomsData', (req, res) => {
+  (async function () {
+    var roomsData = []
+    const roomIds = req.query.roomIds
+
+    if (roomIds) {
+      for (let i = 0; i <= roomIds.length; i++) {
+        await mongoRooms.findOne({ _id: roomIds[i] }, (err, data) => {
+          if (err || (data == null)) {
+            // console.log(err)
+          } else {
+            roomsData.push({
+              roomId: data._id,
+              title: data.title,
+              usersArray: data.usersArray
+            })
+          }
+        })
+      }
+    }
+
+    res.send(roomsData)
+  })();
 })

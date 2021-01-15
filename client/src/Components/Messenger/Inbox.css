@@ -64,11 +64,10 @@
 .inbox__bodyContainer {
   flex: 1;
   display: flex;
-  padding: 10px 0;
 }
 
 .inbox__body {
-  height:calc(100vh - 200px);
+  height:calc(100vh - 175px);
   overflow-y: scroll;
   scroll-behavior: smooth;
   width: 100%;
@@ -120,6 +119,6 @@
   width: 100%;
 }
 
-.inbox__bottomInput .submit--hidden {
+.submit--hidden {
   display: none;
 }
