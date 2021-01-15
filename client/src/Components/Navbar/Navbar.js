@@ -31,9 +31,10 @@ const Navbar = () => {
 		const id = (path[1] === 'login') ? ('home') : (path[1])
 
 		document.getElementById('home').classList.remove("navbar__option--active");
-		// document.getElementById('teams').classList.remove("navbar__option--active");
+		document.getElementById('profile').classList.remove("navbar__option--active");
 		document.getElementById('messenger').classList.remove("navbar__option--active");
 		document.getElementById(id).classList.toggle("navbar__option--active");
+		document.getElementById('profile').classList.remove("navbar__option--active");
 	}, [location])
 
 	const [notificationDropdown, setNotificationDropdown] = useState(false);
@@ -113,7 +114,7 @@ const Navbar = () => {
 			</div>
 
 			<div className="navbar__right">
-				<div className="navbar__info">
+				<div id = 'profile' className="navbar__info" onClick={() => history.push("/profile")}>
 					<Avatar
 						src={user.avatarSrc}
 						style={{ height: "25px", width: "25px" }}

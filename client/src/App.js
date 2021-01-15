@@ -55,9 +55,9 @@ function App() {
                     <Home />
                   </Route>
 
-                  {/* <Route exact path="/teams">
-                    <Team />
-                  </Route> */}
+                  <Route exact path="/profile">
+                    <Profile />
+                  </Route>
 
                   <Route path="/messenger">
                     <Messenger />

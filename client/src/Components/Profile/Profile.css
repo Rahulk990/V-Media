@@ -1,22 +1,29 @@
 .wrapper{
     background-color: bisque;
     padding: 50px;
+    height:100%;
+    display: flex;
+    justify-content: center;
 }
 .profile__card{
     background: #fff;
-    width:65%;
-    margin: auto;
+    flex:0.65;
+    margin-top: 80px;
     padding: 20px;
     border-radius: 33px;
 }
 .profile__card__img{
     display: flex;
+    position: relative;
     align-items: center;
+    height:100px;
     padding: 10px;
     justify-content: center;
 }
 .profile__card__img > img{
     height: 175px;
+    position: absolute;
+    top:-80px;
     width:175px;
     border-radius: 100%;
     border: 6px solid #eff2f5;
