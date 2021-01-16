@@ -10,12 +10,20 @@
 /* New Event Top */
 
 .showEvent__top {
-  padding: 20px 30px;
+  padding: 20px 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(100% - 60px);
+  width: calc(100% - 30px);
   border-bottom: 1px solid lightgray;
+  justify-content: space-between;
+}
+
+.showEvent__topTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .showEvent__top p {
@@ -24,9 +32,13 @@
   font-weight: 700;
 }
 
-.showEvent__top > button {
-  position: absolute;
+.showEvent__topIcons {
   right: 15px;
+  align-items: center;
+  display: flex;
+}
+
+.showEvent__topIcons > button {
   margin-left: 10px;
   padding: 5px;
   background-color: #f1f2f5;

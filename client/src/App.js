@@ -8,10 +8,9 @@ import Home from './Components/Home/Home'
 import Team from './Components/Teams/Team'
 import Messenger from './Components/Messenger/Messenger'
 import Profile from './Components/Profile/Profile'
-import { login, logout, selectUser } from './Components/ReduxStore/appSlice';
-import { setData } from './Components/ReduxStore/roomSlice'
+import { selectUser } from './Components/ReduxStore/appSlice';
 import Login from './Components/Login/Login'
-import { auth } from './firebase';
+import checkAuth from './Components/Login/checkAuth';
 
 function App() {
 
@@ -19,19 +18,7 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-
-    auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        dispatch(login({
-          userId: authUser.uid,
-          username: authUser.displayName,
-          avatarSrc: authUser.photoURL
-        }))
-      } else {
-        dispatch(logout())
-      }
-    })
-
+    checkAuth(dispatch);
   }, [])
 
   return (
@@ -51,7 +38,7 @@ function App() {
 
                 <Switch>
 
-                  <Route exact path="/home">
+                  <Route exact path="/home"> 
                     <Home />
                   </Route>
 

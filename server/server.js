@@ -4,10 +4,14 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import * as socketIo from 'socket.io'
-import mongoPosts from './mongoPosts.js'
-import mongoUsers from './mongoUsers.js'
-import mongoRooms from './mongoRooms.js'
 import Pusher from 'pusher'
+
+import eventRoutes from './Routes/eventRoutes.js'
+
+import mongoPosts from './Models/mongoPosts.js'
+import mongoUsers from './Models/mongoUsers.js'
+import mongoRooms from './Models/mongoRooms.js'
+
 // App Config
 const app = express()
 const port = process.env.PORT || 8000
@@ -49,13 +53,6 @@ io.on('connection', (socket) => {
     console.log('User Disconnected')
   })
 })
-//==messenger
-// app.use((req, res, next) =>{
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader("Access-Control-Allow-Headers", "*");
-//   next();
-// })
-//==messenger
 
 // DB Config
 const mongoURI = 'mongodb+srv://admin:KsDmm1u8B2RKgKCj@cluster0.f9hlo.mongodb.net/fbdb?retryWrites=true&w=majority'
@@ -93,6 +90,8 @@ mongoose.connection.once('open', () => {
 })
 
 // API Routes
+app.use(eventRoutes);
+
 app.post('/upload/user', (req, res) => {
   mongoUsers.findOneAndUpdate(
     { userId: req.body.userId }, req.body,
@@ -141,30 +140,7 @@ app.get('/retrieve/posts', (req, res) => {
   })
 })
 
-app.post('/upload/event', (req, res) => {
-  mongoUsers.findOneAndUpdate(
-    { userId: req.body.userId },
-    { $push: { eventsArray: req.body.data } },
-    { returnOriginal: false },
-    (err, data) => {
-      if (err) {
-        console.log(err)
-      } else {
-        res.status(201).send(data)
-      }
-    }
-  )
-})
 
-app.get('/retrieve/events', (req, res) => {
-  mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
-    if (err) {
-      res.status(500).send(err)
-    } else {
-      res.send(data.eventsArray)
-    }
-  })
-})
 
 app.post('/create/roomContact', (req, res) => {
   mongoUsers.findOne({ email: req.body.userEmail }, (err, data) => {

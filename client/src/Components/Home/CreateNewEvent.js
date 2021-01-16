@@ -1,38 +1,53 @@
 import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import './CreateNewEvent.css'
 
 import StyledDialog from '../Misc/StyledDialog'
-import { Close } from '@material-ui/icons'
+import { Close, Description } from '@material-ui/icons'
 import { Button, IconButton, TextField } from '@material-ui/core'
-import axios from '../Misc/axios'
+import uploadEvent from './API/uploadEvent'
+import { selectUser } from '../ReduxStore/appSlice'
 
-const CreateNewEvent = ({ open, onClose, reSync, userId }) => {
+const CreateNewEvent = ({ open, onClose }) => {
 
-    const [heading, setHeading] = useState('');
-    const [description, setDescription] = useState('');
-    const [datetime, setDatetime] = useState('2021-01-01T12:00');
+    const dispatch = useDispatch()
+    const user = useSelector(selectUser)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const [heading, setHeading] = useState('')
+    const [description, setDescription] = useState('')
+    const [dateTime, setDateTime] = useState('2021-01-01T12:00')
 
-        const eventData = {
-            heading: heading,
-            description: description,
-            timestamp: datetime
-        }
+    const [errorHeading, setErrorHeading] = useState(false)
+    const [errorDescription, setErrorDescription] = useState(false)
 
-        savePost(eventData)
-        onClose();
+    const validateHeading = (value) => {
+        if (value.length >= 6 && value.length <= 30) setErrorHeading(false)
+        else setErrorHeading(true)
     }
 
-    const savePost = async (eventData) => {
-        await axios.post('/upload/event', {
-            data: eventData,
-            userId: userId
-        })
-            .then((res) => {
-                reSync(res.data.eventsArray)
-            })
+    const validateDescription = (value) => {
+        if (value.length > 0) setErrorDescription(false)
+        else setErrorDescription(true)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        validateHeading(heading)
+        validateDescription(description)
+
+        if (heading.length >= 6 && heading.length <= 30 && description.length > 0) {
+            const uploadData = {
+                data: {
+                    heading: heading,
+                    description: description,
+                    timestamp: Date.parse(dateTime)
+                },
+                userId: user.userId
+            }
+
+            await uploadEvent(dispatch, uploadData)
+            onClose();
+        }
     }
 
     return (
@@ -56,8 +71,10 @@ const CreateNewEvent = ({ open, onClose, reSync, userId }) => {
                                 <TextField
                                     label="Event Heading"
                                     value={heading}
-                                    onChange={(e) => setHeading(e.target.value)}
+                                    onChange={(e) => { setHeading(e.target.value); validateHeading(e.target.value) }}
                                 />
+                                {errorHeading &&
+                                    <p> Heading must be more than 6 and less than 30 characters long </p>}
                             </div>
 
                             <div className='createNewEvent__bodyEntry'>
@@ -66,16 +83,18 @@ const CreateNewEvent = ({ open, onClose, reSync, userId }) => {
                                     multiline
                                     rowsMax={5}
                                     value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
+                                    onChange={(e) => { setDescription(e.target.value); validateDescription(e.target.value) }}
                                 />
+                                {errorDescription &&
+                                    <p> Description cannot be empty </p>}
                             </div>
 
                             <div className='createNewEvent__bodyEntry'>
                                 <TextField
                                     label="Event Timing"
                                     type="datetime-local"
-                                    value={datetime}
-                                    onChange={(e) => { setDatetime(e.target.value); console.log(e.target.value) }}
+                                    value={dateTime}
+                                    onChange={(e) => { setDateTime(e.target.value); console.log(e.target.value) }}
                                 />
                             </div>
 

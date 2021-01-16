@@ -32,7 +32,7 @@ const Post = ({ userId, username, avatar, text, image, timestamp, likes}) => {
 
                 <div className='post__topInfo'>
                     <h3>{username}</h3>
-                    <p> {new Date(parseInt(timestamp)).toUTCString()} </p>
+                    <p> {new Date(parseInt(timestamp)).toLocaleString()} </p>
                 </div>
             </div>
 

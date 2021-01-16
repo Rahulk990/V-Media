@@ -28,6 +28,7 @@ const Navbar = () => {
 
 	useEffect(() => {		
 		const path = (location.pathname).split('/')
+		console.log(path)
 		const id = (path[1] === 'login') ? ('home') : (path[1])
 
 		document.getElementById('home').classList.remove("navbar__option--active");
