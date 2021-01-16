@@ -2,7 +2,7 @@ import React from 'react'
 import './Login.css'
 
 import { Button } from '@material-ui/core'
-import createUser from './API/createUser'
+import createUser from '../API/createUser'
 
 const Login = () => {
 

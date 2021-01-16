@@ -6,7 +6,7 @@ import StyledDialog from '../Misc/StyledDialog'
 import { Close, Delete } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
 import { selectUser } from '../ReduxStore/appSlice'
-import deleteEvent from './API/deleteEvent'
+import deleteEvent from '../API/deleteEvent'
 
 const ShowEvent = ({ open, onClose, eventId, heading, description, timestamp }) => {
 

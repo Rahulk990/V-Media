@@ -1,41 +1,35 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import './PostSender.css'
 
 import { Avatar, Button } from '@material-ui/core'
 import { InsertEmoticon, PhotoLibrary, Videocam } from '@material-ui/icons'
-import axios from '../Misc/axios'
-import { useSelector } from 'react-redux'
 import { selectUser } from '../ReduxStore/appSlice'
+import uploadPost from '../API/uploadPost'
 
 const PostSender = () => {
 
-    const [postInput, setPostInput] = useState('');
+    const dispatch = useDispatch()
     const user = useSelector(selectUser)
+    const [postInput, setPostInput] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // if (image) { 1:32 snap
-        // }
+        // if (image) { 1:32 snap }
 
-        const postData = {
-            userid: user.userId,
-            text: postInput,
-            username: user.username,
-            avatar: user.avatarSrc,
-            timestamp: Date.now(),
-            likes:[""],
-            comments:[{}]
+        if (postInput.length > 0) {
+            const postData = {
+                userId: user.userId,
+                username: user.username,
+                text: postInput,
+                avatar: user.avatarSrc,
+                timestamp: Date.now()
+            }
+
+            setPostInput('');
+            await uploadPost(dispatch, postData)
         }
-        savePost(postData)
-        setPostInput('');
-    }
-
-    const savePost = async (postData) => {
-        await axios.post('/upload/post', postData)
-            .then((res) => {
-                // console.log(res)
-            })
     }
 
     return (
@@ -44,16 +38,20 @@ const PostSender = () => {
                 <Avatar src={user.avatarSrc} />
 
                 <form>
+
                     <input
                         value={postInput}
                         onChange={(e) => setPostInput(e.target.value)}
                         className='postSender__input'
                         placeholder="What's on your mind?"
                     />
+
                     <Button onClick={handleSubmit} type='submit'>
                         Submit
                     </Button>
+
                 </form>
+
             </div>
 
             <div className='postSender__bottom'>

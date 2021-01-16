@@ -7,6 +7,7 @@ import * as socketIo from 'socket.io'
 import Pusher from 'pusher'
 
 import eventRoutes from './Routes/eventRoutes.js'
+import postRoutes from './Routes/postRoutes.js'
 
 import mongoPosts from './Models/mongoPosts.js'
 import mongoUsers from './Models/mongoUsers.js'
@@ -15,6 +16,7 @@ import mongoRooms from './Models/mongoRooms.js'
 // App Config
 const app = express()
 const port = process.env.PORT || 8000
+
 // -----pusher-------
 const pusher = new Pusher({
   appId: "1138234",
@@ -70,7 +72,7 @@ mongoose.connection.once('open', () => {
   const changeStream = mongoose.connection.collection('posts').watch()
   changeStream.on('change', (change) => {
 
-    if (change.operationType === 'insert') {
+    if (change.operationType === 'insert' || change.operationType === 'delete') {
       io.emit('refresh', { body: 'DB Changed' })
     } else {
       console.log('Error Triggering Pusher')
@@ -91,6 +93,7 @@ mongoose.connection.once('open', () => {
 
 // API Routes
 app.use(eventRoutes);
+app.use(postRoutes);
 
 app.post('/upload/user', (req, res) => {
   mongoUsers.findOneAndUpdate(
@@ -117,30 +120,6 @@ app.get('/retrieve/user', (req, res) => {
     }
   })
 })
-
-app.post('/upload/post', (req, res) => {
-  const dbPost = req.body;
-  mongoPosts.create(dbPost, (err, data) => {
-    if (err) {
-      res.status(500).send(err)
-    } else {
-      res.status(201).send(data)
-    }
-  })
-})
-
-app.get('/retrieve/posts', (req, res) => {
-  mongoPosts.find((err, data) => {
-    if (err) {
-      res.status(500).send(err)
-    } else {
-      data.sort((a, b) => { return b.timestamp - a.timestamp })
-      res.send(data)
-    }
-  })
-})
-
-
 
 app.post('/create/roomContact', (req, res) => {
   mongoUsers.findOne({ email: req.body.userEmail }, (err, data) => {

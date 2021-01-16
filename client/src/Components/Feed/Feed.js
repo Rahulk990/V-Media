@@ -1,52 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import './Feed.css'
 
-import axios from '../Misc/axios'
 import PostSender from './PostSender'
 import Post from './Post'
-import socketIOClient from 'socket.io-client'
+import { getPosts } from '../ReduxStore/postSlice'
 
-const Feed = ({ isAdmin }) => {
-    const [postsData, setPostsData] = useState([])
+const Feed = () => {
 
-    const syncFeed = () => {
-        axios.get('retrieve/posts')
-            .then((res) => {
-                // console.log(res.data);
-                setPostsData(res.data);
-            })
-    }
-
-    useEffect(() => {
-        syncFeed();
-
-        const socket = socketIOClient('http://localhost:8000')
-        socket.on('refresh', data => {
-            // console.log(data)
-            syncFeed()
-        })
-
-        return () => socket.disconnect();
-    }, [])
+    const postData = useSelector(getPosts)
 
     return (
         <div className='feed'>
-            {isAdmin && <PostSender />}
+            <PostSender />
 
             {
-                postsData.map(entry => (
+                postData.map(post => (
                     <Post
-                        userId={entry.userId}
-                        username={entry.username}
-                        avatar={entry.avatar}
-                        text={entry.text}
-                        imgName={entry.imgName}
-                        timestamp={entry.timestamp}
-                        likes={entry.likes}
+                        key={post._id}
+                        post={post}
                     />
                 ))
             }
-
 
         </div>
     )

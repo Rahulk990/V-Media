@@ -9,6 +9,8 @@ import NotificationList from "./NotificationList";
 import SettingsList from "./SettingsList";
 import { selectUser } from '../ReduxStore/appSlice'
 import { Avatar, Tooltip, IconButton } from "@material-ui/core";
+import fetchPosts from '../API/fetchPosts'
+import socketIOClient from 'socket.io-client'
 import {
 	Search,
 	Home,
@@ -17,18 +19,16 @@ import {
 	NotificationsActive,
 	ExpandMoreOutlined,
 } from "@material-ui/icons";
-import { setData } from "../ReduxStore/roomSlice";
-import axios from '../Misc/axios'
 
 const Navbar = () => {
 
+	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	let history = useHistory();
 	let location = useLocation();
 
-	useEffect(() => {		
+	useEffect(() => {
 		const path = (location.pathname).split('/')
-		console.log(path)
 		const id = (path[1] === 'login') ? ('home') : (path[1])
 
 		document.getElementById('home').classList.remove("navbar__option--active");
@@ -36,6 +36,16 @@ const Navbar = () => {
 		document.getElementById('messenger').classList.remove("navbar__option--active");
 		document.getElementById(id).classList.toggle("navbar__option--active");
 		document.getElementById('profile').classList.remove("navbar__option--active");
+
+		// Setting up Sockets
+
+		const socket = socketIOClient('http://localhost:8000')
+		socket.on('refresh', data => fetchPosts(dispatch))
+
+		return () => {
+			socket.disconnect()
+		}
+
 	}, [location])
 
 	const [notificationDropdown, setNotificationDropdown] = useState(false);
@@ -115,7 +125,7 @@ const Navbar = () => {
 			</div>
 
 			<div className="navbar__right">
-				<div id = 'profile' className="navbar__info" onClick={() => history.push("/profile")}>
+				<div id='profile' className="navbar__info" onClick={() => history.push("/profile")}>
 					<Avatar
 						src={user.avatarSrc}
 						style={{ height: "25px", width: "25px" }}

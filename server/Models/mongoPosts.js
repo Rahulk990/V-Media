@@ -10,8 +10,8 @@ const postModel = mongoose.Schema({
 	text: String,
 	avatar: String,
 	timestamp: String,
-	likes:[String], 
-	comments:[commentModel]
+	likesArray:[String], 
+	commentsArray:[commentModel]
 });
 
 export default mongoose.model("posts", postModel);

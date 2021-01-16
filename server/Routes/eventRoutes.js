@@ -3,6 +3,7 @@ import mongoUsers from '../Models/mongoUsers.js'
 
 const router = express.Router()
 
+// Upload New Event
 router.post('/upload/event', (req, res) => {
     mongoUsers.findOneAndUpdate(
         { userId: req.body.userId },
@@ -10,7 +11,6 @@ router.post('/upload/event', (req, res) => {
         { returnOriginal: false },
         (err, data) => {
 
-            console.log(data)
             if (err) {
                 res.status(500).send(err)
             } else {
@@ -21,6 +21,7 @@ router.post('/upload/event', (req, res) => {
     )
 })
 
+// Retrieve all User Events
 router.get('/retrieve/events', (req, res) => {
     mongoUsers.findOne(
         { userId: req.query.userId },
@@ -35,6 +36,7 @@ router.get('/retrieve/events', (req, res) => {
         })
 })
 
+// Delete User Event
 router.get('/delete/event', (req, res) => {
     mongoUsers.findOneAndUpdate(
         { userId: req.query.userId },

@@ -1,5 +1,5 @@
-import axios from "../../Misc/axios"
-import { auth, provider } from "../../../firebase"
+import axios from "../Misc/axios"
+import { auth, provider } from "../../firebase"
 
 
 const createUser = async () => {

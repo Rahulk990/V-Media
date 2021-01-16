@@ -1,81 +1,101 @@
 .post {
-    display: flex;
-    margin-top: 20px;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0px 5px 7px -7px rgba(0,0,0,0.75);
-    width: 100%;
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.75);
+  width: 100%;
 }
-
 
 /* Post Top */
 
 .post__top {
-    display: flex;
-    position: relative;
-    align-items: center;
-    padding: 15px;
-    /* border-bottom: 1px solid lightgray; */
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  justify-content: space-between;
+  /* border-bottom: 1px solid lightgray; */
 }
 
+.post__top > button {
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.post__top > button:hover {
+  background-color: white;
+}
+
+.post__top > button:hover .MuiSvgIcon-root {
+  color: red;
+}
+
+/* ### Post Top Left ### */
+
 .post__avatar {
-    margin-right: 10px;
+  margin-right: 10px;
+}
+
+.post__topLeft {
+  display: flex;
+  align-items: center;
+  /* border-bottom: 1px solid lightgray; */
 }
 
 .post__topInfo > h3 {
-    font-size: 15px;
-    font-weight: 650;
+  font-size: 15px;
+  font-weight: 650;
 }
 
 .post__topInfo > p {
-    font-size: 12px;
-    color: gray;
+  font-size: 12px;
+  color: gray;
 }
 
 .post__text {
-    margin-bottom: 10px;
-    padding: 0 15px;
+  margin-bottom: 10px;
+  padding: 0 15px;
 }
 
 .post__image {
-    padding: 5px 10px;
+  padding: 5px 10px;
 }
 
 .post__image > img {
-    width: 100%;
-    border-radius: 20px;
+  width: 100%;
+  border-radius: 20px;
 }
-
 
 /* Post Bottom */
 
 .post__bottom {
-    padding: 0 15px 10px 15px;
-    display: flex;
-    justify-content: space-evenly;
-    /* border-top: 1px solid lightgray; */
-    font-size: medium;
-    color: gray;
+  padding: 0 15px 10px 15px;
+  display: flex;
+  justify-content: space-evenly;
+  /* border-top: 1px solid lightgray; */
+  font-size: medium;
+  color: gray;
 }
 
 .post__option {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 5px 10px;
-    flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 5px 10px;
+  flex: 1;
 }
 
-.post__option > p{
-    margin-left: 10px;
+.post__option > p {
+  margin-left: 10px;
 }
 
 .post__option:hover {
-    border-radius: 20px;
-    background-color: #eff2f5;
+  border-radius: 20px;
+  background-color: #eff2f5;
 }
-.active__like{
-    color: red;
+
+.active__like {
+  color: red;
 }

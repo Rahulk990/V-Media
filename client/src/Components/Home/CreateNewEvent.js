@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import './CreateNewEvent.css'
 
 import StyledDialog from '../Misc/StyledDialog'
-import { Close, Description } from '@material-ui/icons'
+import { Close } from '@material-ui/icons'
 import { Button, IconButton, TextField } from '@material-ui/core'
-import uploadEvent from './API/uploadEvent'
+import uploadEvent from '../API/uploadEvent'
 import { selectUser } from '../ReduxStore/appSlice'
 
 const CreateNewEvent = ({ open, onClose }) => {
@@ -65,6 +65,7 @@ const CreateNewEvent = ({ open, onClose }) => {
                     </div>
 
                     <form>
+                    
                         <div className='createNewEvent__body'>
 
                             <div className='createNewEvent__bodyEntry'>
@@ -94,7 +95,7 @@ const CreateNewEvent = ({ open, onClose }) => {
                                     label="Event Timing"
                                     type="datetime-local"
                                     value={dateTime}
-                                    onChange={(e) => { setDateTime(e.target.value); console.log(e.target.value) }}
+                                    onChange={(e) => setDateTime(e.target.value)}
                                 />
                             </div>
 

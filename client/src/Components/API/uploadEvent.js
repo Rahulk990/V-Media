@@ -1,5 +1,5 @@
-import axios from '../../Misc/axios'
-import { setEvents } from '../../ReduxStore/appSlice';
+import axios from '../Misc/axios'
+import { setEvents } from '../ReduxStore/appSlice';
 
 const uploadEvent = async (dispatch, data) => {
     await axios.post('/upload/event', data)

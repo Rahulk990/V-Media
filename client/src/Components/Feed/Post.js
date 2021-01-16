@@ -1,17 +1,23 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import './Post.css'
 
-import { Avatar } from '@material-ui/core'
-import { ChatBubbleOutline, NearMe, ThumbUp } from '@material-ui/icons'
-import {useSelector } from 'react-redux'
 import Comment from './Comments'
+import { Avatar, IconButton } from '@material-ui/core'
+import { ChatBubbleOutline, Delete, NearMe, ThumbUp } from '@material-ui/icons'
+import deletePost from '../API/deletePost'
 import { selectUser } from '../ReduxStore/appSlice'
 
-const Post = ({ userId, username, avatar, text, image, timestamp, likes}) => {
+const Post = ({ post }) => {
+
+    const dispatch = useDispatch()
     const user = useSelector(selectUser)
-    
-    
-    const handlelike = () =>{
+
+    const handleDelete = async () => {
+        await deletePost(dispatch, user.userId, post._id)
+    }
+
+    const handlelike = () => {
         document.getElementsByClassName('post__option__like')[0].classList.toggle('active__like')
     }
 
@@ -22,27 +28,38 @@ const Post = ({ userId, username, avatar, text, image, timestamp, likes}) => {
     //         handlelike();
     //     }
     // }
+
     return (
         <div className='post'>
             <div className='post__top'>
-                <Avatar
-                    className='post__avatar'
-                    src={avatar}
-                />
 
-                <div className='post__topInfo'>
-                    <h3>{username}</h3>
-                    <p> {new Date(parseInt(timestamp)).toLocaleString()} </p>
+                <div className='post__topLeft'>
+                    <Avatar
+                        className='post__avatar'
+                        src={post.avatar}
+                    />
+
+                    <div className='post__topInfo'>
+                        <h3>{post.username}</h3>
+                        <p> {new Date(parseInt(post.timestamp)).toLocaleString()} </p>
+                    </div>
                 </div>
+
+                {post.userId === user.userId &&
+                    <IconButton onClick={handleDelete}>
+                        <Delete />
+                    </IconButton>
+                }
+
             </div>
 
             <div className='post__text'>
-                <p>{text}</p>
+                <p>{post.text}</p>
             </div>
 
             <div className='post__image'>
-                {image && <img
-                    src={image}
+                {post.image && <img
+                    src={post.image}
                     alt=''
                 />}
             </div>
@@ -51,10 +68,10 @@ const Post = ({ userId, username, avatar, text, image, timestamp, likes}) => {
 
                 <div className='post__option post__option__like' onClick={handlelike}>
                     <ThumbUp />
-                    <p>Like {likes.length}</p>
+                    <p>Like {post.likes && post.likes.length}</p>
                 </div>
 
-                <div className='post__option' onClick='handlecomment'>
+                <div className='post__option'>
                     <ChatBubbleOutline />
                     <p>Comment</p>
                 </div>
