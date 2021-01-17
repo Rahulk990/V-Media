@@ -9,6 +9,7 @@ import Pusher from 'pusher'
 import eventRoutes from './Routes/eventRoutes.js'
 import postRoutes from './Routes/postRoutes.js'
 import roomRoutes from './Routes/roomRoutes.js'
+import userRoutes from './Routes/userRoutes.js'
 
 import mongoPosts from './Models/mongoPosts.js'
 import mongoUsers from './Models/mongoUsers.js'
@@ -96,32 +97,9 @@ mongoose.connection.once('open', () => {
 app.use(eventRoutes);
 app.use(postRoutes);
 app.use(roomRoutes);
+app.use(userRoutes);
 
-app.post('/upload/user', (req, res) => {
-  mongoUsers.findOneAndUpdate(
-    { userId: req.body.userId }, req.body,
-    { returnOriginal: false, upsert: true },
-    (err, data) => {
-      if (err) {
-        res.status(500).send(err)
-      } else {
-        res.status(201).send(data)
-      }
-    })
-})
 
-app.get('/retrieve/user', (req, res) => {
-  mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
-    if (err) {
-      res.status(500).send(err)
-    } else {
-      res.send({
-        name: data.name,
-        avatar: data.avatar
-      })
-    }
-  })
-})
 
 app.post('/create/roomContact', (req, res) => {
   mongoUsers.findOne({ email: req.body.userEmail }, (err, data) => {
@@ -194,29 +172,6 @@ app.post('/create/roomGroup', (req, res) => {
   })
 })
 
-app.post('/upload/message', (req, res) => {
-  mongoRooms.findOneAndUpdate(
-    { _id: req.body.roomId },
-    { $push: { messagesArray: req.body.data } },
-    { returnOriginal: false },
-    (err, data) => {
-      if (err) {
-        console.log(err)
-      } else {
-        res.status(201).send(data)
-      }
-    }
-  )
-})
 
-app.get('/retrieve/messages', (req, res) => {
-  mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
-    if (err) {
-      res.status(500).send(err)
-    } else {
-      res.send(data)
-    }
-  })
-})
 
 

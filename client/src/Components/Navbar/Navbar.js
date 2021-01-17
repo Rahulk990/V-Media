@@ -9,12 +9,9 @@ import NotificationList from "./NotificationList";
 import SettingsList from "./SettingsList";
 import { selectUser } from '../ReduxStore/appSlice'
 import { Avatar, Tooltip, IconButton } from "@material-ui/core";
-import fetchPosts from '../API/fetchPosts'
-import socketIOClient from 'socket.io-client'
 import {
 	Search,
 	Home,
-	People,
 	Telegram,
 	NotificationsActive,
 	ExpandMoreOutlined,
@@ -22,29 +19,17 @@ import {
 
 const Navbar = () => {
 
-	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	let history = useHistory();
 	let location = useLocation();
 
 	useEffect(() => {
-		const path = (location.pathname).split('/')
-		const id = (path[1] === 'login') ? ('home') : (path[1])
-
+		const id = (location.pathname).split('/')[1]
 		document.getElementById('home').classList.remove("navbar__option--active");
 		document.getElementById('profile').classList.remove("navbar__option--active");
 		document.getElementById('messenger').classList.remove("navbar__option--active");
 		document.getElementById(id).classList.toggle("navbar__option--active");
 		document.getElementById('profile').classList.remove("navbar__option--active");
-
-		// Setting up Sockets
-
-		const socket = socketIOClient('http://localhost:8000')
-		socket.on('refresh', data => fetchPosts(dispatch))
-
-		return () => {
-			socket.disconnect()
-		}
 
 	}, [location])
 
@@ -170,7 +155,7 @@ const Navbar = () => {
 									outsideHandler={handleSettingSelection}
 									component={
 										<SettingsList
-											outsideHandler={handleSettingSelection}
+											history={history}
 										/>
 									}
 								/>

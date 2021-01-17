@@ -4,18 +4,22 @@ export const roomSlice = createSlice({
     name: 'room',
 
     initialState: {
-        roomsArray: null
+        roomsData: null
     },
 
     reducers: {
-        setData: (state, action) => {
+        setRoomsData: (state, action) => {
             state.roomsArray = action.payload
+        },
+
+        appendRoomsData: (state, action) => {
+            state.posts.push(action.payload)
         }
     },
 });
 
-export const { setData } = roomSlice.actions;
+export const { setRoomsData, appendRoomsData } = roomSlice.actions;
 
-export const getRooms = state => state.room.roomsArray;
+export const selectRoomsData = state => state.room.roomsData;
 
 export default roomSlice.reducer;

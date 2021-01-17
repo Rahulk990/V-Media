@@ -1,8 +1,7 @@
 import { auth } from '../../firebase'
 import { login, logout } from '../ReduxStore/appSlice'
-import fetchAllData from './fetchAllData'
 
-const checkAuth = (dispatch) => {
+const checkAuth = (dispatch, history) => {
 
     auth.onAuthStateChanged((authUser) => {
         if (authUser) {
@@ -14,8 +13,8 @@ const checkAuth = (dispatch) => {
                 avatarSrc: authUser.photoURL
             }))
 
-            // Fetch all related Data
-            fetchAllData(dispatch, authUser.uid)
+            // Redirect to Home
+            history.replace('/home')
 
         } else {
             dispatch(logout())

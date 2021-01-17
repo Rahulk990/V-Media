@@ -1,5 +1,6 @@
 import express from 'express'
 import mongoUsers from '../Models/mongoUsers.js'
+import mongoRooms from '../Models/mongoRooms.js'
 
 const router = express.Router()
 
@@ -19,33 +20,44 @@ router.get('/retrieve/rooms', (req, res) => {
 })
 
 // Retrieve Rooms Data
+router.get('/retrieve/roomData', (req, res) => {
+    mongoRooms.findOne({ _id: req.query.roomId },
+        (err, data) => {
 
+            if (err) {
+                res.status(500).send(err)
+            } else {
+                res.send(data)
+            }
 
+        })
+})
 
+// Upload New Message to Room
+router.post('/upload/message', (req, res) => {
+    mongoRooms.findOneAndUpdate(
+        { _id: req.body.roomId },
+        { $push: { messagesArray: req.body.data } },
+        { returnOriginal: false },
+        (err, data) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.status(201).send(data)
+            }
+        }
+    )
+})
 
-// app.get('/retrieve/roomsData', (req, res) => {
-//     (async function () {
-//         var roomsData = []
-//         const roomIds = req.query.roomIds
-
-//         if (roomIds) {
-//             for (let i = 0; i <= roomIds.length; i++) {
-//                 await mongoRooms.findOne({ _id: roomIds[i] }, (err, data) => {
-//                     if (err || (data == null)) {
-//                         // console.log(err)
-//                     } else {
-//                         roomsData.push({
-//                             roomId: data._id,
-//                             title: data.title,
-//                             usersArray: data.usersArray
-//                         })
-//                     }
-//                 })
-//             }
-//         }
-
-//         res.send(roomsData)
-//     })();
-// })
+// Upload Messages from Room
+router.get('/retrieve/messages', (req, res) => {
+    mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
+        if (err) {
+            res.status(500).send(err)
+        } else {
+            res.send(data)
+        }
+    })
+})
 
 export default router

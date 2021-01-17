@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const messageModel = mongoose.Schema({
-    userId: String, // User Id
+    userId: String,
     username: String,
     content: String,
     timestamp: String

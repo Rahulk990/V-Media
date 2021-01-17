@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import './Messenger.css'
 
-import MessengerLeft from './MessengerLeft'
+// import MessengerLeft from './MessengerLeft'
 import Inbox from './Inbox'
 
 const Messenger = () => {
@@ -24,7 +24,7 @@ const Messenger = () => {
 
     return (
         <div className='messenger'>
-            <MessengerLeft roomSelector={setRoomInfo} />
+            {/* <MessengerLeft roomSelector={setRoomInfo} /> */}
             {roomPath ? (
                 <Inbox roomId={roomPath} roomInfo={roomInfo}/>
             ) : (

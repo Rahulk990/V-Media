@@ -5,7 +5,7 @@ import './MessengerLeft.css'
 import Room from './Room'
 import { IconButton } from "@material-ui/core"
 import { Add } from '@material-ui/icons'
-import { getRooms, setData } from '../ReduxStore/roomSlice'
+import { selectRoomsData, setData } from '../ReduxStore/roomSlice'
 import axios from '../Misc/axios'
 import { selectUser } from '../ReduxStore/appSlice'
 import Pusher from 'pusher-js';
@@ -14,7 +14,7 @@ const MessengerLeft = ({ roomSelector }) => {
 
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
-    const roomsArray = useSelector(getRooms)
+    const roomsArray = useSelector(selectRoomsData)
     const [userInput, setUserInput] = useState('')
     const [option, setOption] = useState('contact')
 

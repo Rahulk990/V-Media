@@ -11,9 +11,11 @@ export const postSlice = createSlice({
         setPosts: (state, action) => {
             state.posts = action.payload
         },
+
         appendPosts: (state, action) => {
             state.posts.push(action.payload)
         },
+        
         updatePost: (state, action) => {
             const ind = state.posts.findIndex(obj => obj._id === action.payload._id)
             state.posts[ind] = action.payload

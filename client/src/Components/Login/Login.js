@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import './Login.css'
 
 import { Button } from '@material-ui/core'
 import createUser from '../API/createUser'
+import checkAuth from './checkAuth'
 
 const Login = () => {
+
+    const history = useHistory()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        checkAuth(dispatch, history);
+    }, [])
 
     const signInHandler = async () => {
         await createUser()

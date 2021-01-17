@@ -2,7 +2,7 @@ import React from 'react'
 import { auth } from '../../firebase';
 import './SettingsList.css'
 
-const SettingsList = ({ outsideHandler }) => {
+const SettingsList = ({ history }) => {
 
     return (
         <div className='settingsList'>
@@ -14,8 +14,8 @@ const SettingsList = ({ outsideHandler }) => {
             <div
                 className='settingsList__selectListOption'
                 onClick={() => {
+                    history.replace('/login')
                     auth.signOut();
-                    outsideHandler();
                 }}
             >
                 <p>Logout</p>
