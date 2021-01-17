@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
+
 const commentModel = mongoose.Schema({
-	content:String, 
-	userId:String
-})
+	userId: String,
+	username: String,
+	avatar: String,
+	content: String,
+	timestamp: String
+});
+
 const postModel = mongoose.Schema({
 	userId: String,
 	username: String,
@@ -10,8 +15,8 @@ const postModel = mongoose.Schema({
 	text: String,
 	avatar: String,
 	timestamp: String,
-	likesArray:[String], 
-	commentsArray:[commentModel]
+	likesArray: [String],
+	commentsArray: [commentModel]
 });
 
 export default mongoose.model("posts", postModel);

@@ -7,7 +7,7 @@ export const appSlice = createSlice({
         user: null,
         events: [],
         userPosts: [],
-        userRooms: []
+        rooms: []
     },
 
     reducers: {
@@ -28,14 +28,19 @@ export const appSlice = createSlice({
 
         setUserPosts: (state, action) => {
             state.userPosts = action.payload
+        },
+
+        setRooms: (state, action) => {
+            state.rooms = action.payload
         }
     },
 });
 
-export const { login, logout, setEvents, setUserPosts } = appSlice.actions;
+export const { login, logout, setEvents, setUserPosts, setRooms } = appSlice.actions;
 
 export const selectUser = state => state.app.user;
 export const selectEvents = state => state.app.events;
 export const selectPosts = state => state.app.userPosts;
+export const selectRooms = state => state.app.rooms;
 
 export default appSlice.reducer;

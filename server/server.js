@@ -8,6 +8,7 @@ import Pusher from 'pusher'
 
 import eventRoutes from './Routes/eventRoutes.js'
 import postRoutes from './Routes/postRoutes.js'
+import roomRoutes from './Routes/roomRoutes.js'
 
 import mongoPosts from './Models/mongoPosts.js'
 import mongoUsers from './Models/mongoUsers.js'
@@ -94,6 +95,7 @@ mongoose.connection.once('open', () => {
 // API Routes
 app.use(eventRoutes);
 app.use(postRoutes);
+app.use(roomRoutes);
 
 app.post('/upload/user', (req, res) => {
   mongoUsers.findOneAndUpdate(
@@ -192,16 +194,6 @@ app.post('/create/roomGroup', (req, res) => {
   })
 })
 
-app.get('/retrieve/rooms', (req, res) => {
-  mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
-    if (err) {
-      res.status(500).send(err)
-    } else {
-      res.send(data.roomsArray)
-    }
-  })
-})
-
 app.post('/upload/message', (req, res) => {
   mongoRooms.findOneAndUpdate(
     { _id: req.body.roomId },
@@ -228,27 +220,3 @@ app.get('/retrieve/messages', (req, res) => {
 })
 
 
-app.get('/retrieve/roomsData', (req, res) => {
-  (async function () {
-    var roomsData = []
-    const roomIds = req.query.roomIds
-
-    if (roomIds) {
-      for (let i = 0; i <= roomIds.length; i++) {
-        await mongoRooms.findOne({ _id: roomIds[i] }, (err, data) => {
-          if (err || (data == null)) {
-            // console.log(err)
-          } else {
-            roomsData.push({
-              roomId: data._id,
-              title: data.title,
-              usersArray: data.usersArray
-            })
-          }
-        })
-      }
-    }
-
-    res.send(roomsData)
-  })();
-})

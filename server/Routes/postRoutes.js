@@ -40,6 +40,93 @@ router.get('/delete/post', (req, res) => {
     res.redirect('userPost/?userId=' + req.query.userId + '&postId=' + req.query.postId)
 })
 
+// Retrieve Post Data
+router.get('/retrieve/postData', (req, res) => {
+    mongoPosts.find({ _id: req.query.postId },
+        (err, data) => {
+
+            if (err) {
+                res.status(500).send(err)
+            } else {
+                res.send(data)
+            }
+
+        })
+})
+
+
+// Add Like to Post
+router.get('/update/post/addLike', (req, res) => {
+    mongoPosts.findOneAndUpdate(
+        { _id: req.query.postId },
+        { $push: { likesArray: req.query.userId } },
+        { returnOriginal: false },
+        (err, data) => {
+
+            if (err) {
+                res.status(500).send(err)
+            } else {
+                res.status(201).send(data)
+            }
+
+        }
+    )
+})
+
+// Remove Like from Post
+router.get('/update/post/removeLike', (req, res) => {
+    mongoPosts.findOneAndUpdate(
+        { _id: req.query.postId },
+        { $pull: { likesArray: req.query.userId } },
+        { returnOriginal: false },
+        (err, data) => {
+
+            if (err) {
+                res.status(500).send(err)
+            } else {
+                res.status(201).send(data)
+            }
+
+        }
+    )
+})
+
+// Add Comment to Post
+router.post('/update/post/addComment', (req, res) => {
+    mongoPosts.findOneAndUpdate(
+        { _id: req.body.postId },
+        { $push: { commentsArray: req.body.commentData } },
+        { returnOriginal: false },
+        (err, data) => {
+
+            if (err) {
+                res.status(500).send(err)
+            } else {
+                res.status(201).send(data)
+            }
+
+        }
+    )
+})
+
+// Remove Comment from Post
+router.get('/update/post/removeComment', (req, res) => {
+    mongoPosts.findOneAndUpdate(
+        { _id: req.query.postId },
+        { $pull: { commentsArray: { _id: req.query.commentId } } },
+        { returnOriginal: false },
+        (err, data) => {
+
+            if (err) {
+                res.status(500).send(err)
+            } else {
+                res.status(201).send(data)
+            }
+
+        }
+    )
+})
+
 
 // Add PostId to User
 router.get('/upload/userPost', (req, res) => {

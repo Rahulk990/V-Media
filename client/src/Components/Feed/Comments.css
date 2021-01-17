@@ -1,32 +1,42 @@
-.comment__body{
-    position: absolute;
-    width: 455.98px;
+.comment {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
-.comment__input{
-    display: flex;
-    align-items: center;
-    background-color: indigo;
-    border-radius: 10px;
-    padding:2px 5px 2px 10px;
+
+.comment__info {
+  display: flex;
+  justify-content: flex-start;
 }
-.comment__input input{
-    border: none;
-    outline-width: 0;
-    width: 75%;
-    height:20px;
+
+.comment__body {
+  max-width: 80%;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #e9edf1;
+  border-radius: 10px;
+  padding: 5px 10px;
 }
-.comment__input .MuiIconButton-root {
-    padding: 2px;
-    margin: 5px;
-  }
-  
-  .comment__input .MuiSvgIcon-root {
-    font-size: 22px;
-    color: #2e81f4;
-    padding: 3px;
-  }
-  
-  .comment__body form {
-    flex: 1;
-    margin-left: 5px;
-  }
+
+.comment__bodyUsername {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.comment__bodyContent {
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.comment .MuiIconButton-root {
+  padding: 2px;
+  margin: 5px;
+}
+
+.comment .MuiSvgIcon-root {
+  font-size: 22px;
+  color: #2e81f4;
+  padding: 3px;
+}
+

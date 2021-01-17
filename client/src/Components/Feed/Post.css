@@ -15,20 +15,23 @@
   align-items: center;
   padding: 15px;
   justify-content: space-between;
-  /* border-bottom: 1px solid lightgray; */
 }
 
-.post__top > button {
-  margin-left: 10px;
-  padding: 5px;
+.post__top button {
+  padding: 0;
+  margin: 5px;
 }
 
-.post__top > button:hover {
+.post__top button:hover {
   background-color: white;
 }
 
-.post__top > button:hover .MuiSvgIcon-root {
+.post__topIconsDelete:hover .MuiSvgIcon-root {
   color: red;
+}
+
+.post__topIconsRefresh:hover .MuiSvgIcon-root {
+  color: #2e81f4;
 }
 
 /* ### Post Top Left ### */
@@ -40,7 +43,6 @@
 .post__topLeft {
   display: flex;
   align-items: center;
-  /* border-bottom: 1px solid lightgray; */
 }
 
 .post__topInfo > h3 {
@@ -70,12 +72,16 @@
 /* Post Bottom */
 
 .post__bottom {
-  padding: 0 15px 10px 15px;
+  padding: 0 15px;
   display: flex;
   justify-content: space-evenly;
-  /* border-top: 1px solid lightgray; */
   font-size: medium;
   color: gray;
+  margin-bottom: 10px;
+}
+
+.post__bottom--active {
+  border-bottom: 1px solid lightgray;
 }
 
 .post__option {
@@ -96,6 +102,14 @@
   background-color: #eff2f5;
 }
 
-.active__like {
-  color: red;
+.post__option--active {
+  color: #2e81f4;
+}
+
+/* Post Comments */
+
+.post__comments {
+  display: flex;
+  padding: 0 15px 10px 15px;
+  flex-direction: column;
 }
