@@ -4,17 +4,26 @@ import './Messenger.css'
 
 import MessengerLeft from './MessengerLeft'
 import Inbox from './Inbox'
+import { setCurrentRoom } from '../ReduxStore/roomSlice'
+import { useDispatch } from 'react-redux'
 
 const Messenger = () => {
 
     const location = useLocation()
+    const dispatch = useDispatch()
     const [roomPath, setRoomPath] = useState(null)
     const [roomInfo, setRoomInfo] = useState(null)
 
     useEffect(() => {
         const path = (location.pathname).split('/')
-        if (path.length > 3) setRoomPath(path[3])
-        else setRoomPath(null)
+        if (path.length > 3) {
+            setRoomPath(path[3])
+        }
+        else {
+            dispatch(setCurrentRoom(null))
+            setRoomPath(null)
+        }
+
     }, [location])
 
     return (

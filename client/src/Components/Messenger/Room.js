@@ -26,19 +26,21 @@ const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
         }
     }, [])
 
-    const handleSelect = () => {
-        if (title) history.push('/messenger/g/' + roomId)
-        else history.push('/messenger/d/' + roomId)
+    const handleSelect = async () => {
+        await dispatch(setCurrentRoom(roomId))
+        if (title) {
+            history.push('/messenger/g/' + roomId)
+        }
+        else {
+            history.push('/messenger/d/' + roomId)
+        }
 
-        setRoomInfo({
+        await setRoomInfo({
             title: newUser.name,
             avatar: newUser.avatar,
             isGroup: (title) ? ('group') : ('direct')
         })
-
-        dispatch(setCurrentRoom(roomId))
     }
-
 
     return (
         <div className='room' onClick={handleSelect}>

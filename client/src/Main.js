@@ -24,6 +24,12 @@ const Main = () => {
     const roomsData = useSelector(selectRooms)
     const currentRoom = useSelector(selectCurrentRoom)
 
+    const syncMessages = async (roomId) => {
+        console.log(roomId)
+        await fetchMessages(dispatch, history, roomId)
+    }
+
+
     useEffect(() => {
 
         if (!user) {
@@ -46,7 +52,10 @@ const Main = () => {
             });
 
             channel.bind('updated', function (data) {
-                fetchMessages(dispatch, history, currentRoom)
+                if (roomsData.includes(data._id)) {
+                    console.log(data, currentRoom)
+
+                }
             });
 
             return () => {
@@ -62,7 +71,7 @@ const Main = () => {
     }, [roomsData])
 
     useEffect(() => {
-        fetchMessages(dispatch, history, currentRoom)
+        syncMessages(currentRoom)
     }, [currentRoom])
 
     return (

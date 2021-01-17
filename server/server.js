@@ -88,7 +88,7 @@ mongoose.connection.once('open', () => {
     if (change.operationType === 'insert') {
       pusher.trigger('messages', 'inserted', 'Update Rooms');
     } else if (change.operationType === 'update') {
-      pusher.trigger('messages', 'updated', 'Update Messages');
+      pusher.trigger('messages', 'updated', change.documentKey);
     }
   })
 })

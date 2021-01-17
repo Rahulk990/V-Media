@@ -16,6 +16,7 @@ const Inbox = ({ roomId, roomInfo }) => {
     const user = useSelector(selectUser)
     const messages = useSelector(selectMessagesData)
 
+
     const [settingsDropdown, setSettingsDropdown] = useState(false);
     const showSettingList = () => {
         setSettingsDropdown(true);
@@ -45,15 +46,11 @@ const Inbox = ({ roomId, roomInfo }) => {
                 roomId: roomId
             }
 
+            console.log(roomId);
+            await addMessage(requestData)
             setNewMessage('')
-            addMessage(requestData)
         }
     }
-
-    // function updateScroll() {
-    //     var element = document.getElementsByClassName("inbox__body")[0];
-    //     element.scrollTop = element.scrollHeight;
-    // }
 
     return (
         <div className='inbox'>
@@ -84,23 +81,26 @@ const Inbox = ({ roomId, roomInfo }) => {
                             component={<RoomSettings isGroup={roomInfo.isGroup} />}
                         />
                         }
-                        
+
                     </div>
                 </Tooltip>
             </div>
 
             <div className='inbox__bodyContainer'>
-                <div className='inbox__body'>
-                    {
-                        messages.map(obj => (
-                            <Chat
-                                userId={user.userId}
-                                authorId={obj.userId}
-                                username={obj.username}
-                                content={obj.content}
-                                timestamp={obj.timestamp} />
-                        ))
-                    }
+                <div className='inbox__bodyContainer2'>
+                    <div className='inbox__body'>
+                        {
+                            messages.map(obj => (
+                                <Chat
+                                    key={obj.timestamp+obj.content}
+                                    userId={user.userId}
+                                    authorId={obj.userId}
+                                    username={obj.username}
+                                    content={obj.content}
+                                    timestamp={obj.timestamp} />
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
 
