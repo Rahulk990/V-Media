@@ -23,13 +23,7 @@ const Main = () => {
     const user = useSelector(selectUser)
     const roomsData = useSelector(selectRooms)
     const currentRoom = useSelector(selectCurrentRoom)
-
-    const syncMessages = async (roomId) => {
-        console.log(roomId)
-        await fetchMessages(dispatch, history, roomId)
-    }
-
-
+  
     useEffect(() => {
 
         if (!user) {
@@ -43,25 +37,8 @@ const Main = () => {
             const socket = socketIOClient('http://localhost:8000')
             socket.on('refresh', data => fetchPosts(dispatch))
 
-            // Setup Pusher
-            const pusher = new Pusher('d24ba3df0d30f4d2c95e', { cluster: 'ap2' });
-
-            const channel = pusher.subscribe('messages');
-            channel.bind('inserted', function (data) {
-                fetchUserRooms(dispatch, user.userId)
-            });
-
-            channel.bind('updated', function (data) {
-                if (roomsData.includes(data._id)) {
-                    console.log(data, currentRoom)
-
-                }
-            });
-
             return () => {
                 socket.disconnect()
-                channel.unbind_all();
-                channel.unsubscribe();
             }
         }
     }, [])
@@ -71,7 +48,28 @@ const Main = () => {
     }, [roomsData])
 
     useEffect(() => {
-        syncMessages(currentRoom)
+        fetchMessages(dispatch, history, currentRoom)
+
+        if (user) {
+
+            // Setup Pusher
+            const pusher = new Pusher('d24ba3df0d30f4d2c95e', { cluster: 'ap2' });
+
+            const channel = pusher.subscribe('messages');
+            channel.bind('inserted', function (data) {
+                fetchUserRooms(dispatch, user.userId)
+            });
+
+            channel.bind('updated', function (data) {
+                fetchMessages(dispatch, history, currentRoom)
+            });
+
+            return () => {
+                channel.unbind_all();
+                channel.unsubscribe();
+            }
+        }
+
     }, [currentRoom])
 
     return (

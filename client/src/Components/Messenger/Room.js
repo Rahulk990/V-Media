@@ -27,7 +27,8 @@ const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
     }, [])
 
     const handleSelect = async () => {
-        await dispatch(setCurrentRoom(roomId))
+        dispatch(setCurrentRoom(roomId))
+
         if (title) {
             history.push('/messenger/g/' + roomId)
         }

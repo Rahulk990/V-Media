@@ -81,6 +81,7 @@ mongoose.connection.once('open', () => {
     }
 
   })
+  
   //-----messenger------
   const msgCollection = mongoose.connection.collection("rooms");
   const changeStream1 = msgCollection.watch();
@@ -88,7 +89,7 @@ mongoose.connection.once('open', () => {
     if (change.operationType === 'insert') {
       pusher.trigger('messages', 'inserted', 'Update Rooms');
     } else if (change.operationType === 'update') {
-      pusher.trigger('messages', 'updated', change.documentKey);
+      pusher.trigger('messages', 'updated', 'Update Messages');
     }
   })
 })

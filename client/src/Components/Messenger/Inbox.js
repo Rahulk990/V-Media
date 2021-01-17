@@ -46,7 +46,6 @@ const Inbox = ({ roomId, roomInfo }) => {
                 roomId: roomId
             }
 
-            console.log(roomId);
             await addMessage(requestData)
             setNewMessage('')
         }
