@@ -10,6 +10,11 @@ import fetchAllData from './Components/API/fetchAllData'
 import { selectRooms, selectUser } from './Components/ReduxStore/appSlice';
 import socketIOClient from 'socket.io-client'
 import fetchPosts from './Components/API/fetchPosts';
+import fetchUserRooms from './Components/API/fetchUserRooms'
+import fetchRoomsData from './Components/API/fetchRoomsData'
+import Pusher from 'pusher-js';
+import { selectCurrentRoom } from './Components/ReduxStore/roomSlice';
+import fetchMessages from './Components/API/fetchMessages';
 
 const Main = () => {
 
@@ -17,9 +22,10 @@ const Main = () => {
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
     const roomsData = useSelector(selectRooms)
+    const currentRoom = useSelector(selectCurrentRoom)
 
     useEffect(() => {
-        
+
         if (!user) {
             history.replace('/login')
         } else {
@@ -31,40 +37,59 @@ const Main = () => {
             const socket = socketIOClient('http://localhost:8000')
             socket.on('refresh', data => fetchPosts(dispatch))
 
+            // Setup Pusher
+            const pusher = new Pusher('d24ba3df0d30f4d2c95e', { cluster: 'ap2' });
+
+            const channel = pusher.subscribe('messages');
+            channel.bind('inserted', function (data) {
+                fetchUserRooms(dispatch, user.userId)
+            });
+
+            channel.bind('updated', function (data) {
+                fetchMessages(dispatch, history, currentRoom)
+            });
+
             return () => {
                 socket.disconnect()
+                channel.unbind_all();
+                channel.unsubscribe();
             }
         }
-
     }, [])
 
+    useEffect(() => {
+        fetchRoomsData(dispatch, roomsData)
+    }, [roomsData])
+
+    useEffect(() => {
+        fetchMessages(dispatch, history, currentRoom)
+    }, [currentRoom])
+
     return (
-        <>
-            { user && <>
+        <Router>
+            {user && <>
                 <Navbar />
                 <div className='app__body'>
-                    <Router>
-                        <Switch>
+                    <Switch>
 
-                            <Route exact path="/home">
-                                <Home />
-                            </Route>
+                        <Route exact path="/home">
+                            <Home />
+                        </Route>
 
-                            <Route exact path="/profile">
-                                <Profile />
-                            </Route>
+                        <Route exact path="/profile">
+                            <Profile />
+                        </Route>
 
-                            <Route path="/messenger">
-                                <Messenger />
-                            </Route>
+                        <Route path="/messenger">
+                            <Messenger />
+                        </Route>
 
-                        </Switch>
-                    </Router>
+                    </Switch>
 
                 </div>
             </>
             }
-        </>
+        </Router>
     )
 }
 

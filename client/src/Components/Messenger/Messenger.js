@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import './Messenger.css'
 
-// import MessengerLeft from './MessengerLeft'
+import MessengerLeft from './MessengerLeft'
 import Inbox from './Inbox'
 
 const Messenger = () => {
@@ -13,20 +13,15 @@ const Messenger = () => {
 
     useEffect(() => {
         const path = (location.pathname).split('/')
-        console.log(path)
-        if (path.length > 2) {
-            setRoomPath(path[2])
-        }
-        else {
-            setRoomPath(null)
-        }
+        if (path.length > 3) setRoomPath(path[3])
+        else setRoomPath(null)
     }, [location])
 
     return (
         <div className='messenger'>
-            {/* <MessengerLeft roomSelector={setRoomInfo} /> */}
+            <MessengerLeft setRoomInfo={setRoomInfo} />
             {roomPath ? (
-                <Inbox roomId={roomPath} roomInfo={roomInfo}/>
+                <Inbox roomId={roomPath} roomInfo={roomInfo} />
             ) : (
                     <div className='messenger__initial'>
                         <img

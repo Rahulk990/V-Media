@@ -1,16 +1,15 @@
 import fetchEvents from './fetchEvents'
 import fetchUserPosts from './fetchUserPosts'
 import fetchPosts from './fetchPosts'
-import fetchRooms from './fetchRooms'
-import fetchRoomsData from './fetchRoomData'
+import fetchUserRooms from './fetchUserRooms'
 
 const fetchAllData = async (dispatch, userId, roomsData) => {
     await fetchEvents(dispatch, userId)
+
     await fetchUserPosts(dispatch, userId)
-    await fetchRooms(dispatch, userId)
-    
     await fetchPosts(dispatch)
-    await fetchRoomsData(dispatch, roomsData)
+
+    await fetchUserRooms(dispatch, userId)
 }
 
 export default fetchAllData;

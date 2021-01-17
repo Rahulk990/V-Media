@@ -19,13 +19,17 @@ router.post('/upload/user', (req, res) => {
 
 // Retrieve User Data
 router.get('/retrieve/user', (req, res) => {
-    mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            res.send(data)
-        }
-    })
+    mongoUsers.findOne(
+        { userId: req.query.userId },
+        (err, data) => {
+
+            if (err) {
+                res.status(500).send(err)
+            } else {
+                res.send(data)
+            }
+
+        })
 })
 
 export default router

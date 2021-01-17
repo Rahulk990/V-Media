@@ -1,13 +1,14 @@
 import axios from "../Misc/axios"
-import { appendRoomsData } from "../ReduxStore/roomSlice";
+import { appendRoomsData, setRoomsData } from "../ReduxStore/roomSlice";
 
 const fetchRoomData = async (dispatch, roomId) => {
-    await axios.get('retrieve/roomData', { params: { postId: roomId } })
+    await axios.get('retrieve/roomData', { params: { roomId: roomId } })
         .then(res => dispatch(appendRoomsData(res.data)))
 
 }
 
 const fetchRoomsData = async (dispatch, roomsData) => {
+    await dispatch(setRoomsData([]))
     roomsData.forEach(roomId => {
         fetchRoomData(dispatch, roomId)
     })

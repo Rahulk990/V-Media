@@ -1,10 +1,10 @@
 import React from 'react'
 import './RoomSettings.css'
 
-const RoomSettings = ({isgroup}) => {
-    if(isgroup === true)
+const RoomSettings = ({isGroup}) => {
+    if(isGroup === 'group')
     {
-        console.log(isgroup);
+        console.log(isGroup);
         return(
             <div className="roomSettings">
             <div className='roomSettings__selectListOption'>

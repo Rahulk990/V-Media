@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import './Inbox.css';
 
 import Chat from './Chat.js'
@@ -8,15 +7,15 @@ import RoomSettings from './RoomSettings'
 import OutsideAlerter from '../Misc/OutsideAlerter'
 import { Avatar, IconButton, Tooltip } from "@material-ui/core";
 import { EmojiEmotions, MoreVert, Send } from '@material-ui/icons';
-import Pusher from 'pusher-js';
-import axios from '../Misc/axios';
 import { selectUser } from '../ReduxStore/appSlice'
+import { selectMessagesData } from '../ReduxStore/roomSlice';
+import addMessage from '../API/addMessage'
 
 const Inbox = ({ roomId, roomInfo }) => {
 
     const user = useSelector(selectUser)
-    const dispatch = useDispatch()
-    const history = useHistory()
+    const messages = useSelector(selectMessagesData)
+
     const [settingsDropdown, setSettingsDropdown] = useState(false);
     const showSettingList = () => {
         setSettingsDropdown(true);
@@ -32,74 +31,29 @@ const Inbox = ({ roomId, roomInfo }) => {
     }
 
     const [newMessage, setNewMessage] = useState('')
-    const messageSender = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const messageData = {
-            userId: user.userId,
-            username: user.username,
-            content: newMessage,
-            timestamp: Date.now()
-        }
-
-        saveMessage(messageData)
-        setNewMessage('')
-    }
-
-    const saveMessage = async (messageData) => {
-        await axios.post('/upload/message', {
-            data: messageData,
-            roomId: roomId
-        })
-            .then((res) => {
-                // console.log(res)
-            })
-    }
-
-    // new-----
-
-    const [messages, setMessages] = useState([]);
-    const syncMessages = async () => {
-        await axios.get('retrieve/messages', {
-            params: {
+        if (newMessage.length > 0) {
+            const requestData = {
+                data: {
+                    userId: user.userId,
+                    username: user.username,
+                    content: newMessage,
+                    timestamp: Date.now()
+                },
                 roomId: roomId
             }
-        })
-            .then((res) => {
-                if (res) {
-                    setMessages(res.data.messagesArray);
-                } else {
-                    history.replace('/messenger')
-                    setMessages(null)
-                }
-            })
-        updateScroll();
-    }
 
-    useEffect(() => {
-        syncMessages()
-
-        const pusher = new Pusher('d24ba3df0d30f4d2c95e', {
-            cluster: 'ap2'
-        });
-
-        const channel = pusher.subscribe('messages');
-        channel.bind('updated', function (data) {
-            syncMessages()
-        });
-
-        return () => {
-            channel.unbind_all();
-            channel.unsubscribe();
+            setNewMessage('')
+            addMessage(requestData)
         }
-    }, [roomId]);
-    // -----new------
-
-    //---- time pass function
-    function updateScroll() {
-        var element = document.getElementsByClassName("inbox__body")[0];
-        element.scrollTop = element.scrollHeight;
     }
+
+    // function updateScroll() {
+    //     var element = document.getElementsByClassName("inbox__body")[0];
+    //     element.scrollTop = element.scrollHeight;
+    // }
 
     return (
         <div className='inbox'>
@@ -127,9 +81,10 @@ const Inbox = ({ roomId, roomInfo }) => {
 
                         {settingsDropdown && <OutsideAlerter
                             outsideHandler={handleSettingSelection}
-                            component={<RoomSettings isgroup={roomInfo.isgroup} />}
+                            component={<RoomSettings isGroup={roomInfo.isGroup} />}
                         />
                         }
+                        
                     </div>
                 </Tooltip>
             </div>
@@ -165,13 +120,13 @@ const Inbox = ({ roomId, roomInfo }) => {
                         />
                         <button
                             className='submit--hidden'
-                            onClick={messageSender}
+                            onClick={handleSubmit}
                             type='submit'
                         />
 
                     </form>
 
-                    <IconButton >
+                    <IconButton onClick={handleSubmit}>
                         <Send />
                     </IconButton>
 

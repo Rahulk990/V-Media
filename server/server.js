@@ -101,48 +101,7 @@ app.use(userRoutes);
 
 
 
-app.post('/create/roomContact', (req, res) => {
-  mongoUsers.findOne({ email: req.body.userEmail }, (err, data) => {
-    if (err || (data === null)) {
-      res.send('No such user exists!')
-    } else {
 
-      const roomData = {
-        usersArray: [req.body.userId, data.userId]
-      }
-
-      mongoRooms.create(roomData, (err2, data2) => {
-        if (err2) {
-          res.status(500).send('Unable to create Room')
-        } else {
-          const roomId = data2._id
-          mongoUsers.findOneAndUpdate(
-            { userId: data.userId },
-            { $push: { roomsArray: roomId } },
-            (err3, data3) => {
-              if (err3) {
-                console.log(err)
-              }
-            }
-          )
-          
-          mongoUsers.findOneAndUpdate(
-            { userId: req.body.userId },
-            { $push: { roomsArray: roomId } },{returnOriginal:false},
-            (err3, data3) => {
-              if (err3) {
-                console.log(err)
-              } else {
-                res.status(201).send(data3.roomsArray)
-              }
-            }
-          )
-
-        }
-      })
-    }
-  })
-})
 
 app.post('/create/roomGroup', (req, res) => {
   const roomData = {

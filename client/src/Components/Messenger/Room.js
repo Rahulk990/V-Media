@@ -1,47 +1,47 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import './Room.css'
 
 import { Avatar } from '@material-ui/core'
 import { selectUser } from '../ReduxStore/appSlice'
 import axios from '../Misc/axios'
+import { setCurrentRoom } from '../ReduxStore/roomSlice'
 
-const Room = ({ roomId, title, usersArray, roomSelector }) => {
-    const temp_title = title;
+const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
+
     const history = useHistory()
+    const dispatch = useDispatch()
     const user = useSelector(selectUser)
     const [newUser, setNewUser] = useState({})
 
     useEffect(() => {
         if (!title) {
             const fetchId = (usersArray[0] === user.userId) ? (usersArray[1]) : (usersArray[0])
-            axios.get('retrieve/user', {
-                params: {
-                    userId: fetchId
-                }
-            })
-                .then((res) => {
-                    setNewUser(res.data);
-                })
+            axios.get('retrieve/user', { params: { userId: fetchId } })
+                .then((res) => setNewUser(res.data))
         }
         else {
-            setNewUser({
-                name: title,
-                avatar: ''
-            })
+            setNewUser({ name: title, avatar: '' })
         }
     }, [])
 
+    const handleSelect = () => {
+        if (title) history.push('/messenger/g/' + roomId)
+        else history.push('/messenger/d/' + roomId)
+
+        setRoomInfo({
+            title: newUser.name,
+            avatar: newUser.avatar,
+            isGroup: (title) ? ('group') : ('direct')
+        })
+
+        dispatch(setCurrentRoom(roomId))
+    }
+
+
     return (
-        <div className='room' onClick={() => {
-            roomSelector({
-                title: newUser.name,
-                avatar: newUser.avatar,
-                isgroup: (temp_title === null)?false:true
-            })
-            history.push('/messenger/' + roomId)
-            }}>
+        <div className='room' onClick={handleSelect}>
             <Avatar
                 className="room__avatar"
                 style={{ "height": "25px", "width": "25px" }}
