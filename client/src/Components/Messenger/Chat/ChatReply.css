@@ -1,0 +1,9 @@
+.reply{
+    position: absolute;
+    bottom:65px;
+    background-color: #808080;
+    height:50px;
+    /* padding: 10px; */
+    width:100%;
+    
+}

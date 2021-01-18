@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import './Inbox.css';
 
-import Chat from './Chat.js'
+import Chat from './Chat/Chat.js'
 import RoomSettings from './RoomSettings/RoomSettings'
+import ChatReply from './Chat/ChatReply'
 import OutsideAlerter from '../Misc/OutsideAlerter'
 import { Avatar, IconButton, Tooltip } from "@material-ui/core";
-
 import { EmojiEmotions, Send} from '@material-ui/icons';
 
 import { selectUser } from '../ReduxStore/appSlice'
@@ -82,6 +82,7 @@ const Inbox = ({ roomId, roomInfo }) => {
             </div>
 
             <div className="inbox__bottom">
+                <ChatReply/>
                 <div className='inbox__bottomInput'>
 
                     <IconButton >

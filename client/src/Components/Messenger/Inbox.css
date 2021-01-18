@@ -86,6 +86,7 @@
 /* Bottom */
 
 .inbox__bottom {
+  position: relative;
   display: flex;
   flex: 0.1;
   align-items: center;
