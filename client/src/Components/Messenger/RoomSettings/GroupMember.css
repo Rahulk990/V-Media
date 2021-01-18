@@ -1,0 +1,16 @@
+.groupmember__dialog{
+    /* display: flex; */
+    border-radius: 10px;
+    position: absolute;
+    background-color: #fff;
+    width: 200px;
+    /* height: 45px; */
+    top:55px;
+    box-shadow: 0 0 10px -3px rgba(0,0,0,0.75);
+    right: 10px;
+}
+.groupmember__list{
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+}

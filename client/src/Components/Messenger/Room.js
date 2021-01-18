@@ -39,7 +39,8 @@ const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
         await setRoomInfo({
             title: newUser.name,
             avatar: newUser.avatar,
-            isGroup: (title) ? ('group') : ('direct')
+            isGroup: (title) ? ('group') : ('direct'),
+            Array:newUser.userArray
         })
     }
 

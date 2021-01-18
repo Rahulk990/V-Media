@@ -3,10 +3,12 @@ import { useSelector } from 'react-redux'
 import './Inbox.css';
 
 import Chat from './Chat.js'
-import RoomSettings from './RoomSettings'
+import RoomSettings from './RoomSettings/RoomSettings'
 import OutsideAlerter from '../Misc/OutsideAlerter'
 import { Avatar, IconButton, Tooltip } from "@material-ui/core";
-import { EmojiEmotions, MoreVert, Send } from '@material-ui/icons';
+
+import { EmojiEmotions, Send} from '@material-ui/icons';
+
 import { selectUser } from '../ReduxStore/appSlice'
 import { selectMessagesData } from '../ReduxStore/roomSlice';
 import addMessage from '../API/addMessage'
@@ -17,19 +19,7 @@ const Inbox = ({ roomId, roomInfo }) => {
     const messages = useSelector(selectMessagesData)
 
 
-    const [settingsDropdown, setSettingsDropdown] = useState(false);
-    const showSettingList = () => {
-        setSettingsDropdown(true);
-        document.getElementsByClassName('inbox__navbarRight')[0].classList.remove('inbox__navbarRight--disable');
-    }
-
-    const handleSettingSelection = (id) => {
-        if (id) {
-            // Do related work
-        }
-        setSettingsDropdown(false);
-        document.getElementsByClassName('inbox__navbarRight')[0].classList.add('inbox__navbarRight--disable');
-    }
+    
 
     const [newMessage, setNewMessage] = useState('')
     const handleSubmit = async (e) => {
@@ -63,26 +53,14 @@ const Inbox = ({ roomId, roomInfo }) => {
                     <p>{roomInfo.title}</p>
                 </div>
 
-                <Tooltip
-                    title="Options"
-                    enterDelay={1000}
-                >
+                
                     <div
-                        className='inbox__navbarRight inbox__navbarRight--disable'
-                        onClick={() => showSettingList()}
+                        className='inbox__navbarRight '
                     >
-                        <IconButton >
-                            <MoreVert />
-                        </IconButton>
-
-                        {settingsDropdown && <OutsideAlerter
-                            outsideHandler={handleSettingSelection}
-                            component={<RoomSettings isGroup={roomInfo.isGroup} />}
-                        />
-                        }
+                    <RoomSettings isGroup={roomInfo.isGroup} grouplist={roomInfo.userArray} />
 
                     </div>
-                </Tooltip>
+                
             </div>
 
             <div className='inbox__bodyContainer'>

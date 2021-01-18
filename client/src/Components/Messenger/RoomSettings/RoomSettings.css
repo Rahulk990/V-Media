@@ -1,0 +1,17 @@
+.roomSettings {
+    display: flex;
+    align-items: center;
+    z-index: -1000;
+}
+
+.roomSetting__listOption{
+    padding:5px;
+    margin-right: 10px;
+    /* z-index: -1000; */
+}
+
+.roomSetting__listOption .MuiSvgIcon-root{
+    font-size: 1.5rem;
+    padding:0px;
+    /* color: gray; */
+}
