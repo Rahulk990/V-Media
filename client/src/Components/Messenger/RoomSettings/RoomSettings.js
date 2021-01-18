@@ -18,7 +18,7 @@ const RoomSettings = ({isGroup, userArray}) => {
     const btnclick_addMember = () =>{
         setHandleClick_addMember(!handleClick_addMember);
     }
-   
+   console.log(userArray);
     if(isGroup === 'group')
     {
         console.log(isGroup);

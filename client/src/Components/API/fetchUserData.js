@@ -1,3 +1,4 @@
+import axios from '../Misc/axios'
 
 const fetchUserData = () => {
     

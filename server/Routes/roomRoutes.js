@@ -9,7 +9,11 @@ router.post('/create/directRoom', (req, res) => {
     mongoUsers.findOne({ email: req.body.userEmail }, (err, data) => {
         if (err) {
             res.status(500).send(err)
-        } else {
+        }
+        else if (data === null) {
+            res.send(data);
+        }
+        else {
 
             const roomData = { usersArray: [req.body.userId, data.userId] }
             mongoRooms.create(roomData,

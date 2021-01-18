@@ -14,7 +14,7 @@ const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
     const [newUser, setNewUser] = useState({})
-
+    // console.log(usersArray)
     useEffect(() => {
         if (!title) {
             const fetchId = (usersArray[0] === user.userId) ? (usersArray[1]) : (usersArray[0])
@@ -40,7 +40,7 @@ const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
             title: newUser.name,
             avatar: newUser.avatar,
             isGroup: (title) ? ('group') : ('direct'),
-            Array:newUser.userArray
+            usersArray:usersArray
         })
     }
 

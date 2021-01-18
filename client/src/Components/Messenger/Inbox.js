@@ -20,7 +20,7 @@ const Inbox = ({ roomId, roomInfo }) => {
 
 
     
-
+    console.log(roomInfo.usersArray);
     const [newMessage, setNewMessage] = useState('')
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,7 +57,7 @@ const Inbox = ({ roomId, roomInfo }) => {
                     <div
                         className='inbox__navbarRight '
                     >
-                    <RoomSettings isGroup={roomInfo.isGroup} grouplist={roomInfo.userArray} />
+                    <RoomSettings isGroup={roomInfo.isGroup} userArray={roomInfo.usersArray} />
 
                     </div>
                 

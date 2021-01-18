@@ -128,6 +128,7 @@ const MessengerLeft = ({ setRoomInfo }) => {
                             key={room._id}
                             roomId={room._id}
                             title={room.title}
+                            usersArray={room.usersArray}
                             setRoomInfo={setRoomInfo}
                         />
                     ))
