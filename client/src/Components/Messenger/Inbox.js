@@ -57,7 +57,7 @@ const Inbox = ({ roomId, roomInfo }) => {
                     <div
                         className='inbox__navbarRight '
                     >
-                    <RoomSettings isGroup={roomInfo.isGroup} userArray={roomInfo.usersArray} />
+                    <RoomSettings isGroup={roomInfo.isGroup} roomId={roomId} usersArray={roomInfo.usersArray} />
 
                     </div>
                 
