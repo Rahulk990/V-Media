@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import './Inbox.css';
 
@@ -27,7 +27,8 @@ const Inbox = ({ roomId, roomInfo }) => {
                     userId: user.userId,
                     username: user.username,
                     content: newMessage,
-                    timestamp: Date.now()
+                    timestamp: Date.now(),
+                    replyId: messageReply.messageId
                 },
                 roomId: roomId
             }
@@ -36,6 +37,11 @@ const Inbox = ({ roomId, roomInfo }) => {
             setNewMessage('')
         }
     }
+
+    const [messageReply, setMessageReply] = useState(null)
+    useEffect(() => {
+        setMessageReply(null)
+    }, [messages])
 
     return (
         <div className='inbox'>
@@ -64,14 +70,13 @@ const Inbox = ({ roomId, roomInfo }) => {
                 <div className='inbox__bodyContainer2'>
                     <div className='inbox__body'>
                         {
-                            messages.map(obj => (
+                            messages.map(message => (
                                 <Chat
-                                    key={obj.timestamp + obj.content}
+                                    key={message.timestamp + message.content}
                                     userId={user.userId}
-                                    authorId={obj.userId}
-                                    username={obj.username}
-                                    content={obj.content}
-                                    timestamp={obj.timestamp} />
+                                    message={message}
+                                    setMessageReply={setMessageReply}
+                                />
                             ))
                         }
                     </div>
@@ -79,7 +84,14 @@ const Inbox = ({ roomId, roomInfo }) => {
             </div>
 
             <div className="inbox__bottom">
-                <ChatReply />
+
+                {messageReply &&
+                    <ChatReply
+                        messageReply={messageReply}
+                        setMessageReply={setMessageReply}
+                    />
+                }
+
                 <div className='inbox__bottomInput'>
 
                     <IconButton >

@@ -1,8 +1,8 @@
-import { Avatar, Tooltip } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import axios from "../../Misc/axios";
-
 import "./GroupMember.css";
+
+import axios from "../../Misc/axios";
+import { Avatar, Tooltip } from "@material-ui/core";
 
 const GroupMember = ({ userId }) => {
     const [user, setUser] = useState(null);

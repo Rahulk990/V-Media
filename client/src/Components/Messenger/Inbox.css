@@ -54,9 +54,9 @@
 /* Body */
 
 .inbox__bodyContainer {
-  flex: 1;
+  flex: 10;
   display: flex;
-  height: calc(100vh - 175px);
+  height: 10px;
 }
 
 .inbox__bodyContainer2 {
@@ -82,8 +82,7 @@
   display: flex;
   align-items: center;
   padding: 10px 20px;
-  justify-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
 
 .inbox__bottomInput {

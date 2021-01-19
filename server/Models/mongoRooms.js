@@ -4,6 +4,7 @@ const messageModel = mongoose.Schema({
     userId: String,
     username: String,
     content: String,
+    replyId: String,
     timestamp: String
 })
 

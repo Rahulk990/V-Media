@@ -22,7 +22,7 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 
 	return (
 		<>
-			{ (isGroup !== "group") ? (
+			{ (isGroup === "group") ? (
 				<div className="roomSettings" >
 
 					<Tooltip
