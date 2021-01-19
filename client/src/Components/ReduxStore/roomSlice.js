@@ -19,6 +19,7 @@ export const roomSlice = createSlice({
         },
         
         setMessagesData: (state, action) => {
+            action.payload.sort((a,b) => b.timestamp - a.timestamp)
             state.messagesData = action.payload
         },
 
