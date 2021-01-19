@@ -26,7 +26,7 @@
 .chat__messageBody {
   display: flex;
   padding: 10px 10px;
-  max-width: 75%;
+  max-width: 60%;
   align-items: flex-start;
   background-color: #dae6f1;
   border-radius: 20px;
@@ -67,7 +67,11 @@
   visibility: hidden;
 }
 
-.chat:hover .chat__forward .MuiIconButton-root {
+/* .chat:hover .chat__forward .MuiIconButton-root {
+  visibility: visible;
+} */
+
+.chat__message :hover.chat__forward .MuiIconButton-root  {
   visibility: visible;
 }
 

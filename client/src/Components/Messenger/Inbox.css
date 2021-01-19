@@ -83,6 +83,7 @@
   align-items: center;
   padding: 10px 20px;
   flex-direction: column;
+  border-top: 1px solid #888888;
 }
 
 .inbox__bottomInput {
@@ -91,7 +92,7 @@
   justify-content: space-between;
   border: none;
   outline-width: 0;
-  background-color: #f0f2f5;
+  background-color: #dae6f1;
   border-radius: 30px;
   width: 100%;
 }
@@ -115,7 +116,7 @@
 .inbox__bottomInput input {
   border: none;
   outline-width: 0;
-  background-color: #eff2f5;
+  background-color: #dae6f1;
   font-size: 14px;
   width: 100%;
 }
