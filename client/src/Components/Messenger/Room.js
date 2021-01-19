@@ -16,7 +16,7 @@ const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
     const [newUser, setNewUser] = useState({})
 
     useEffect(() => {
-        if (!title) {
+        if (!title && usersArray) {
             const fetchId = (usersArray[0] === user.userId) ? (usersArray[1]) : (usersArray[0])
             axios.get('retrieve/user', { params: { userId: fetchId } })
                 .then((res) => setNewUser(res.data))

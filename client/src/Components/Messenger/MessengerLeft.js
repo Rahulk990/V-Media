@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './MessengerLeft.css'
 
 import Room from './Room'
@@ -8,13 +8,14 @@ import { Add } from '@material-ui/icons'
 import { selectRoomsData } from '../ReduxStore/roomSlice'
 import { selectUser } from '../ReduxStore/appSlice'
 import addDirectRoom from '../API/addDirectRoom'
-
+import axios from "../Misc/axios";
 const MessengerLeft = ({ setRoomInfo }) => {
 
     const user = useSelector(selectUser)
     const roomsData = useSelector(selectRoomsData)
     const [userInput, setUserInput] = useState('')
     const [option, setOption] = useState('direct')
+    const dispatch = useDispatch()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,25 +30,25 @@ const MessengerLeft = ({ setRoomInfo }) => {
             await addDirectRoom(queryData)
         }
 
-        //     
-        // } else {
-        //     const queryData = {
-        //         userId: user.userId,
-        //         title: userInput
-        //     }
-        //     setUserInput('');
-        //     await axios.post('/create/roomGroup', queryData)
-        //         .then((res) => {
-        //             axios.get('retrieve/roomsData', {
-        //                 params: {
-        //                     roomIds: res.data
-        //                 }
-        //             })
-        //                 .then((res2) => {
-        //                     dispatch(setData(res2.data))
-        //                 })
-        //         })
-        // }
+            
+         else {
+            const queryData = {
+                userId: user.userId,
+                title: userInput
+            }
+            setUserInput('');
+            await axios.post('/create/roomGroup', queryData)
+                .then((res) => {
+                    axios.get('retrieve/roomsData', {
+                        params: {
+                            roomIds: res.data
+                        }
+                    })
+                        // .then((res2) => {
+                        //     dispatch(setData(res2.data))
+                        // })
+                })
+        }
 
     }
 
