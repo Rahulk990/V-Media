@@ -1,25 +1,25 @@
-import { auth } from '../../firebase'
-import { login, logout } from '../ReduxStore/appSlice'
+import { auth } from "../../firebase";
+import { login, logout } from "../ReduxStore/appSlice";
 
 const checkAuth = (dispatch, history) => {
+	auth.onAuthStateChanged((authUser) => {
+		if (authUser) {
+			// Insert User Details into Redux Store
+			dispatch(
+				login({
+					userId: authUser.uid,
+					username: authUser.displayName,
+					avatarSrc: authUser.photoURL,
+				})
+			);
 
-    auth.onAuthStateChanged((authUser) => {
-        if (authUser) {
+			// Redirect to Home
+			history.replace("/home");
+		} else {
+			dispatch(logout());
+			history.replace("/login");
+		}
+	});
+};
 
-            // Insert User Details into Redux Store
-            dispatch(login({
-                userId: authUser.uid,
-                username: authUser.displayName,
-                avatarSrc: authUser.photoURL
-            }))
-
-            // Redirect to Home
-            history.replace('/home')
-
-        } else {
-            dispatch(logout())
-        }
-    })
-}
-
-export default checkAuth
+export default checkAuth;

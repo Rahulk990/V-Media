@@ -1,38 +1,34 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import './Login.css'
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import "./Login.css";
 
-import { Button } from '@material-ui/core'
-import createUser from '../API/createUser'
-import checkAuth from './checkAuth'
+import { Button } from "@material-ui/core";
+import createUser from "../API/createUser";
+import checkAuth from "./checkAuth";
 
 const Login = () => {
+	const history = useHistory();
+	const dispatch = useDispatch();
 
-    const history = useHistory()
-    const dispatch = useDispatch()
+	checkAuth(dispatch, history);
+	const signInHandler = async () => {
+		await createUser();
+	};
 
-    useEffect(() => {
-        checkAuth(dispatch, history);
-    }, [])
+	return (
+		<div className="login">
+			<div className="login__container">
+				<img
+					src="https://upload.wikimedia.org/wikipedia/commons/a/aa/V-logo.svg"
+					alt="LogoImage"
+				/>
+				<Button variant="outlined" onClick={signInHandler}>
+					Sign In
+				</Button>
+			</div>
+		</div>
+	);
+};
 
-    const signInHandler = async () => {
-        await createUser()
-    }
-
-    return (
-        <div className='login'>
-            <div className='login__container'>
-                <img
-                    src='https://upload.wikimedia.org/wikipedia/commons/a/aa/V-logo.svg'
-                    alt='LogoImage'
-                />
-                <Button variant='outlined' onClick={signInHandler}>
-                    Sign In
-            </Button>
-            </div>
-        </div>
-    )
-}
-
-export default Login
+export default Login;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useHistory} from 'react-router-dom'
 import "./RoomSettings.css";
 
 import { selectUser } from "../../ReduxStore/appSlice";
@@ -20,18 +21,21 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 	const [addMemberDialog, setAddMemberDialog] = useState(false);
 	const [viewMembersDialog, setViewMembersDialog] = useState(false);
 
+	const history = useHistory()
 	const user = useSelector(selectUser);
 
 	const exitFromGroup = async (e) => {
 		e.preventDefault();
 		console.log("group room remove");
 		await removeMember(user.userId, roomId);
+		history.replace('/messenger')
 	};
 
 	const deleteRoom = async (e) => {
 		// e.preventDefault();
 		console.log("direct room remove");
 		await removeDirectRoom(user.userId, roomId);
+		history.replace('/messenger')
 	};
 
 	return (

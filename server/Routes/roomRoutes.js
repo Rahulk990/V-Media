@@ -11,6 +11,8 @@ router.post("/create/directRoom", (req, res) => {
 			res.status(500).send(err);
 		} else if (data === null) {
 			res.send(data);
+		} else if (data.userId === req.body.userId) {
+			res.send("Same User");
 		} else {
 			const roomData = { usersArray: [req.body.userId, data.userId] };
 			mongoRooms.create(roomData, (err2, data2) => {
@@ -99,30 +101,44 @@ router.get("/retrieve/messages", (req, res) => {
 
 router.get("/update/room/addMember", (req, res) => {
 	// console.log(req);
-	mongoUsers.findOneAndUpdate(
-		{ email: req.query.email },
-		{ $push: { roomsArray: req.query.roomId } },
-		{ returnOriginal: false },
-		(err, data) => {
-			if (err) {
-				console.log(err);
-			} else if (data === null) {
-				res.send(data);
-			} else {
-				mongoRooms.findOneAndUpdate(
-					{ _id: req.query.roomId },
-					{ $push: { usersArray: data.userId } },
-					(err2) => {
-						if (err2) {
-							res.status(500).send(err);
-						}
-					}
-				);
+	mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
+		if (err) {
+			console.log(err);
+		} else {
+			mongoUsers.findOne({ email: req.query.email }, (err2, data2) => {
+				if (err2) {
+					console.log(err2);
+				} else if (data.usersArray.includes(data2.userId)) {
+					res.send("Error");
+				} else {
+					mongoUsers.findOneAndUpdate(
+						{ email: req.query.email },
+						{ $push: { roomsArray: req.query.roomId } },
+						{ returnOriginal: false },
+						(err2, data3) => {
+							if (err2) {
+								console.log(err2);
+							} else if (data3 === null) {
+								res.send(data3);
+							} else {
+								mongoRooms.findOneAndUpdate(
+									{ _id: req.query.roomId },
+									{ $push: { usersArray: data3.userId } },
+									(err4) => {
+										if (err4) {
+											res.status(500).send(err4);
+										}
+									}
+								);
 
-				res.send(data.roomsArray);
-			}
+								res.send(data3.roomsArray);
+							}
+						}
+					);
+				}
+			});
 		}
-	);
+	});
 });
 
 router.get("/update/room/removeMember", (req, res) => {
@@ -142,14 +158,17 @@ router.get("/update/room/removeMember", (req, res) => {
 						// else {
 						// 	console.log(data, data.usersArray.length, roomId)
 						// }
-						else if (data.usersArray.length === 1) {
+						else if (data.usersArray.length <= 1) {
 							console.log("deleting empty room");
-							mongoRooms.findOneAndDelete({ _id: req.query.roomId }, (err2, dataroom) => {
-								if (err2) console.log(err2);
-								else {
-									res.send(dataroom);
+							mongoRooms.findOneAndDelete(
+								{ _id: req.query.roomId },
+								(err2, dataroom) => {
+									if (err2) console.log(err2);
+									else {
+										res.send(dataroom);
+									}
 								}
-							});
+							);
 						}
 					}
 				);
@@ -158,34 +177,41 @@ router.get("/update/room/removeMember", (req, res) => {
 	);
 });
 
-router.get("/update/room/removeDirectRoom", (req, res) =>{
-	console.log("Direct Room Deleted")
+router.get("/update/room/removeDirectRoom", (req, res) => {
+	console.log("Direct Room Deleted");
 	const roomId = req.query.roomId;
-	// const userId = req.query.userId;
 
-	// mongoUsers.findOneAndUpdate({_id:userId},
-	// 	{$pull: {roomsArray:roomId} },
-	// 	(err1, data) =>{
-	// 		if(err1) console.log(err1)
-	// 	})
-	mongoRooms.findOneAndRemove({_id:roomId},
-		(err, data)=>{
-			if(err) console.log(err)
-			else{
-				console.log("deleting member")
-				data.usersArray.map(userId => {
-					return(
-						mongoUsers.findOneAndUpdate({_id:userId},
-							{$pull: {roomsArray:roomId} },
-							(err1, data) =>{
-								if(err1) console.log(err1)
-								console.log("Member Deleted", userId)
-							})
-					)
-				})
+	mongoRooms.findOneAndUpdate(
+		{ _id: roomId },
+		{ $pull: { usersArray: req.query.userId } },
+		(err, data) => {
+			if (err) console.log(err);
+			else {
+				console.log("deleting member", data);
+				data.usersArray.map((userId) => {
+					return mongoUsers.findOneAndUpdate(
+						{ userId: userId },
+						{ $pull: { roomsArray: roomId } },
+						(err1, data) => {
+							if (err1) console.log(err1);
+							console.log("Member Deleted", userId);
+						}
+					);
+				});
+				mongoRooms.findOneAndDelete(
+					{ _id: req.query.roomId },
+					(err2, dataroom) => {
+						if (err2) console.log(err2);
+						else {
+							res.send(dataroom);
+						}
+					}
+				);
+
 				// res.send(data);
-				console.log("Room data" + data)
+				console.log("Room data" + data);
 			}
-		})
-})
+		}
+	);
+});
 export default router;

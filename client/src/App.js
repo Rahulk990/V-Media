@@ -4,7 +4,7 @@ import './App.css';
 import Login from './Components/Login/Login'
 import Main from './Main'
 
-function App() {
+function App() {  
   return (
     <div className="app">
       <Router>

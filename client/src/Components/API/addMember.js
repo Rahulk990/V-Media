@@ -7,9 +7,7 @@ const addMember = async (dispatch, email, roomId) => {
 		.get("/update/room/addMember", { params: { email: email, roomId: roomId } })
 		.then((res) => {
 			if (!res.data) alert("No such user exists!");
-			// else {
-			// 	dispatch(setRooms(res.data));
-			// }
+			else if(res.data === 'Error')  alert("Kyu Bar bar dalrela hain");
 		});
 };
 
