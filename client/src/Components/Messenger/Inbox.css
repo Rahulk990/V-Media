@@ -92,7 +92,7 @@
   justify-content: space-between;
   border: none;
   outline-width: 0;
-  background-color: #dae6f1;
+  background-color: #f0f2f5;
   border-radius: 30px;
   width: 100%;
 }
@@ -116,7 +116,7 @@
 .inbox__bottomInput input {
   border: none;
   outline-width: 0;
-  background-color: #dae6f1;
+  background-color: #f0f2f5;
   font-size: 14px;
   width: 100%;
 }
