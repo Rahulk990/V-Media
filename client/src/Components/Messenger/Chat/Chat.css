@@ -26,7 +26,7 @@
 .chat__messageBody {
   display: flex;
   padding: 10px 10px;
-  max-width: 60%;
+  max-width: 80%;
   align-items: flex-start;
   background-color: #dae6f1;
   border-radius: 20px;
@@ -51,12 +51,13 @@
 
 .chat__messageBodyReply p{
   font-size: 12px;
+  word-wrap: break-all;
 }
 
 .chat__messageBody > p {
   margin: 0 5px;
   font-size: 14px;
-  word-wrap: break-word;
+  word-break: break-all;
   text-align: justify;
 }
 
