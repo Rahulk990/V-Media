@@ -7,6 +7,7 @@
   max-height: calc(100vh - 55px);
   overflow: auto;
   top: 55px;
+  z-index: 10;
 
   background-color: #ffffff;
 }
@@ -14,14 +15,13 @@
 .inbox__navbar {
   flex: 0.1;
   display: flex;
-  position: sticky;
   align-items: center;
   justify-content: space-between;
-  top:0px;
+  
   position: sticky;
-  z-index: 50000;
+  top:0px;
+
   padding: 10px 10px 10px 10px;
-  justify-content: space-between;
   box-shadow: 0 3px 6px -6px black;
 }
 
@@ -51,14 +51,6 @@
   padding: 0;
 }
 
-.inbox__navbarRight--disable .MuiIconButton-root {
-  background-color: #f0f2f5;
-}
-
-.inbox__navbarRight--disable .MuiSvgIcon-root {
-  color: gray;
-}
-
 /* Body */
 
 .inbox__bodyContainer {
@@ -77,7 +69,6 @@
 }
 
 .inbox__body {
-  height: calc(100vh - 175px);
   overflow: auto;
   display: flex;
   flex-direction: column-reverse;
@@ -86,13 +77,13 @@
 /* Bottom */
 
 .inbox__bottom {
-  position: relative;
-  display: flex;
   flex: 0.1;
+
+  display: flex;
   align-items: center;
-  justify-content: center;
   padding: 10px 20px;
   justify-items: center;
+  justify-content: center;
 }
 
 .inbox__bottomInput {

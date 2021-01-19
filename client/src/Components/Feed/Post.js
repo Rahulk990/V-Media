@@ -35,14 +35,6 @@ const Post = ({ post }) => {
         }
     }
 
-    const handleComment = () => {
-        if (showComments) {
-            setShowComments(false)
-        } else {
-            setShowComments(true)
-        }
-    }
-
     return (
         <div className='post'>
             <div className='post__top'>
@@ -104,7 +96,7 @@ const Post = ({ post }) => {
                 </div>
 
                 <div className={`post__option ${showComments && 'post__option--active'}`}
-                    onClick={handleComment}
+                    onClick={() => setShowComments(!showComments)}
                 >
                     <ChatBubbleOutline />
                     <p>Comment</p>

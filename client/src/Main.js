@@ -27,7 +27,7 @@ const Main = () => {
     useEffect(() => {
 
         if (!user) {
-            history.replace('/login')
+            history.push('/login')
         } else {
 
             // Fetch All Data
