@@ -12,7 +12,7 @@ const Chat = ({ userId, message, setMessageReply }) => {
     const [messageReplied, setMessageReplied] = useState(null);
 
     useEffect(() => {
-        if (message.replyId) {
+        if (message && message.replyId) {
 
             const ind = messagesArray.findIndex(obj => obj._id === message.replyId)
             setMessageReplied({

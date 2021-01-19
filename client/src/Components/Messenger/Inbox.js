@@ -28,7 +28,7 @@ const Inbox = ({ roomId, roomInfo }) => {
                     username: user.username,
                     content: newMessage,
                     timestamp: Date.now(),
-                    replyId: messageReply.messageId
+                    replyId: (messageReply) ? (messageReply.messageId) : (null)
                 },
                 roomId: roomId
             }
