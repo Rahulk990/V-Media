@@ -23,6 +23,7 @@ export const appSlice = createSlice({
         },
 
         setEvents: (state, action) => {
+            action.payload.sort((a,b) => a.timestamp - b.timestamp)
             state.events = action.payload
         },
 
