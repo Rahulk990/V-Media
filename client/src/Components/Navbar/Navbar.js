@@ -23,12 +23,12 @@ const Navbar = () => {
 
 	useEffect(() => {
 		const id = (location.pathname).split('/')[1]
-		document.getElementById('home').classList.remove("navbar__option--active");
-		document.getElementById('profile').classList.remove("navbar__option--active");
-		document.getElementById('messenger').classList.remove("navbar__option--active");
-		document.getElementById(id).classList.toggle("navbar__option--active");
-		document.getElementById('profile').classList.remove("navbar__option--active");
-
+		if (id === 'home' || id === 'messenger') {
+			document.getElementById(id).classList.add("navbar__option--active");
+			return () => {
+				document.getElementById(id).classList.remove("navbar__option--active");
+			}
+		}
 	}, [location])
 
 	return (
@@ -36,7 +36,10 @@ const Navbar = () => {
 
 			<div className="navbar__left">
 
-				<div className="navbar__logo">
+				<div
+					className="navbar__logo"
+					onClick={() => history.replace('/home')}
+				>
 					<Avatar src="https://upload.wikimedia.org/wikipedia/commons/a/aa/V-logo.svg" />
 				</div>
 
@@ -73,52 +76,46 @@ const Navbar = () => {
 
 			<div className="navbar__right">
 
-				<div id='profile' className="navbar__info" onClick={() => history.push("/profile")}>
+				<div
+					id='profile'
+					className="navbar__info"
+					onClick={() => history.push("/profile/" + user.userId)}
+				>
+
 					<Avatar
 						src={user.avatarSrc}
 						style={{ height: "25px", width: "25px" }}
 					/>
+
 					<p> {user.username} </p>
 				</div>
 
 				<div className="navbar__settings">
 
-					<Tooltip
-						title="About Us"
-						enterDelay={1000}
+					<div
+						className="navbar__settingsOption"
+						onClick={() => history.replace('/about')}
 					>
-						<div
-							className="navbar__settingsOption"
-							onClick={() => history.replace('/profile')}
-						>
 
-							<IconButton>
-								<InfoOutlined style={{ height: "20px", width: "20px" }} />
-							</IconButton>
+						<InfoOutlined style={{ height: "25px", width: "25px" }} />
+						<p> About Us </p>
 
-						</div>
-					</Tooltip>
+					</div>
 
-					<Tooltip
-						title="Logout"
-						enterDelay={1000}
+					<div
+						className="navbar__settingsOption"
+						onClick={() => auth.signOut()}
 					>
-						<div
-							className="navbar__settingsOption"
-							onClick={() => auth.signOut()}
-						>
 
-							<IconButton>
-								<ExitToAppRounded style={{ height: "20px", width: "20px" }} />
-							</IconButton>
+						<ExitToAppRounded style={{ height: "25px", width: "25px" }} />
+						<p> Logout </p>
 
-						</div>
-					</Tooltip>
+					</div>
 
 				</div>
-			
+
 			</div>
-		
+
 		</div>
 	);
 };

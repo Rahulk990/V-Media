@@ -57,6 +57,10 @@
   height: 100%;
 }
 
+.navbar__logo {
+  cursor: pointer;
+}
+
 /* Navbar Center */
 
 .navbar__center {
@@ -136,32 +140,37 @@
   align-items: center;
 }
 
-.navbar__settings .MuiSvgIcon-root {
-  padding: 10px;
-}
-
-/* ### Notification Dropdown ### */
-
 .navbar__settingsOption {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   margin-left: 10px;
-}
-
-.navbar__settingsOption > button {
-  padding: 0;
-  color: #5a5858;
   cursor: pointer;
-  background-color: #f1f2f5;
+  height: min-content;
+  padding: 5px;
 }
 
-.navbar__settingsOption > button:hover {
+.navbar__settingsOption .MuiSvgIcon-root{
+  padding: 3px;
+  color: #5e5e5e;
+}
+
+.navbar__settingsOption p{
+  margin: 0 5px;
+  display: none;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.navbar__settingsOption:hover {
   color: #056be1;
   background-color: #dae6f1;
+  border-radius: 30px;
 }
 
-.navbar__iconButton {
-  padding: 0;
+.navbar__settingsOption:hover p{
+  display: flex;
+}
+
+.navbar__settingsOption:hover .MuiSvgIcon-root{
+  color: #056be1;
 }

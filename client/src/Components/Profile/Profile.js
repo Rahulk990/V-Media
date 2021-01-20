@@ -1,26 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import Post from '../Feed/Post'
+import axios from '../Misc/axios'
 
 import './Profile.css'
-const Profile = () =>{
+const Profile = () => {
+
     const location = useLocation()
+    const [user, setUser] = useState(null)
+
+    useEffect(() => {
+        const userId = (location.pathname).split('/')[2]
+        axios.get('retrieve/user', { params: { userId: userId } })
+            .then((res) => setUser(res.data))
+    }, [location])
+
     return (
 
         <div className='profile'>
             <div className='wrapper'>
+
                 <div className='profile__card'>
+
                     <div className='profile__card__img'>
-                        <img src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTM2OTI2NTY2Mjg5NTE2MTI5/justin_bieber_2015_photo_courtesy_dfree_shutterstock_348418241_croppedjpg.jpg"/>
+                        <img src={user && user.avatar} alt="" />
                     </div>
+
                     <div className='profile__card__info'>
+
                         <div className='profile__card__info__name'>
-                            Justin Beiber
+                            {user && user.name}
                         </div>
+
                         <div className='profile__card__info__des'>
-                            Celebrity
+                            {user && user.email}
                         </div>
+
                     </div>
+
+                    <div className='profile__feed'>
+
+                        {/* {user && user.usersArray.map(post => (
+                            <Post
+                                key={post._id}
+                                post={post}
+                            />
+                        ))
+                        } */}
+
+                    </div>
+
                 </div>
+
             </div>
         </div>
     )

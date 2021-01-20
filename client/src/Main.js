@@ -20,6 +20,7 @@ import fetchRoomsData from "./Components/API/fetchRoomsData";
 import Pusher from "pusher-js";
 import { selectCurrentRoom } from "./Components/ReduxStore/roomSlice";
 import fetchMessages from "./Components/API/fetchMessages";
+import AboutUs from "./Components/AboutUs/AboutUs";
 
 const Main = () => {
 	const history = useHistory();
@@ -70,7 +71,7 @@ const Main = () => {
 
 	useEffect(() => {
 		if (user && currentRoom) {
-            fetchMessages(dispatch, history, currentRoom);
+			fetchMessages(dispatch, history, currentRoom);
 			// Setup Pusher
 			const pusher = new Pusher("d24ba3df0d30f4d2c95e", { cluster: "ap2" });
 
@@ -94,11 +95,16 @@ const Main = () => {
 					<Navbar />
 					<div className="app__body">
 						<Switch>
+
+							<Route exact path="/about">
+								<AboutUs />
+							</Route>
+
 							<Route exact path="/home">
 								<Home />
 							</Route>
 
-							<Route exact path="/profile">
+							<Route path="/profile">
 								<Profile />
 							</Route>
 
