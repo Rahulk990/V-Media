@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux'
 import './HomeLeft.css'
 
 import HomeLeftRow from './HomeLeftRow'
-import FlagIcon from '@material-ui/icons/Flag'
-import PeopleIcon from '@material-ui/icons/People'
+import {Telegram, InfoOutlined} from '@material-ui/icons'
 import { selectUser } from '../ReduxStore/appSlice'
 
 const HomeLeft = () => {
@@ -14,8 +13,8 @@ const HomeLeft = () => {
     return (
         <div className='homeLeft'>
             <HomeLeftRow src={user.avatarSrc} title={user.username} />
-            <HomeLeftRow Icon={FlagIcon} title='Pages' />
-            <HomeLeftRow Icon={PeopleIcon} title='People' />
+            <HomeLeftRow Icon={Telegram} title='Messenger' />
+            <HomeLeftRow Icon={InfoOutlined} title='About Us' />
         </div>
     )
 }

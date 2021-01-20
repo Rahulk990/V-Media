@@ -46,6 +46,29 @@ router.post("/create/directRoom", (req, res) => {
 	});
 });
 
+router.post("/create/groupRoom", (req, res) => {
+	const roomData = {
+		title: req.body.title,
+		usersArray: [req.body.userId],
+	};
+
+	mongoRooms.create(roomData, (err2, data2) => {
+		if (err2) {
+			res.status(500).send("Unable to create Room");
+		} else {
+			const roomId = data2._id;
+			mongoUsers.findOneAndUpdate(
+				{ userId: req.body.userId },
+				{ $push: { roomsArray: roomId } },
+				{ returnOriginal: false },
+				(err3, data3) => {
+					if (err3) console.log(err);
+				}
+			);
+		}
+	});
+});
+
 // Retrieve all User Rooms
 router.get("/retrieve/rooms", (req, res) => {
 	mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
@@ -88,7 +111,7 @@ router.post("/upload/message", (req, res) => {
 	);
 });
 
-// Upload Messages from Room
+// Retrieve Messages from Room
 router.get("/retrieve/messages", (req, res) => {
 	mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
 		if (err) {
@@ -99,8 +122,20 @@ router.get("/retrieve/messages", (req, res) => {
 	});
 });
 
+// Delete Message from Room
+router.get("/delete/message", (req, res) => {
+	mongoRooms.findOneAndUpdate(
+		{ _id: req.query.roomId },
+		{ $pull: { messagesArray: { _id: req.query.messageId } } },
+		{ returnOriginal: false },
+		(err, data) => {
+			if (err) console.log(err);
+		}
+	);
+});
+
+// Add Member to Room
 router.get("/update/room/addMember", (req, res) => {
-	// console.log(req);
 	mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
 		if (err) {
 			console.log(err);
@@ -141,8 +176,8 @@ router.get("/update/room/addMember", (req, res) => {
 	});
 });
 
+// Remove Member from GroupRoom
 router.get("/update/room/removeMember", (req, res) => {
-	console.log("delete request here");
 	mongoUsers.findOneAndUpdate(
 		{ userId: req.query.userId },
 		{ $pull: { roomsArray: req.query.roomId } },
@@ -155,17 +190,13 @@ router.get("/update/room/removeMember", (req, res) => {
 					{ $pull: { usersArray: req.query.userId } },
 					(err2, data) => {
 						if (err2) console.log(err2);
-						// else {
-						// 	console.log(data, data.usersArray.length, roomId)
-						// }
 						else if (data.usersArray.length <= 1) {
-							console.log("deleting empty room");
 							mongoRooms.findOneAndDelete(
 								{ _id: req.query.roomId },
-								(err2, dataroom) => {
+								(err2, dataRoom) => {
 									if (err2) console.log(err2);
 									else {
-										res.send(dataroom);
+										res.send(dataRoom);
 									}
 								}
 							);
@@ -177,8 +208,8 @@ router.get("/update/room/removeMember", (req, res) => {
 	);
 });
 
+// Remove DirectRoom
 router.get("/update/room/removeDirectRoom", (req, res) => {
-	console.log("Direct Room Deleted");
 	const roomId = req.query.roomId;
 
 	mongoRooms.findOneAndUpdate(
@@ -187,31 +218,29 @@ router.get("/update/room/removeDirectRoom", (req, res) => {
 		(err, data) => {
 			if (err) console.log(err);
 			else {
-				console.log("deleting member", data);
+
 				data.usersArray.map((userId) => {
 					return mongoUsers.findOneAndUpdate(
 						{ userId: userId },
 						{ $pull: { roomsArray: roomId } },
 						(err1, data) => {
 							if (err1) console.log(err1);
-							console.log("Member Deleted", userId);
 						}
 					);
 				});
+
 				mongoRooms.findOneAndDelete(
 					{ _id: req.query.roomId },
-					(err2, dataroom) => {
+					(err2, dataRoom) => {
 						if (err2) console.log(err2);
 						else {
-							res.send(dataroom);
+							res.send(dataRoom);
 						}
 					}
 				);
-
-				// res.send(data);
-				console.log("Room data" + data);
 			}
 		}
 	);
 });
+
 export default router;

@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import './Chat.css'
 
 import { IconButton, Tooltip } from "@material-ui/core";
-import { Reply } from '@material-ui/icons';
+import { Delete, Reply } from '@material-ui/icons';
 import { selectMessagesData } from '../../ReduxStore/roomSlice';
+import removeMessage from '../../API/removeMessage';
 
-const Chat = ({ userId, message, setMessageReply }) => {
+const Chat = ({ roomId, userId, message, setMessageReply }) => {
 
     const messagesArray = useSelector(selectMessagesData)
     const [messageReplied, setMessageReplied] = useState(null);
@@ -15,11 +16,17 @@ const Chat = ({ userId, message, setMessageReply }) => {
         if (message && message.replyId) {
 
             const ind = messagesArray.findIndex(obj => obj._id === message.replyId)
-            setMessageReplied({
-                username: messagesArray[ind].username,
-                content: messagesArray[ind].content
-            })
-
+            if (messagesArray[ind]) {
+                setMessageReplied({
+                    username: messagesArray[ind].username,
+                    content: messagesArray[ind].content
+                })
+            } else {
+                setMessageReplied({
+                    username: 'Message has been deleted!',
+                    content: ''
+                })
+            }
         }
     }, [])
 
@@ -31,6 +38,11 @@ const Chat = ({ userId, message, setMessageReply }) => {
         }
         setMessageReply(messageReply)
     }
+
+    const handleDelete = async () => {
+        await removeMessage(roomId, message._id)
+    }
+
 
     return (
         <div className={`chat ${userId === message.userId && 'chat__sent'}`}>
@@ -58,10 +70,19 @@ const Chat = ({ userId, message, setMessageReply }) => {
                     </Tooltip>
 
                     <div className='chat__forward'>
+
                         <IconButton onClick={handleReplySelection}>
                             <Reply />
                         </IconButton>
+
+                        {userId === message.userId &&
+                            <IconButton onClick={handleDelete}>
+                                <Delete />
+                            </IconButton>
+                        }
+
                     </div>
+
                 </div>
 
             </div>

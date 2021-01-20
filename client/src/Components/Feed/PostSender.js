@@ -2,23 +2,61 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './PostSender.css'
 
-import { Avatar, Button } from '@material-ui/core'
-import { InsertEmoticon, PhotoLibrary, Videocam } from '@material-ui/icons'
+import { Avatar, Button, IconButton } from '@material-ui/core'
+import { Close, PhotoLibrary } from '@material-ui/icons'
 import { selectUser } from '../ReduxStore/appSlice'
 import uploadPost from '../API/uploadPost'
+import { storage } from '../../firebase'
 
 const PostSender = () => {
 
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
     const [postInput, setPostInput] = useState('')
+    const [postImage, setPostImage] = useState(null)
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            if (file.size > 1048576) {
+                alert('File must be less than 1MB')
+            } else {
+                setPostImage(e.target.files[0])
+            }
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // if (image) { 1:32 snap }
+        if (postImage && postInput.length > 0) {
+            console.log(postImage);
+            const imageName = Date.now() + postImage.name;
+            const uploadTask = storage.ref(`/images/${imageName}`).put(postImage)
+            uploadTask.on('state_changed',
+                (snapShot) => {
+                    // console.log(snapShot)
+                }, (err) => {
+                    // console.log(err)
+                }, () => {
+                    storage.ref('images').child(imageName).getDownloadURL()
+                        .then(fireBaseUrl => {
+                            const postData = {
+                                userId: user.userId,
+                                username: user.username,
+                                text: postInput,
+                                avatar: user.avatarSrc,
+                                imgName: fireBaseUrl,
+                                timestamp: Date.now()
+                            }
 
-        if (postInput.length > 0) {
+                            setPostInput('');
+                            setPostImage(null);
+                            uploadPost(dispatch, postData)
+                        })
+                })
+
+        } else if (postInput.length > 0) {
             const postData = {
                 userId: user.userId,
                 username: user.username,
@@ -56,23 +94,22 @@ const PostSender = () => {
 
             <div className='postSender__bottom'>
 
-                <div className='postSender__option'>
-                    <Videocam style={{ color: "red" }} />
-                    <h3> Live Video </h3>
-                </div>
-
-                <div className='postSender__option'>
+                <div className={`postSender__option ${postImage && 'postSender__option--disable'}`}>
                     <PhotoLibrary style={{ color: "green" }} />
                     <h3> Photos/Videos </h3>
+                    <input type='file' onChange={handleImageChange} />
                 </div>
 
-                <div className='postSender__option'>
-                    <InsertEmoticon style={{ color: "orange" }} />
-                    <h3> Feelings/Activity </h3>
-                </div>
+                {postImage &&
+                    <div className='postSender__optionClose'>
+                        <IconButton onClick={() => setPostImage(null)}>
+                            <Close />
+                        </IconButton>
+                    </div>
+                }
 
             </div>
-        </div>
+        </div >
     )
 }
 

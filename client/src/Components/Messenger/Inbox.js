@@ -60,8 +60,8 @@ const Inbox = ({ roomId, roomInfo }) => {
                     <RoomSettings
                         roomId={roomId}
                         isGroup={roomInfo.isGroup}
-                        usersArray={roomInfo.usersArray} />
-
+                        usersArray={roomInfo.usersArray}
+                    />
                 </div>
 
             </div>
@@ -73,6 +73,7 @@ const Inbox = ({ roomId, roomInfo }) => {
                             messages.map(message => (
                                 <Chat
                                     key={message.timestamp + message.content}
+                                    roomId={roomId}
                                     userId={user.userId}
                                     message={message}
                                     setMessageReply={setMessageReply}

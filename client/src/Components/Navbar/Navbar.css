@@ -132,7 +132,6 @@
 }
 
 .navbar__settings {
-  margin-left: 10px;
   display: flex;
   align-items: center;
 }
@@ -143,51 +142,24 @@
 
 /* ### Notification Dropdown ### */
 
-.navbar__settingsNotification {
+.navbar__settingsOption {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
-.navbar__settingsNotification > button {
+.navbar__settingsOption > button {
   padding: 0;
-  color: #056be1;
-  background-color: #dae6f1;
+  color: #5a5858;
   cursor: pointer;
-}
-
-.navbar__settingsNotification .MuiBadge-badge {
-  position: absolute;
-  right: 5px;
-  top: 10px;
-  size: 10px;
-  font-size: 10px;
-}
-.navbar__settingsNotification--disable > button {
-  color: #1a1919;
   background-color: #f1f2f5;
 }
 
-.navbar__settingsSetting {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-left: 5px;
-}
-
-.navbar__settingsSetting > button {
-  padding: 0;
+.navbar__settingsOption > button:hover {
   color: #056be1;
   background-color: #dae6f1;
-  cursor: pointer;
-}
-
-.navbar__settingsSetting--disable > button {
-  color: #1a1919;
-  background-color: #f1f2f5;
 }
 
 .navbar__iconButton {

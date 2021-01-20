@@ -49,14 +49,6 @@ const io = new socketIo.Server(server, {
 io.on("connection", (socket) => {
 	console.log("User Connected");
 
-	socket.emit(
-		"temp",
-		{
-			data: "ABCD",
-		},
-		1000
-	);
-
 	socket.on("disconnect", () => {
 		console.log("User Disconnected");
 	});
@@ -88,19 +80,16 @@ mongoose.connection.once("open", () => {
 		}
 	});
 
-	//-----messenger------
-	const msgCollection = mongoose.connection.collection("rooms");
-	const changeStream1 = msgCollection.watch();
+	const changeStream1 = mongoose.connection.collection("rooms").watch();
 	changeStream1.on("change", (change) => {
-		if (
-			change.operationType === "insert" ||
-			change.operationType === "update"
-		) {
+
+		if (change.operationType === "insert" || change.operationType === "update")
 			pusher.trigger("messages", "inserted", "Update Rooms");
-		}
+
 		if (change.operationType === "update") {
 			pusher.trigger("messages", "updated", "Update Messages");
 		}
+		
 	});
 });
 
@@ -109,30 +98,3 @@ app.use(eventRoutes);
 app.use(postRoutes);
 app.use(roomRoutes);
 app.use(userRoutes);
-
-app.post("/create/roomGroup", (req, res) => {
-	const roomData = {
-		title: req.body.title,
-		usersArray: [req.body.userId],
-	};
-
-	mongoRooms.create(roomData, (err2, data2) => {
-		if (err2) {
-			res.status(500).send("Unable to create Room");
-		} else {
-			const roomId = data2._id;
-			mongoUsers.findOneAndUpdate(
-				{ userId: req.body.userId },
-				{ $push: { roomsArray: roomId } },
-				{ returnOriginal: false },
-				(err3, data3) => {
-					if (err3) {
-						console.log(err);
-					} else {
-						res.status(201).send(data3.roomsArray);
-					}
-				}
-			);
-		}
-	});
-});

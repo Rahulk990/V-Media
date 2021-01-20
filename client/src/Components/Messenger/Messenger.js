@@ -23,7 +23,6 @@ const Messenger = () => {
             dispatch(setCurrentRoom(null))
             setRoomPath(null)
         }
-
     }, [location])
 
     return (

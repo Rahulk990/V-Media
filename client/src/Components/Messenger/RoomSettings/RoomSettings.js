@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import "./RoomSettings.css";
 
 import { selectUser } from "../../ReduxStore/appSlice";
@@ -18,22 +18,18 @@ import removeDirectRoom from "../../API/removeDirectRoom";
 
 
 const RoomSettings = ({ roomId, isGroup, usersArray }) => {
-	const [addMemberDialog, setAddMemberDialog] = useState(false);
-	const [viewMembersDialog, setViewMembersDialog] = useState(false);
 
 	const history = useHistory()
 	const user = useSelector(selectUser);
+	const [addMemberDialog, setAddMemberDialog] = useState(false);
+	const [viewMembersDialog, setViewMembersDialog] = useState(false);
 
 	const exitFromGroup = async (e) => {
-		e.preventDefault();
-		console.log("group room remove");
 		await removeMember(user.userId, roomId);
 		history.replace('/messenger')
 	};
 
 	const deleteRoom = async (e) => {
-		// e.preventDefault();
-		console.log("direct room remove");
 		await removeDirectRoom(user.userId, roomId);
 		history.replace('/messenger')
 	};
@@ -42,6 +38,7 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 		<>
 			{(isGroup === "group") ? (
 				<div className="roomSettings">
+
 					<Tooltip title="Add Member" enterDelay={1000}>
 						<div
 							className="roomSetting__listOption"
@@ -55,6 +52,7 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 
 					{addMemberDialog && (
 						<OutsideAlerter
+							open={addMemberDialog}
 							outsideHandler={() => setAddMemberDialog(!addMemberDialog)}
 							component={<AddMember roomId={roomId} />}
 						/>
@@ -73,15 +71,14 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 
 					{viewMembersDialog && (
 						<OutsideAlerter
+							open={viewMembersDialog}
 							outsideHandler={() => setViewMembersDialog(!viewMembersDialog)}
 							component={
-								<>
-									<div className="groupMember__dialog">
-										{usersArray.map((userId) => (
-											<GroupMember userId={userId} />
-										))}
-									</div>
-								</>
+								<div className="groupMember__dialog">
+									{usersArray.map((userId) => (
+										<GroupMember key={userId} userId={userId} />
+									))}
+								</div>
 							}
 						/>
 					)}
@@ -93,18 +90,21 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 							</IconButton>
 						</div>
 					</Tooltip>
+
 				</div>
 			) : (
-				<div className="roomSettings">
-					<Tooltip title="Exit" enterDelay={1000}>
-						<div className="roomSetting__listOption">
-							<IconButton onClick={deleteRoom}>
-								<ExitToAppRounded />
-							</IconButton>
-						</div>
-					</Tooltip>
-				</div>
-			)}
+					<div className="roomSettings">
+
+						<Tooltip title="Exit" enterDelay={1000}>
+							<div className="roomSetting__listOption">
+								<IconButton onClick={deleteRoom}>
+									<ExitToAppRounded />
+								</IconButton>
+							</div>
+						</Tooltip>
+
+					</div>
+				)}
 		</>
 	);
 };

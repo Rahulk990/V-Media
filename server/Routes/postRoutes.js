@@ -19,16 +19,17 @@ router.post('/upload/post', (req, res) => {
 
 // Retrieve all Posts
 router.get('/retrieve/posts', (req, res) => {
-    mongoPosts.find((err, data) => {
+    mongoPosts.find(
+        (err, data) => {
 
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            data.sort((a, b) => { return b.timestamp - a.timestamp })
-            res.send(data)
-        }
+            if (err) {
+                res.status(500).send(err)
+            } else {
+                data.sort((a, b) => { return b.timestamp - a.timestamp })
+                res.send(data)
+            }
 
-    })
+        })
 })
 
 // Delete Post

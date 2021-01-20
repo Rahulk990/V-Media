@@ -4,18 +4,19 @@ import "./AddMember.css";
 import addMember from "../../API/addMember"
 import { IconButton } from "@material-ui/core";
 import { AddRounded } from "@material-ui/icons";
-import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-const AddMember = ({ roomId }) => {
+const AddMember = ({ roomId, onClose }) => {
 
-	const dispatch = useDispatch()
-
+	const history = useHistory()
 	const [newMember, setNewMember] = useState("")
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		await addMember(dispatch, newMember, roomId)
 		setNewMember("");
+		await addMember(newMember, roomId)
+		history.replace('/messenger')
 	}
+
 	return (
 		<div className="addMember__dialog">
 			<div className="addMember__dialogInput">

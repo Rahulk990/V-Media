@@ -11,7 +11,10 @@ const Login = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	checkAuth(dispatch, history);
+	useEffect(() => {
+		checkAuth(dispatch, history);
+	}, [])
+
 	const signInHandler = async () => {
 		await createUser();
 	};

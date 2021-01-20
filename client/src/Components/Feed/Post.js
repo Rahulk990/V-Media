@@ -12,6 +12,7 @@ import deletePost from '../API/deletePost'
 import removeLike from '../API/removeLike'
 import addLike from '../API/addLike'
 import fetchPostData from '../API/fetchPostData'
+import { storage } from '../../firebase'
 
 const Post = ({ post }) => {
 
@@ -20,6 +21,7 @@ const Post = ({ post }) => {
     const [showComments, setShowComments] = useState(false)
 
     const handleDelete = async () => {
+        storage.refFromURL(post.imgName).delete()
         await deletePost(dispatch, user.userId, post._id)
     }
 
@@ -78,8 +80,8 @@ const Post = ({ post }) => {
             </div>
 
             <div className='post__image'>
-                {post.image && <img
-                    src={post.image}
+                {post.imgName && <img
+                    src={post.imgName}
                     alt=''
                 />}
             </div>
@@ -105,7 +107,7 @@ const Post = ({ post }) => {
 
             </div>
 
-            { showComments &&
+            {showComments &&
                 <div className='post__comments'>
 
                     {

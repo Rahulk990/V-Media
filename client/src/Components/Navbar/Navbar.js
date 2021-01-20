@@ -3,18 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import "./Navbar.css";
 
+import { auth } from "../../firebase";
 import Badge from "@material-ui/core/Badge";
-import OutsideAlerter from "../Misc/OutsideAlerter";
-import NotificationList from "./NotificationList";
-import SettingsList from "./SettingsList";
 import { selectUser } from '../ReduxStore/appSlice'
 import { Avatar, Tooltip, IconButton } from "@material-ui/core";
 import {
 	Search,
 	Home,
 	Telegram,
-	NotificationsActive,
-	ExpandMoreOutlined,
+	ExitToAppRounded,
+	InfoOutlined,
 } from "@material-ui/icons";
 
 const Navbar = () => {
@@ -33,40 +31,11 @@ const Navbar = () => {
 
 	}, [location])
 
-	const [notificationDropdown, setNotificationDropdown] = useState(false);
-	const showNotificationList = () => {
-		setNotificationDropdown(true);
-		document
-			.getElementsByClassName("navbar__settingsNotification")[0]
-			.classList.remove("navbar__settingsNotification--disable");
-	};
-	const handleNotificationSelection = (id) => {
-		if (id) {
-			// Do related work
-		}
-		setNotificationDropdown(false);
-		document
-			.getElementsByClassName("navbar__settingsNotification")[0]
-			.classList.add("navbar__settingsNotification--disable");
-	};
-
-	const [settingsDropdown, setSettingsDropdown] = useState(false);
-	const showSettingList = () => {
-		setSettingsDropdown(true);
-		document
-			.getElementsByClassName("navbar__settingsSetting")[0]
-			.classList.remove("navbar__settingsSetting--disable");
-	};
-	const handleSettingSelection = (id) => {
-		setSettingsDropdown(false);
-		document
-			.getElementsByClassName("navbar__settingsSetting")[0]
-			.classList.add("navbar__settingsSetting--disable");
-	};
-
 	return (
 		<div className="navbar">
+
 			<div className="navbar__left">
+
 				<div className="navbar__logo">
 					<Avatar src="https://upload.wikimedia.org/wikipedia/commons/a/aa/V-logo.svg" />
 				</div>
@@ -75,9 +44,11 @@ const Navbar = () => {
 					<Search />
 					<input placeholder="Type here" />
 				</div>
+
 			</div>
 
 			<div className="navbar__center">
+
 				<Tooltip title="Home" enterDelay={1000}>
 					<div
 						id="home"
@@ -88,16 +59,6 @@ const Navbar = () => {
 					</div>
 				</Tooltip>
 
-				{/* <Tooltip title="Teams" enterDelay={1000}>
-					<div
-						id="teams"
-						className="navbar__option "
-						onClick={() => history.push("/teams")}
-					>
-						<People />
-					</div>
-				</Tooltip> */}
-
 				<Tooltip title="Messenger" enterDelay={1000}>
 					<div
 						id="messenger"
@@ -107,9 +68,11 @@ const Navbar = () => {
 						<Telegram />
 					</div>
 				</Tooltip>
+
 			</div>
 
 			<div className="navbar__right">
+
 				<div id='profile' className="navbar__info" onClick={() => history.push("/profile")}>
 					<Avatar
 						src={user.avatarSrc}
@@ -119,51 +82,43 @@ const Navbar = () => {
 				</div>
 
 				<div className="navbar__settings">
-					<Tooltip title="Notifications" enterDelay={1000}>
+
+					<Tooltip
+						title="About Us"
+						enterDelay={1000}
+					>
 						<div
-							className="navbar__settingsNotification navbar__settingsNotification--disable"
-							onClick={() => showNotificationList()}
+							className="navbar__settingsOption"
+							onClick={() => history.replace('/profile')}
 						>
+
 							<IconButton>
-								{/* <Badge badgeContent={4} color="primary"> */}
-								<NotificationsActive
-									style={{ height: "20px", width: "20px" }}
-								/>
-								{/* </Badge> */}
+								<InfoOutlined style={{ height: "20px", width: "20px" }} />
 							</IconButton>
 
-							{notificationDropdown && (
-								<OutsideAlerter
-									outsideHandler={handleNotificationSelection}
-									component={<NotificationList />}
-								/>
-							)}
 						</div>
 					</Tooltip>
 
-					<Tooltip title="Account" enterDelay={1000}>
+					<Tooltip
+						title="Logout"
+						enterDelay={1000}
+					>
 						<div
-							className="navbar__settingsSetting navbar__settingsSetting--disable"
-							onClick={() => showSettingList()}
+							className="navbar__settingsOption"
+							onClick={() => auth.signOut()}
 						>
+
 							<IconButton>
-								<ExpandMoreOutlined style={{ height: "20px", width: "20px" }} />
+								<ExitToAppRounded style={{ height: "20px", width: "20px" }} />
 							</IconButton>
 
-							{settingsDropdown && (
-								<OutsideAlerter
-									outsideHandler={handleSettingSelection}
-									component={
-										<SettingsList
-											history={history}
-										/>
-									}
-								/>
-							)}
 						</div>
 					</Tooltip>
+
 				</div>
+			
 			</div>
+		
 		</div>
 	);
 };

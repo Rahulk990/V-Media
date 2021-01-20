@@ -2,7 +2,7 @@ import axios from "../Misc/axios"
 import { appendRoomsData, setRoomsData } from "../ReduxStore/roomSlice";
 
 const fetchRoomData = async (dispatch, roomId) => {
-    await axios.get('retrieve/roomData', { params: { roomId: roomId } })
+    axios.get('retrieve/roomData', { params: { roomId: roomId } })
         .then(res => dispatch(appendRoomsData(res.data)))
 
 }

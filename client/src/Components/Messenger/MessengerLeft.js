@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import './MessengerLeft.css'
 
 import Room from './Room'
@@ -7,47 +7,38 @@ import { IconButton } from "@material-ui/core"
 import { Add } from '@material-ui/icons'
 import { selectRoomsData } from '../ReduxStore/roomSlice'
 import { selectUser } from '../ReduxStore/appSlice'
+
 import addDirectRoom from '../API/addDirectRoom'
-import axios from "../Misc/axios";
+import addGroupRoom from '../API/addGroupRoom'
+
 const MessengerLeft = ({ setRoomInfo }) => {
 
     const user = useSelector(selectUser)
     const roomsData = useSelector(selectRoomsData)
     const [userInput, setUserInput] = useState('')
     const [option, setOption] = useState('direct')
-    const dispatch = useDispatch()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (option === 'direct') {
-            const queryData = {
-                userId: user.userId,
-                userEmail: userInput
-            }
+        if (userInput) {
+            if (option === 'direct') {
+                const queryData = {
+                    userId: user.userId,
+                    userEmail: userInput
+                }
 
-            setUserInput('');
-            await addDirectRoom(queryData)
-        }
+                setUserInput('');
+                await addDirectRoom(queryData)
+            } else {
+                const queryData = {
+                    userId: user.userId,
+                    title: userInput
+                }
 
-            
-         else {
-            const queryData = {
-                userId: user.userId,
-                title: userInput
+                setUserInput('');
+                await addGroupRoom(queryData)
             }
-            setUserInput('');
-            await axios.post('/create/roomGroup', queryData)
-                .then((res) => {
-                    axios.get('retrieve/roomsData', {
-                        params: {
-                            roomIds: res.data
-                        }
-                    })
-                        // .then((res2) => {
-                        //     dispatch(setData(res2.data))
-                        // })
-                })
         }
 
     }
