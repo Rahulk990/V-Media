@@ -43,7 +43,7 @@ router.get('/delete/post', (req, res) => {
 
 // Retrieve Post Data
 router.get('/retrieve/postData', (req, res) => {
-    mongoPosts.find({ _id: req.query.postId },
+    mongoPosts.findOne({ _id: req.query.postId },
         (err, data) => {
 
             if (err) {

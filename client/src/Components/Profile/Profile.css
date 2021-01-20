@@ -29,12 +29,12 @@
   top: -80px;
   width: 175px;
   border-radius: 100%;
-  border: 6px solid #eff2f5;
+  border: 6px solid rgb(223, 247, 247);
 }
 
 .profile__card__info {
-    padding-bottom: 10px;
-  border-bottom: 1px solid #eff2f5;
+  padding-bottom: 10px;
+  border-bottom: 1px solid lightgray;
 }
 
 .profile__card__info__name {
@@ -54,4 +54,24 @@
 }
 
 .profile__feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgb(223, 247, 247);
+  border-radius: 30px;
+}
+
+.profile__feed > h3 {
+  font-weight: 600;
+  font-size: 25px;
+}
+
+.profile__feedPosts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }

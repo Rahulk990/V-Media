@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+
 import axios from '../Misc/axios'
+import PostMiddleware from './PostMiddleware'
 
 import './Profile.css'
 const Profile = () => {
@@ -38,16 +40,21 @@ const Profile = () => {
                     </div>
 
                     <div className='profile__feed'>
+                        <h3> Posts </h3>
+                        <div className='profile__feedPosts'>
 
-                        {/* {user && user.usersArray.map(post => (
-                            <Post
-                                key={post._id}
-                                post={post}
-                            />
-                        ))
-                        } */}
+                            {user && user.postsArray.map(postId => (
+                                <PostMiddleware
+                                    key={postId._id}
+                                    postId={postId}
+                                />
+                            ))
+                            }
 
+                        </div>
                     </div>
+
+
 
                 </div>
 

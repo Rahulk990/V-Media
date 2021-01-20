@@ -100,7 +100,8 @@ const Post = ({ post }) => {
                     <p>{post.likesArray.length}</p>
                 </div>
 
-                <div className={`post__option ${showComments && 'post__option--active'}`}
+                <div
+                    className={`post__option ${showComments && 'post__option--active'}`}
                     onClick={() => setShowComments(!showComments)}
                 >
                     <ChatBubbleOutline />

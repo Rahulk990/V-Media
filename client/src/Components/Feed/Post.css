@@ -114,6 +114,7 @@
 
 .post__option--active {
   color: #2e81f4;
+  margin-bottom: 10px;
 }
 
 /* Post Comments */
