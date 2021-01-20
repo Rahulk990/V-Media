@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import Post from '../Feed/Post'
 import axios from '../Misc/axios'
 
 import './Profile.css'

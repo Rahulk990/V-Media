@@ -104,7 +104,7 @@ const Main = () => {
 								<Home />
 							</Route>
 
-							<Route path="/profile">
+							<Route path="/user">
 								<Profile />
 							</Route>
 

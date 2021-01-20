@@ -38,6 +38,11 @@
 
 .post__avatar {
   margin-right: 10px;
+  cursor: pointer;
+}
+
+.post__avatar:hover {
+  box-shadow: 0 1px 10px 10px #ebebeb;
 }
 
 .post__topLeft {
@@ -48,6 +53,11 @@
 .post__topInfo > h3 {
   font-size: 15px;
   font-weight: 650;
+  cursor: pointer;
+}
+
+.post__topInfo > h3:hover {
+  text-decoration: underline;
 }
 
 .post__topInfo > p {

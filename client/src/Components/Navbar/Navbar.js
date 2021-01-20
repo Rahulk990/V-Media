@@ -79,7 +79,7 @@ const Navbar = () => {
 				<div
 					id='profile'
 					className="navbar__info"
-					onClick={() => history.push("/profile/" + user.userId)}
+					onClick={() => history.push("/user/" + user.userId)}
 				>
 
 					<Avatar

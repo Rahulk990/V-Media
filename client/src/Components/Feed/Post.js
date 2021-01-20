@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import './Post.css'
 
 import Comment from './Comments'
@@ -16,6 +17,7 @@ import { storage } from '../../firebase'
 
 const Post = ({ post }) => {
 
+    const history = useHistory()
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
     const [showComments, setShowComments] = useState(false)
@@ -45,10 +47,11 @@ const Post = ({ post }) => {
                     <Avatar
                         className='post__avatar'
                         src={post.avatar}
+                        onClick={() => history.replace('/user/' + user.userId)}
                     />
 
                     <div className='post__topInfo'>
-                        <h3>{post.username}</h3>
+                        <h3 onClick={() => history.replace('/user/' + user.userId)}>{post.username}</h3>
                         <p> {new Date(parseInt(post.timestamp)).toLocaleString()} </p>
                     </div>
                 </div>
