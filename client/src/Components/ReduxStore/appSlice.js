@@ -23,7 +23,7 @@ export const appSlice = createSlice({
         },
 
         setEvents: (state, action) => {
-            action.payload.sort((a,b) => a.timestamp - b.timestamp)
+            action.payload.sort((a, b) => a.timestamp - b.timestamp)
             state.events = action.payload
         },
 
@@ -32,6 +32,7 @@ export const appSlice = createSlice({
         },
 
         setRooms: (state, action) => {
+            action.payload.sort((a, b) => a._id - b._id)
             state.rooms = action.payload
         }
     },

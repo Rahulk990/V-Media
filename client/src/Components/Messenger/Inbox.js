@@ -11,9 +11,11 @@ import { EmojiEmotions, Send } from '@material-ui/icons';
 import { selectUser } from '../ReduxStore/appSlice'
 import { selectRoomsData } from '../ReduxStore/roomSlice';
 import addMessage from '../API/addMessage'
+import { useHistory } from 'react-router-dom';
 
 const Inbox = ({ roomId, roomInfo }) => {
 
+    const history = useHistory()
     const user = useSelector(selectUser)
     const roomsData = useSelector(selectRoomsData)
 
@@ -23,6 +25,8 @@ const Inbox = ({ roomId, roomInfo }) => {
             const ind = roomsData.findIndex(obj => obj._id === roomId)
             if(roomsData[ind]){
                 setMessages(roomsData[ind].messagesArray);
+            } else {
+                history.replace('/messenger')
             }
         }
     }, [roomId, roomsData])
