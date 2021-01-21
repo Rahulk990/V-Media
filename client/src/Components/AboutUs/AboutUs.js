@@ -4,6 +4,8 @@ import {
 	LinkedIn,
 	GitHub,
 	PermIdentityRounded,
+    Twitter,
+    Mail,
 } from "@material-ui/icons";
 import { IconButton, Tooltip } from "@material-ui/core";
 const AboutUs = () => {
@@ -12,41 +14,68 @@ const AboutUs = () => {
             <div className='about__heading'>
                 Meet the Team
             </div>
-            <div className='container_1'>
-                <div>
-                <div className='puneet_img'>
-                <img src='https://financerewind.com/wp-content/uploads/2020/06/7b790c831c72c5dd3b3275833df09f29.jpg'/>
+            <div className='card_container'>
+            <div className='card_1 card'>
+                <div className='card_img'>
+                    <img src = 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg'/>
                 </div>
-                <div className='logos'>
-                    <IconButton>
+                
+                <div className='card_socialmedia'>
+                    <IconButton className='blue'>
                         <LinkedIn/>
                     </IconButton>
-                    <IconButton>
+                    <IconButton className='black'>
                         <GitHub/>
                     </IconButton>
+                    <IconButton className='blue'>
+                        <Twitter/>
+                    </IconButton>
+                    <IconButton className='red'>
+                        <Mail/>
+                    </IconButton>
                 </div>
+                <div className='name align_center'>
+                    <h3>Puneet Jangid</h3>
                 </div>
-                <div className='puneet_info'>
-                I m great best person of the world
+                <div className='college_info'>
+                    <div className='college_name align_center'>
+                        <h5>Delhi Technological University</h5>
+                    </div>
+                    <div className='degree align_center'>
+                        <h6>Computer Engineering</h6>
+                    </div>
                 </div>
             </div>
-            <div className='container_1'>
-                <div className='puneet_info'>
-                I m great best person of the world
+            <div className='card_2 card'>
+                <div className='card_img'>
+                    <img src = 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg'/>
                 </div>
-                <div>
-                <div className='puneet_img'>
-                <img src='https://financerewind.com/wp-content/uploads/2020/06/7b790c831c72c5dd3b3275833df09f29.jpg'/>
-                </div>
-                <div className='logos'>
-                    <IconButton>
+                <div className='card_socialmedia'>
+                    <IconButton className='blue'>
                         <LinkedIn/>
                     </IconButton>
-                    <IconButton>
+                    <IconButton className='black'>
                         <GitHub/>
                     </IconButton>
+                    <IconButton className='blue'>
+                        <Twitter/>
+                    </IconButton>
+                    <IconButton className='red'>
+                        <Mail/>
+                    </IconButton>
                 </div>
+                <div className='name align_center'>
+                    <h3>Rahul</h3>
                 </div>
+                <div className='college_info'>
+                    <div className='college_name align_center'>
+                        <h5>Delhi Technological University</h5>
+                    </div>
+                    <div className='degree align_center'>
+                        <h6>Computer Engineering</h6>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     )
