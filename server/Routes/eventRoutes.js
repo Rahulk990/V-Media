@@ -13,7 +13,7 @@ router.post('/upload/event', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(201).send(data)
             }
 
@@ -29,7 +29,7 @@ router.get('/retrieve/events', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(200).send(data)
             }
 
@@ -46,7 +46,7 @@ router.get('/delete/event', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(201).send(data)
             }
 

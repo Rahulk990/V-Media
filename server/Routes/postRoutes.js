@@ -10,7 +10,7 @@ router.post('/upload/post', (req, res) => {
 
         if (err) {
             res.status(500).send(err)
-        } else {
+        } else if (data) {
             res.redirect('userPost/?userId=' + req.body.userId + '&postId=' + data._id)
         }
 
@@ -48,7 +48,7 @@ router.get('/retrieve/postData', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.send(data)
             }
 
@@ -66,7 +66,7 @@ router.get('/update/post/addLike', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(201).send(data)
             }
 
@@ -84,7 +84,7 @@ router.get('/update/post/removeLike', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(201).send(data)
             }
 
@@ -102,7 +102,7 @@ router.post('/update/post/addComment', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(201).send(data)
             }
 
@@ -120,7 +120,7 @@ router.get('/update/post/removeComment', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(201).send(data)
             }
 
@@ -139,7 +139,7 @@ router.get('/upload/userPost', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(201).send(data)
             }
 
@@ -155,7 +155,7 @@ router.get('/retrieve/userPosts', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(200).send(data)
             }
 
@@ -172,7 +172,7 @@ router.get('/delete/userPost', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else if (data) {
+            } else {
                 res.status(201).send(data)
             }
 

@@ -89,7 +89,7 @@ router.get("/retrieve/roomData", (req, res) => {
 	mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
 		if (err) {
 			res.status(500).send(err);
-		} else if (data) {
+		} else if (data){
 			data.messagesArray.sort((a, b) => b.timestamp - a.timestamp)
 			res.send(data);
 		}
@@ -105,7 +105,7 @@ router.post("/upload/message", (req, res) => {
 		(err, data) => {
 			if (err) {
 				console.log(err);
-			} else if (data) {
+			} else {
 				res.status(201).send(data);
 			}
 		}
@@ -117,7 +117,7 @@ router.get("/retrieve/messages", (req, res) => {
 	mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
 		if (err) {
 			res.status(500).send(err);
-		} else if (data){
+		} else {
 			res.send(data);
 		}
 	});

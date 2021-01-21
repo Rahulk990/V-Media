@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect } from "react"
+import { useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import "./Navbar.css";
 
 import { auth } from "../../firebase";
-import Badge from "@material-ui/core/Badge";
 import { selectUser } from '../ReduxStore/appSlice'
-import { Avatar, Tooltip, IconButton } from "@material-ui/core";
+import { Avatar, Tooltip } from "@material-ui/core";
 import {
 	Search,
 	Home,
@@ -23,7 +22,7 @@ const Navbar = () => {
 
 	useEffect(() => {
 		const id = (location.pathname).split('/')[1]
-		if (id === 'home' || id === 'messenger') {
+		if ((id === 'home' || id === 'messenger') && document.getElementById(id)) {
 			document.getElementById(id).classList.add("navbar__option--active");
 			return () => {
 				document.getElementById(id).classList.remove("navbar__option--active");

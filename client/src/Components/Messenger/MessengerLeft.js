@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import './MessengerLeft.css'
 
@@ -15,6 +15,7 @@ const MessengerLeft = ({ setRoomInfo }) => {
 
     const user = useSelector(selectUser)
     const roomsData = useSelector(selectRoomsData)
+    const [sortedRooms, setSortedRooms] = useState([])
     const [userInput, setUserInput] = useState('')
     const [option, setOption] = useState('direct')
 
@@ -49,6 +50,17 @@ const MessengerLeft = ({ setRoomInfo }) => {
         document.getElementById('group').classList.remove("messengerLeft__navbarBtn--active");
         document.getElementById(id).classList.toggle("messengerLeft__navbarBtn--active");
     }
+
+    useEffect(() => {
+        const rooms = [...roomsData]
+        rooms.sort((a, b) => {
+            if (a.messagesArray.length === 0) return 0;
+            if (b.messagesArray.length === 0) return 1;
+            return b.messagesArray[0].timestamp - a.messagesArray[0].timestamp;
+        })
+        setSortedRooms(rooms)
+    }, [roomsData])
+
 
     return (
         <div className='messengerLeft'>
@@ -101,8 +113,8 @@ const MessengerLeft = ({ setRoomInfo }) => {
 
             <div className='messengerLeft__rooms'>
 
-                {(option === 'direct' && roomsData) &&
-                    roomsData.map(room => (
+                {(option === 'direct' && sortedRooms) &&
+                    sortedRooms.map(room => (
                         !room.title &&
                         <Room
                             key={room._id}
@@ -115,8 +127,8 @@ const MessengerLeft = ({ setRoomInfo }) => {
                     ))
                 }
 
-                {(option === 'group' && roomsData) &&
-                    roomsData.map(room => (
+                {(option === 'group' && sortedRooms) &&
+                    sortedRooms.map(room => (
                         room.title &&
                         <Room
                             key={room._id}
