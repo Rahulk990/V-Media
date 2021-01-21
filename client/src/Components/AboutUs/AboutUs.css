@@ -27,7 +27,7 @@
     position: relative;
 }
 .card{
-    background-color: #bee5d3;
+    background-color: #bbf1fa;
     border-radius: 10px;
     padding:50px
 }
@@ -39,10 +39,15 @@
     width: 150px;
     height:150px;
     border-radius: 100%;
+    border: 5px solid #fff;
 }
 .card_socialmedia{
+    display: flex;
     margin-top: 20px;
     padding:10px;
+}
+.card_socialmedia form{
+    width: fit-content;
 }
 .name{
     margin-bottom: 20px;
