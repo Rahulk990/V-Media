@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom'
 import "./GroupMember.css";
 
 import axios from "../../Misc/axios";
 import { Avatar, Tooltip } from "@material-ui/core";
 
 const GroupMember = ({ userId }) => {
+
+    const history = useHistory()
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -20,7 +23,10 @@ const GroupMember = ({ userId }) => {
                 enterDelay={1000}
                 placement="left"
             >
-                <div className="groupMember__listItem">
+                <div
+                    className="groupMember__listItem"
+                    onClick={() => history.replace('/user/' + user.userId)}
+                >
                     <Avatar
                         style={{ height: '25px', width: '25px' }}
                         src={user.avatar}

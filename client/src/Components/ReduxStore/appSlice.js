@@ -32,10 +32,9 @@ export const appSlice = createSlice({
         },
 
         setRooms: (state, action) => {
-            console.log(action.payload)
             action.payload.sort((a, b) => a._id - b._id)
-            if (!(state.rooms.length === action.payload.length && state.rooms.every((v, i) => v === action.payload[i]))) {
-                console.log(action.payload)
+            if (!(state.rooms.length === action.payload.length &&
+                state.rooms.every((v, i) => v === action.payload[i]))) {
                 state.rooms = action.payload
             }
         }

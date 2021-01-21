@@ -7,7 +7,7 @@ import { Avatar } from '@material-ui/core'
 import { selectUser } from '../ReduxStore/appSlice'
 import axios from '../Misc/axios'
 
-const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
+const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recentMessageContent }) => {
 
     const history = useHistory()
     const user = useSelector(selectUser)
@@ -36,16 +36,33 @@ const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
         })
     }
 
+    const sliceMessage = () => {
+        if(recentMessageContent.length <= 20) {
+            return recentMessageContent;
+        } else {
+            return recentMessageContent.slice(0, 20) + '...';
+        }
+    }
+
     return (
         <div className='room' onClick={handleSelect}>
             <Avatar
                 className="room__avatar"
-                style={{ "height": "25px", "width": "25px" }}
+                style={{ "height": "30px", "width": "30px" }}
                 src={newUser.avatar}
             />
 
-            <p>{newUser.name}</p>
+            <div className='room__content'>
+                <p>{newUser.name}</p>
 
+                {recentMessageUser.length > 0 &&
+                    <div className='room__contentRecent'>
+                        <h3>{recentMessageUser + ':'}</h3>
+                        <p>{sliceMessage()}</p>
+                    </div>
+                }
+
+            </div>
         </div>
     )
 }

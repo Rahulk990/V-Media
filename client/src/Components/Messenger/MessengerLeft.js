@@ -109,6 +109,8 @@ const MessengerLeft = ({ setRoomInfo }) => {
                             roomId={room._id}
                             usersArray={room.usersArray}
                             setRoomInfo={setRoomInfo}
+                            recentMessageUser={(room.messagesArray.length) ? (room.messagesArray[0].username) : ('')}
+                            recentMessageContent={(room.messagesArray.length) ? (room.messagesArray[0].content) : ('')}
                         />
                     ))
                 }
@@ -122,6 +124,8 @@ const MessengerLeft = ({ setRoomInfo }) => {
                             title={room.title}
                             usersArray={room.usersArray}
                             setRoomInfo={setRoomInfo}
+                            recentMessageUser={(room.messagesArray.length) ? (room.messagesArray[0].username) : ('')}
+                            recentMessageContent={(room.messagesArray.length) ? (room.messagesArray[0].content) : ('')}
                         />
                     ))
                 }
