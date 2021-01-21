@@ -17,3 +17,11 @@
     position: relative;
 }
 
+.container_1{
+    display: flex;
+}
+.puneet_img img{
+    height:80px;
+    width:80px;
+    border-radius: 100%;
+}
