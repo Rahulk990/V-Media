@@ -82,9 +82,6 @@ mongoose.connection.once("open", () => {
 
 	const changeStream1 = mongoose.connection.collection("rooms").watch();
 	changeStream1.on("change", (change) => {
-
-		console.log(change);
-
 		if (change.operationType === "insert" ||
 			(change.operationType === "update" && change.updateDescription.updatedFields.usersArray))
 			pusher.trigger("messages", "inserted", "Update Rooms");

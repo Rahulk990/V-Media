@@ -23,7 +23,7 @@ const Post = ({ post }) => {
     const [showComments, setShowComments] = useState(false)
 
     const handleDelete = async () => {
-        storage.refFromURL(post.imgName).delete()
+        if (post.imgName) storage.refFromURL(post.imgName).delete();
         await deletePost(dispatch, user.userId, post._id)
     }
 

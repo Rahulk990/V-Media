@@ -92,6 +92,7 @@
 
 .post__bottom--active {
   border-bottom: 1px solid lightgray;
+  padding-bottom: 10px;
 }
 
 .post__option {
@@ -114,7 +115,6 @@
 
 .post__option--active {
   color: #2e81f4;
-  margin-bottom: 10px;
 }
 
 /* Post Comments */

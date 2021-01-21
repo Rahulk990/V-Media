@@ -22,10 +22,12 @@ const Navbar = () => {
 
 	useEffect(() => {
 		const id = (location.pathname).split('/')[1]
-		if ((id === 'home' || id === 'messenger') && document.getElementById(id)) {
+		if (id === 'home' || id === 'messenger') {
 			document.getElementById(id).classList.add("navbar__option--active");
 			return () => {
-				document.getElementById(id).classList.remove("navbar__option--active");
+				if (document.getElementById(id)) {
+					document.getElementById(id).classList.remove("navbar__option--active");
+				}
 			}
 		}
 	}, [location])
