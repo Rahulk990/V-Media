@@ -56,7 +56,7 @@ const AboutUs = () => {
 					<div className="card_img">
 						<img src="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg" />
 					</div>
-					<div className="card_socialmedia">
+					
                     <div className="card_socialmedia">
 						<form action='' target="_blank">
 							<IconButton className="blue" type='submit'>
@@ -79,7 +79,7 @@ const AboutUs = () => {
 						</IconButton>
                         </form>
 					</div>
-					</div>
+					
 					<div className="name align_center">
 						<h3>Rahul</h3>
 					</div>
