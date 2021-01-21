@@ -25,14 +25,14 @@ const Main = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
-	const roomsData = useSelector(selectRooms);
+	const userRooms = useSelector(selectRooms);
 
 	useEffect(() => {
 		if (!user) {
 			history.push("/login");
 		} else {
 			// Fetch All Data
-			fetchAllData(dispatch, user.userId, roomsData);
+			fetchAllData(dispatch, user.userId, userRooms);
 
 			// Setup Sockets
 			const socket = socketIOClient("http://localhost:8000");
@@ -45,10 +45,10 @@ const Main = () => {
 	}, []);
 
 	useEffect(() => {
-		if (user && roomsData) {
-			fetchRoomsData(dispatch, roomsData);
+		if (user && userRooms) {
+			fetchRoomsData(dispatch, userRooms);
 		}
-	}, [roomsData]);
+	}, [userRooms]);
 
 	useEffect(() => {
 		if (user) {
@@ -70,25 +70,6 @@ const Main = () => {
 			};
 		}
 	}, []);
-
-	// useEffect(() => {
-	// 	if (user && currentRoom) {
-	// 		fetchMessages(dispatch, history, currentRoom);
-	// 		// Setup Pusher
-	// 		const pusher = new Pusher("d24ba3df0d30f4d2c95e", { cluster: "ap2" });
-
-	// 		const channel = pusher.subscribe("messages");
-
-	// 		channel.bind("updated", function (data) {
-	// 			fetchMessages(dispatch, history, currentRoom);
-	// 		});
-
-	// 		return () => {
-	// 			channel.unbind_all();
-	// 			channel.unsubscribe();
-	// 		};
-	// 	}
-	// }, [currentRoom]);
 
 	return (
 		<Router>
