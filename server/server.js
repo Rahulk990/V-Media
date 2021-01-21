@@ -11,10 +11,6 @@ import postRoutes from "./Routes/postRoutes.js";
 import roomRoutes from "./Routes/roomRoutes.js";
 import userRoutes from "./Routes/userRoutes.js";
 
-import mongoPosts from "./Models/mongoPosts.js";
-import mongoUsers from "./Models/mongoUsers.js";
-import mongoRooms from "./Models/mongoRooms.js";
-
 // App Config
 const app = express();
 const port = process.env.PORT || 8000;
@@ -55,8 +51,8 @@ io.on("connection", (socket) => {
 });
 
 // DB Config
-const mongoURI =
-	"mongodb+srv://admin:KsDmm1u8B2RKgKCj@cluster0.f9hlo.mongodb.net/fbdb?retryWrites=true&w=majority";
+const mongoURI = process.env.URI;
+
 mongoose.set("useFindAndModify", false);
 
 mongoose.connect(mongoURI, {

@@ -1,13 +1,8 @@
 import React from "react";
 import "./AboutUs.css";
-import {
-	LinkedIn,
-	GitHub,
-	PermIdentityRounded,
-	Twitter,
-	Mail,
-} from "@material-ui/icons";
-import { IconButton, Tooltip } from "@material-ui/core";
+import { LinkedIn, GitHub, Mail } from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
+
 const AboutUs = () => {
 	return (
 		<div className="about">
@@ -17,29 +12,24 @@ const AboutUs = () => {
 					<div className="card_img">
 						<img src="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg" />
 					</div>
-                    <div className="card_socialmedia">
+					<div className="card_socialmedia">
 						<form action='https://www.linkedin.com/in/puneet-jangid-26a0ba16b/' target="_blank">
 							<IconButton className="blue" type='submit'>
 								<LinkedIn />
 							</IconButton>
 						</form>
-                        <form action='https://github.com/Napster404' target="_blank">
-						<IconButton className="black" type='submit'>
-							<GitHub />
-						</IconButton>
-                        </form>
-                        <form action='https://twitter.com/Puneetjangid1' target="_blank">
-						<IconButton className="blue" type='submit'>
-							<Twitter />
-						</IconButton>
-                        </form>
-                        <form action='mailto:puneetjangid349@gmail.com' target="_blank">
-						<IconButton className="red" type='submit'>
-							<Mail />
-						</IconButton>
-                        </form>
+						<form action='https://github.com/Napster404' target="_blank">
+							<IconButton className="black" type='submit'>
+								<GitHub />
+							</IconButton>
+						</form>
+						<form action='mailto:puneetjangid349@gmail.com' target="_blank">
+							<IconButton className="red" type='submit'>
+								<Mail />
+							</IconButton>
+						</form>
 					</div>
-					
+
 					<div className="name align_center">
 						<h3>Puneet Jangid</h3>
 					</div>
@@ -56,30 +46,25 @@ const AboutUs = () => {
 					<div className="card_img">
 						<img src="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg" />
 					</div>
-					
-                    <div className="card_socialmedia">
-						<form action='' target="_blank">
+
+					<div className="card_socialmedia">
+						<form action='https://www.linkedin.com/in/rahul990/' target="_blank">
 							<IconButton className="blue" type='submit'>
 								<LinkedIn />
 							</IconButton>
 						</form>
-                        <form action='' target="_blank">
-						<IconButton className="black" type='submit'>
-							<GitHub />
-						</IconButton>
-                        </form>
-                        <form action='' target="_blank">
-						<IconButton className="blue" type='submit'>
-							<Twitter />
-						</IconButton>
-                        </form>
-                        <form action='' target="_blank">
-						<IconButton className="red" type='submit'>
-							<Mail />
-						</IconButton>
-                        </form>
+						<form action='https://github.com/Rahulk990' target="_blank">
+							<IconButton className="black" type='submit'>
+								<GitHub />
+							</IconButton>
+						</form>
+						<form action='mailto:rahulv0530@gmail.com' target="_blank">
+							<IconButton className="red" type='submit'>
+								<Mail />
+							</IconButton>
+						</form>
 					</div>
-					
+
 					<div className="name align_center">
 						<h3>Rahul</h3>
 					</div>
