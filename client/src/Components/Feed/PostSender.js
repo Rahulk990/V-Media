@@ -30,7 +30,6 @@ const PostSender = () => {
         e.preventDefault();
 
         if (postImage && postInput.length > 0) {
-            console.log(postImage);
             const imageName = Date.now() + postImage.name;
             const uploadTask = storage.ref(`/images/${imageName}`).put(postImage)
             uploadTask.on('state_changed',

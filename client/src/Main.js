@@ -35,7 +35,8 @@ const Main = () => {
 			fetchAllData(dispatch, user.userId, userRooms);
 
 			// Setup Sockets
-			const socket = socketIOClient("http://localhost:8000");
+			// const socket = socketIOClient("http://localhost:8000");
+			const socket = socketIOClient("https://network-backend-server.herokuapp.com/")
 			socket.on("refresh", (data) => fetchPosts(dispatch));
 
 			return () => {
