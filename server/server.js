@@ -76,20 +76,23 @@ mongoose.connection.once("open", () => {
 		) {
 			io.emit("refresh", { body: "DB Changed" });
 		} else {
-			console.log("Error Triggering Pusher");
+			console.log("Error Triggering Socket");
 		}
 	});
 
 	const changeStream1 = mongoose.connection.collection("rooms").watch();
 	changeStream1.on("change", (change) => {
 
-		if (change.operationType === "insert" || change.operationType === "update")
+		console.log(change);
+
+		if (change.operationType === "insert" ||
+			(change.operationType === "update" && change.updateDescription.updatedFields.usersArray))
 			pusher.trigger("messages", "inserted", "Update Rooms");
 
 		if (change.operationType === "update") {
-			pusher.trigger("messages", "updated", "Update Messages");
+			pusher.trigger("messages", "updated", change.documentKey._id);
 		}
-		
+
 	});
 });
 

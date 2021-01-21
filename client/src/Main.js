@@ -18,16 +18,14 @@ import fetchPosts from "./Components/API/fetchPosts";
 import fetchUserRooms from "./Components/API/fetchUserRooms";
 import fetchRoomsData from "./Components/API/fetchRoomsData";
 import Pusher from "pusher-js";
-import { selectCurrentRoom } from "./Components/ReduxStore/roomSlice";
-import fetchMessages from "./Components/API/fetchMessages";
 import AboutUs from "./Components/AboutUs/AboutUs";
+import fetchRoomData from "./Components/API/fetchRoomData";
 
 const Main = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
 	const roomsData = useSelector(selectRooms);
-	const currentRoom = useSelector(selectCurrentRoom);
 
 	useEffect(() => {
 		if (!user) {
@@ -62,23 +60,8 @@ const Main = () => {
 				fetchUserRooms(dispatch, user.userId);
 			});
 
-			return () => {
-				channel.unbind_all();
-				channel.unsubscribe();
-			};
-		}
-	}, []);
-
-	useEffect(() => {
-		if (user && currentRoom) {
-			fetchMessages(dispatch, history, currentRoom);
-			// Setup Pusher
-			const pusher = new Pusher("d24ba3df0d30f4d2c95e", { cluster: "ap2" });
-
-			const channel = pusher.subscribe("messages");
-
 			channel.bind("updated", function (data) {
-				fetchMessages(dispatch, history, currentRoom);
+				fetchRoomData(dispatch, data);
 			});
 
 			return () => {
@@ -86,7 +69,26 @@ const Main = () => {
 				channel.unsubscribe();
 			};
 		}
-	}, [currentRoom]);
+	}, []);
+
+	// useEffect(() => {
+	// 	if (user && currentRoom) {
+	// 		fetchMessages(dispatch, history, currentRoom);
+	// 		// Setup Pusher
+	// 		const pusher = new Pusher("d24ba3df0d30f4d2c95e", { cluster: "ap2" });
+
+	// 		const channel = pusher.subscribe("messages");
+
+	// 		channel.bind("updated", function (data) {
+	// 			fetchMessages(dispatch, history, currentRoom);
+	// 		});
+
+	// 		return () => {
+	// 			channel.unbind_all();
+	// 			channel.unsubscribe();
+	// 		};
+	// 	}
+	// }, [currentRoom]);
 
 	return (
 		<Router>

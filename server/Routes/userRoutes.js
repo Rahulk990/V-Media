@@ -11,7 +11,7 @@ router.post('/upload/user', (req, res) => {
         (err, data) => {
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.status(201).send(data)
             }
         })
@@ -25,7 +25,7 @@ router.get('/retrieve/user', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.send(data)
             }
 

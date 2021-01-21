@@ -9,13 +9,24 @@ import { Avatar, IconButton } from "@material-ui/core";
 import { EmojiEmotions, Send } from '@material-ui/icons';
 
 import { selectUser } from '../ReduxStore/appSlice'
-import { selectMessagesData } from '../ReduxStore/roomSlice';
+import { selectRoomsData } from '../ReduxStore/roomSlice';
 import addMessage from '../API/addMessage'
 
 const Inbox = ({ roomId, roomInfo }) => {
 
     const user = useSelector(selectUser)
-    const messages = useSelector(selectMessagesData)
+    const roomsData = useSelector(selectRoomsData)
+
+    const [messages, setMessages] = useState([])
+    useEffect(() => {
+        if (roomsData && roomId) {
+            const ind = roomsData.findIndex(obj => obj._id === roomId)
+            if(roomsData[ind]){
+                setMessages(roomsData[ind].messagesArray);
+            }
+        }
+    }, [roomId, roomsData])
+
 
     const [newMessage, setNewMessage] = useState('')
     const handleSubmit = async (e) => {
@@ -76,6 +87,7 @@ const Inbox = ({ roomId, roomInfo }) => {
                                     roomId={roomId}
                                     userId={user.userId}
                                     message={message}
+                                    messagesArray={messages}
                                     setMessageReply={setMessageReply}
                                 />
                             ))

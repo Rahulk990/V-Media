@@ -4,9 +4,7 @@ export const roomSlice = createSlice({
     name: 'room',
 
     initialState: {
-        roomsData: [],
-        currentRoom: null,
-        messagesData: []
+        roomsData: []
     },
 
     reducers: {
@@ -17,22 +15,16 @@ export const roomSlice = createSlice({
         appendRoomsData: (state, action) => {
             state.roomsData.push(action.payload)
         },
-        
-        setMessagesData: (state, action) => {
-            action.payload.sort((a,b) => b.timestamp - a.timestamp)
-            state.messagesData = action.payload
-        },
 
-        setCurrentRoom: (state, action) => {
-            state.currentRoom = action.payload
+        updateRoomData: (state, action) => {
+            const ind = state.roomsData.findIndex(obj => obj._id === action.payload._id)
+            if (state.roomsData[ind]) state.roomsData[ind] = action.payload
         }
     },
 });
 
-export const { setRoomsData, appendRoomsData, setMessagesData, setCurrentRoom } = roomSlice.actions;
+export const { setRoomsData, appendRoomsData, updateRoomData, setMessagesData, setCurrentRoom } = roomSlice.actions;
 
 export const selectRoomsData = state => state.room.roomsData;
-export const selectCurrentRoom = state => state.room.currentRoom;
-export const selectMessagesData = state => state.room.messagesData;
 
 export default roomSlice.reducer;

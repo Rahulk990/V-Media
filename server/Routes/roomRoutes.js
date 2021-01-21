@@ -23,7 +23,7 @@ router.post("/create/directRoom", (req, res) => {
 					mongoUsers.findOneAndUpdate(
 						{ userId: data.userId },
 						{ $push: { roomsArray: roomId } },
-						(err3) => {
+						(err3, data3) => {
 							if (err3) {
 								console.log(err);
 							}
@@ -74,7 +74,7 @@ router.get("/retrieve/rooms", (req, res) => {
 	mongoUsers.findOne({ userId: req.query.userId }, (err, data) => {
 		if (err) {
 			res.status(500).send(err);
-		} else {
+		} else if (data) {
 			res.status(200).send({
 				roomId: data._id,
 				title: data.title,
@@ -89,7 +89,8 @@ router.get("/retrieve/roomData", (req, res) => {
 	mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
 		if (err) {
 			res.status(500).send(err);
-		} else {
+		} else if (data) {
+			data.messagesArray.sort((a, b) => b.timestamp - a.timestamp)
 			res.send(data);
 		}
 	});
@@ -104,7 +105,7 @@ router.post("/upload/message", (req, res) => {
 		(err, data) => {
 			if (err) {
 				console.log(err);
-			} else {
+			} else if (data) {
 				res.status(201).send(data);
 			}
 		}
@@ -116,7 +117,7 @@ router.get("/retrieve/messages", (req, res) => {
 	mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
 		if (err) {
 			res.status(500).send(err);
-		} else {
+		} else if (data){
 			res.send(data);
 		}
 	});

@@ -4,12 +4,10 @@ import './Chat.css'
 
 import { IconButton, Tooltip } from "@material-ui/core";
 import { Delete, Reply } from '@material-ui/icons';
-import { selectMessagesData } from '../../ReduxStore/roomSlice';
 import removeMessage from '../../API/removeMessage';
 
-const Chat = ({ roomId, userId, message, setMessageReply }) => {
+const Chat = ({ roomId, userId, message, messagesArray, setMessageReply }) => {
 
-    const messagesArray = useSelector(selectMessagesData)
     const [messageReplied, setMessageReplied] = useState(null);
 
     useEffect(() => {

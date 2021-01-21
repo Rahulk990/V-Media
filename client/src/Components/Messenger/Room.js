@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import './Room.css'
 
 import { Avatar } from '@material-ui/core'
 import { selectUser } from '../ReduxStore/appSlice'
 import axios from '../Misc/axios'
-import { setCurrentRoom } from '../ReduxStore/roomSlice'
 
 const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
 
     const history = useHistory()
-    const dispatch = useDispatch()
     const user = useSelector(selectUser)
     const [newUser, setNewUser] = useState({})
 
@@ -27,8 +25,6 @@ const Room = ({ roomId, title, usersArray, setRoomInfo }) => {
     }, [])
 
     const handleSelect = async () => {
-        dispatch(setCurrentRoom(roomId))
-
         if (title) history.push('/messenger/g/' + roomId);
         else history.push('/messenger/d/' + roomId);
 

@@ -24,7 +24,7 @@ router.get('/retrieve/posts', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 data.sort((a, b) => { return b.timestamp - a.timestamp })
                 res.send(data)
             }
@@ -48,7 +48,7 @@ router.get('/retrieve/postData', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.send(data)
             }
 
@@ -66,7 +66,7 @@ router.get('/update/post/addLike', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.status(201).send(data)
             }
 
@@ -84,7 +84,7 @@ router.get('/update/post/removeLike', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.status(201).send(data)
             }
 
@@ -102,7 +102,7 @@ router.post('/update/post/addComment', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.status(201).send(data)
             }
 
@@ -120,7 +120,7 @@ router.get('/update/post/removeComment', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.status(201).send(data)
             }
 
@@ -139,7 +139,7 @@ router.get('/upload/userPost', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.status(201).send(data)
             }
 
@@ -155,7 +155,7 @@ router.get('/retrieve/userPosts', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.status(200).send(data)
             }
 
@@ -172,7 +172,7 @@ router.get('/delete/userPost', (req, res) => {
 
             if (err) {
                 res.status(500).send(err)
-            } else {
+            } else if (data) {
                 res.status(201).send(data)
             }
 
