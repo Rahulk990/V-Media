@@ -13,7 +13,6 @@ const GroupMember = ({ userId }) => {
     useEffect(() => {
         axios.get("retrieve/user", { params: { userId: userId } })
             .then((res) => setUser(res.data));
-
     }, []);
 
     return (

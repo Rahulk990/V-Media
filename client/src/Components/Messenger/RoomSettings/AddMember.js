@@ -4,17 +4,14 @@ import "./AddMember.css";
 import addMember from "../../API/addMember"
 import { IconButton } from "@material-ui/core";
 import { AddRounded } from "@material-ui/icons";
-import { useHistory } from "react-router-dom";
 
-const AddMember = ({ roomId, onClose }) => {
+const AddMember = ({ roomId }) => {
 
-	const history = useHistory()
 	const [newMember, setNewMember] = useState("")
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setNewMember("");
 		await addMember(newMember, roomId)
-		history.replace('/messenger')
 	}
 
 	return (

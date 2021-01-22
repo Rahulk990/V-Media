@@ -104,3 +104,24 @@
   color: black;
   align-items: flex-end;
 }
+
+
+/* For Chat Information */
+
+.chat__info {
+  justify-content: center;
+}
+
+.chat__infoContent {
+  border-radius: 20px;
+  background-color: #99CEFF;
+  padding: 10px;
+}
+
+.chat__infoContent > p {
+  margin: 0 5px;
+  font-size: 13px;
+  font-weight: 600;
+  word-break: break-all;
+  text-align: justify;
+}

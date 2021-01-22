@@ -51,7 +51,7 @@ const Post = ({ post }) => {
                     />
 
                     <div className='post__topInfo'>
-                        <h3 onClick={() => history.replace('/user/' + user.userId)}>{post.username}</h3>
+                        <h3 onClick={() => history.replace('/user/' + post.userId)}>{post.username}</h3>
                         <p> {new Date(parseInt(post.timestamp)).toLocaleString()} </p>
                     </div>
                 </div>

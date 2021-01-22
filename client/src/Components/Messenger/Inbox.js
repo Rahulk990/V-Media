@@ -20,11 +20,13 @@ const Inbox = ({ roomId, roomInfo }) => {
     const roomsData = useSelector(selectRoomsData)
 
     const [messages, setMessages] = useState([])
+    const [usersArray, setUsersArray] = useState([])
     useEffect(() => {
         if (roomsData && roomId) {
             const ind = roomsData.findIndex(obj => obj._id === roomId)
-            if(roomsData[ind]){
+            if (roomsData[ind]) {
                 setMessages(roomsData[ind].messagesArray);
+                setUsersArray(roomsData[ind].usersArray)
             } else {
                 history.replace('/messenger')
             }
@@ -36,12 +38,13 @@ const Inbox = ({ roomId, roomInfo }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (newMessage.length > 0) {
+        const messageText = newMessage.trim()
+        if (messageText.length > 0) {
             const requestData = {
                 data: {
                     userId: user.userId,
                     username: user.username,
-                    content: newMessage,
+                    content: messageText,
                     timestamp: Date.now(),
                     replyId: (messageReply) ? (messageReply.messageId) : (null)
                 },
@@ -75,7 +78,7 @@ const Inbox = ({ roomId, roomInfo }) => {
                     <RoomSettings
                         roomId={roomId}
                         isGroup={roomInfo.isGroup}
-                        usersArray={roomInfo.usersArray}
+                        usersArray={usersArray}
                     />
                 </div>
 

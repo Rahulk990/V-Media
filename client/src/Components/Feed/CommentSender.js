@@ -16,13 +16,14 @@ const CommentSender = ({ postId }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (commentInput.length > 0) {
+        const comment = commentInput.trim()
+        if (comment.length > 0) {
             const requestData = {
                 commentData: {
                     userId: user.userId,
                     username: user.username,
                     avatar: user.avatarSrc,
-                    content: commentInput,
+                    content: comment,
                     timestamp: Date.now()
                 },
                 postId: postId

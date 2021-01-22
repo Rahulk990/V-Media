@@ -43,48 +43,60 @@ const Chat = ({ roomId, userId, message, messagesArray, setMessageReply }) => {
 
 
     return (
-        <div className={`chat ${userId === message.userId && 'chat__sent'}`}>
-            <div className='chat__container'>
-                <p> {message.username} </p>
-
-                <div className='chat__message'>
-                    <Tooltip
-                        title={new Date(parseInt(message.timestamp)).toLocaleString()}
-                        enterDelay={1000}
-                    >
-
-                        <div className='chat__messageBody'>
-
-                            {messageReplied &&
-                                <div className='chat__messageBodyReply'>
-                                    <h3> {messageReplied.username} </h3>
-                                    <p> {messageReplied.content} </p>
-                                </div>
-                            }
-
-                            <p> {message.content} </p>
-                        </div>
-
-                    </Tooltip>
-
-                    <div className='chat__forward'>
-
-                        <IconButton onClick={handleReplySelection}>
-                            <Reply />
-                        </IconButton>
-
-                        {userId === message.userId &&
-                            <IconButton onClick={handleDelete}>
-                                <Delete />
-                            </IconButton>
-                        }
-
+        <>
+            {message.replyId === 'AAAAA' ? (
+                <div className='chat chat__info'>
+                    <div className='chat__infoContent'>
+                        <p>{message.content}</p>
                     </div>
-
                 </div>
+            ) : (
+                    <div className={`chat ${userId === message.userId && 'chat__sent'}`}>
+                        <div className='chat__container'>
+                            <p> {message.username} </p>
 
-            </div>
-        </div >
+                            <div className='chat__message'>
+                                <Tooltip
+                                    title={new Date(parseInt(message.timestamp)).toLocaleString()}
+                                    enterDelay={1000}
+                                >
+
+                                    <div className='chat__messageBody'>
+
+                                        {messageReplied &&
+                                            <div className='chat__messageBodyReply'>
+                                                <h3> {messageReplied.username} </h3>
+                                                <p> {messageReplied.content} </p>
+                                            </div>
+                                        }
+
+                                        <p> {message.content} </p>
+                                    </div>
+
+                                </Tooltip>
+
+                                <div className='chat__forward'>
+
+                                    <IconButton onClick={handleReplySelection}>
+                                        <Reply />
+                                    </IconButton>
+
+                                    {userId === message.userId &&
+                                        <IconButton onClick={handleDelete}>
+                                            <Delete />
+                                        </IconButton>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div >
+                )}
+        </>
+
+
     )
 }
 

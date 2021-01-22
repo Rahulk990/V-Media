@@ -29,7 +29,8 @@ const PostSender = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (postImage && postInput.length > 0) {
+        const postText = postInput.trim()
+        if (postImage && postText.length > 0) {
             const imageName = Date.now() + postImage.name;
             const uploadTask = storage.ref(`/images/${imageName}`).put(postImage)
             uploadTask.on('state_changed',
@@ -43,7 +44,7 @@ const PostSender = () => {
                             const postData = {
                                 userId: user.userId,
                                 username: user.username,
-                                text: postInput,
+                                text: postText,
                                 avatar: user.avatarSrc,
                                 imgName: fireBaseUrl,
                                 timestamp: Date.now()
@@ -55,11 +56,11 @@ const PostSender = () => {
                         })
                 })
 
-        } else if (postInput.length > 0) {
+        } else if (postText.length > 0) {
             const postData = {
                 userId: user.userId,
                 username: user.username,
-                text: postInput,
+                text: postText,
                 avatar: user.avatarSrc,
                 timestamp: Date.now()
             }

@@ -89,7 +89,7 @@ router.get("/retrieve/roomData", (req, res) => {
 	mongoRooms.findOne({ _id: req.query.roomId }, (err, data) => {
 		if (err) {
 			res.status(500).send(err);
-		} else if (data){
+		} else if (data) {
 			data.messagesArray.sort((a, b) => b.timestamp - a.timestamp)
 			res.send(data);
 		}
@@ -157,9 +157,19 @@ router.get("/update/room/addMember", (req, res) => {
 							} else if (data3 === null) {
 								res.send(data3);
 							} else {
+
+								const messageData = {
+									replyId: 'AAAAA',
+									content: data3.name + ' has been Added',
+									timestamp: Date.now()
+								}
+
 								mongoRooms.findOneAndUpdate(
 									{ _id: req.query.roomId },
-									{ $push: { usersArray: data3.userId } },
+									{
+										$push: { usersArray: data3.userId },
+										$push: { messagesArray: messageData }
+									},
 									(err4) => {
 										if (err4) {
 											res.status(500).send(err4);
@@ -183,15 +193,27 @@ router.get("/update/room/removeMember", (req, res) => {
 		{ userId: req.query.userId },
 		{ $pull: { roomsArray: req.query.roomId } },
 		{ returnOriginal: false },
-		(err1) => {
-			if (err1) console.log(err1);
-			else {
+		(err1, removedUser) => {
+			if (err1) {
+				console.log(err1)
+			} else {
+
+				const messageData = {
+					replyId: 'AAAAA',
+					content: removedUser.name + ' Left',
+					timestamp: Date.now()
+				}
+
 				mongoRooms.findOneAndUpdate(
 					{ _id: req.query.roomId },
-					{ $pull: { usersArray: req.query.userId } },
+					{
+						$pull: { usersArray: req.query.userId },
+						$push: { messagesArray: messageData }
+					},
 					(err2, data) => {
-						if (err2) console.log(err2);
-						else if (data.usersArray.length <= 1) {
+						if (err2) {
+							console.log(err2)
+						} else if (data.usersArray.length <= 1) {
 							mongoRooms.findOneAndDelete(
 								{ _id: req.query.roomId },
 								(err2, dataRoom) => {

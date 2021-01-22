@@ -22,7 +22,7 @@ const Navbar = () => {
 
 	useEffect(() => {
 		const id = (location.pathname).split('/')[1]
-		if (id === 'home' || id === 'messenger') {
+		if (id && (id === 'home' || id === 'messenger')) {
 			document.getElementById(id).classList.add("navbar__option--active");
 			return () => {
 				if (document.getElementById(id)) {

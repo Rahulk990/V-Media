@@ -32,15 +32,14 @@ const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recen
             title: newUser.name,
             avatar: newUser.avatar,
             isGroup: (title) ? ('group') : ('direct'),
-            usersArray: usersArray
         })
     }
 
     const sliceMessage = () => {
-        if(recentMessageContent.length <= 20) {
+        if (recentMessageUser && recentMessageUser.length + recentMessageContent.length <= 30) {
             return recentMessageContent;
-        } else {
-            return recentMessageContent.slice(0, 20) + '...';
+        } else if (recentMessageUser) {
+            return recentMessageContent.slice(0, 30 - recentMessageUser.length) + '...';
         }
     }
 
@@ -55,7 +54,7 @@ const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recen
             <div className='room__content'>
                 <p>{newUser.name}</p>
 
-                {recentMessageUser.length > 0 &&
+                {recentMessageUser && recentMessageUser.length > 0 &&
                     <div className='room__contentRecent'>
                         <h3>{recentMessageUser + ':'}</h3>
                         <p>{sliceMessage()}</p>
