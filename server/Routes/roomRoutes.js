@@ -166,10 +166,7 @@ router.get("/update/room/addMember", (req, res) => {
 
 								mongoRooms.findOneAndUpdate(
 									{ _id: req.query.roomId },
-									{
-										$push: { usersArray: data3.userId },
-										$push: { messagesArray: messageData }
-									},
+									{ $push: { usersArray: data3.userId, messagesArray: messageData } },
 									(err4) => {
 										if (err4) {
 											res.status(500).send(err4);
@@ -206,16 +203,24 @@ router.get("/update/room/removeMember", (req, res) => {
 
 				mongoRooms.findOneAndUpdate(
 					{ _id: req.query.roomId },
-					{
-						$pull: { usersArray: req.query.userId },
-						$push: { messagesArray: messageData }
-					},
+					{ $pull: { usersArray: req.query.userId } },
 					(err2, data) => {
 						if (err2) {
 							console.log(err2)
 						} else if (data.usersArray.length <= 1) {
 							mongoRooms.findOneAndDelete(
 								{ _id: req.query.roomId },
+								(err2, dataRoom) => {
+									if (err2) console.log(err2);
+									else {
+										res.send(dataRoom);
+									}
+								}
+							);
+						} else {
+							mongoRooms.findOneAndUpdate(
+								{ _id: req.query.roomId },
+								{ $push: { messagesArray: messageData } },
 								(err2, dataRoom) => {
 									if (err2) console.log(err2);
 									else {
