@@ -6,7 +6,8 @@ const router = express.Router()
 // Upload User Data
 router.post('/upload/user', (req, res) => {
     mongoUsers.findOneAndUpdate(
-        { userId: req.body.userId }, req.body,
+        { userId: req.body.userId }, 
+        req.body,
         { returnOriginal: false, upsert: true },
         (err, data) => {
             if (err) {
