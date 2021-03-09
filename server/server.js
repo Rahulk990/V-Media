@@ -69,6 +69,18 @@ mongoose.connection.once("open", () => {
 		}
 	});
 
+	const changeStream1 = mongoose.connection.collection("rooms").watch();
+	changeStream1.on("change", (change) => {
+		console.log(change);
+
+		for(let x in change.updateDescription.updatedFields)
+		{
+			if(x.substring(0, x.length - 3) == 'messagesArray'){
+				io.emit("message", change.documentKey._id)
+			}
+		}
+	})
+
 	// const changeStream1 = mongoose.connection.collection("rooms").watch();
 	// changeStream1.on("change", (change) => {
 	// 	if (change.operationType === "insert" ||
@@ -88,3 +100,4 @@ app.use(eventRoutes);
 app.use(postRoutes);
 app.use(roomRoutes);
 app.use(userRoutes);
+

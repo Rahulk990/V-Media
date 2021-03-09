@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	BrowserRouter as Router,
@@ -12,15 +12,23 @@ import Home from "./Components/Home/Home";
 import Messenger from "./Components/Messenger/Messenger";
 import Profile from "./Components/Profile/Profile";
 import fetchAllData from "./Components/API/fetchAllData";
-import { selectUser } from "./Components/ReduxStore/appSlice";
+import { selectRooms, selectUser } from "./Components/ReduxStore/appSlice";
 import socketIOClient from "socket.io-client";
 import fetchPosts from "./Components/API/fetchPosts";
 import AboutUs from "./Components/AboutUs/AboutUs";
+import { updateRoomData } from "./Components/ReduxStore/roomSlice";
+import fetchRoomData from "./Components/API/fetchRoomData";
 
 const Main = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
+	const userRooms = useSelector(selectRooms);
+
+	const userRoomsRef = useRef(userRooms)
+	useEffect(() => {
+		userRoomsRef.current = userRooms
+	}, [userRooms])
 
 	useEffect(() => {
 		if (!user) {
@@ -35,6 +43,7 @@ const Main = () => {
 
 			// Setting Triggers
 			socket.on("refresh", (data) => fetchPosts(dispatch));
+			socket.on("message", (data) => fetchRoomData(dispatch, userRoomsRef.current, data));
 
 			return () => {
 				socket.disconnect();
