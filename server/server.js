@@ -4,7 +4,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
 import * as socketIo from "socket.io";
-import Pusher from "pusher";
+import dotenv from "dotenv";
+// import Pusher from "pusher";
 
 import eventRoutes from "./Routes/eventRoutes.js";
 import postRoutes from "./Routes/postRoutes.js";
@@ -15,26 +16,23 @@ import userRoutes from "./Routes/userRoutes.js";
 const app = express();
 const port = process.env.PORT || 8000;
 
-// -----pusher-------
-const pusher = new Pusher({
-	appId: "1138234",
-	key: "d24ba3df0d30f4d2c95e",
-	secret: "e367a842ed6aa6866991",
-	cluster: "ap2",
-	useTLS: true,
-});
+if (process.env.NODE_ENV !== 'production') {
+	dotenv.config();
+}
+
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+
 
 // Listener
 const server = app.listen(port, () => {
 	console.log(`listening at http://localhost:${port}`);
 });
 
-// Socket Setup
 
+// Socket Setup
 const io = new socketIo.Server(server, {
 	cors: {
 		origin: "*",
@@ -50,16 +48,15 @@ io.on("connection", (socket) => {
 	});
 });
 
+
 // DB Config
 const mongoURI = process.env.URI;
-
-mongoose.set("useFindAndModify", false);
-
 mongoose.connect(mongoURI, {
 	useCreateIndex: true,
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
+
 
 mongoose.connection.once("open", () => {
 	console.log("DB Connected");
@@ -76,18 +73,19 @@ mongoose.connection.once("open", () => {
 		}
 	});
 
-	const changeStream1 = mongoose.connection.collection("rooms").watch();
-	changeStream1.on("change", (change) => {
-		if (change.operationType === "insert" ||
-			(change.operationType === "update" && change.updateDescription.updatedFields.usersArray))
-			pusher.trigger("messages", "inserted", "Update Rooms");
+	// const changeStream1 = mongoose.connection.collection("rooms").watch();
+	// changeStream1.on("change", (change) => {
+	// 	if (change.operationType === "insert" ||
+	// 		(change.operationType === "update" && change.updateDescription.updatedFields.usersArray))
+	// 		pusher.trigger("messages", "inserted", "Update Rooms");
 
-		if (change.operationType === "update") {
-			pusher.trigger("messages", "updated", change.documentKey._id);
-		}
+	// 	if (change.operationType === "update") {
+	// 		pusher.trigger("messages", "updated", change.documentKey._id);
+	// 	}
 
-	});
+	// });
 });
+
 
 // API Routes
 app.use(eventRoutes);
