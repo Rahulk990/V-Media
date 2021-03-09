@@ -51,6 +51,7 @@ io.on("connection", (socket) => {
 
 // DB Config
 const mongoURI = process.env.URI;
+mongoose.set("useFindAndModify", false);
 mongoose.connect(mongoURI, {
 	useCreateIndex: true,
 	useNewUrlParser: true,
@@ -63,13 +64,8 @@ mongoose.connection.once("open", () => {
 
 	const changeStream = mongoose.connection.collection("posts").watch();
 	changeStream.on("change", (change) => {
-		if (
-			change.operationType === "insert" ||
-			change.operationType === "delete"
-		) {
+		if (change.operationType === "insert" || change.operationType === "delete") {
 			io.emit("refresh", { body: "DB Changed" });
-		} else {
-			console.log("Error Triggering Socket");
 		}
 	});
 

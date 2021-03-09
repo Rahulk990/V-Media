@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_BASE || 'http://localhost:8000'
+    baseURL: 'http://localhost:8000'
+    // baseURL: 'https://network-backend-server.herokuapp.com/'
 })
 
 export default instance

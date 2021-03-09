@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
 import axios from '../Misc/axios'
-import PostMiddleware from './PostMiddleware'
+import { getPosts } from '../ReduxStore/postSlice'
+import Post from '../Feed/Post'
 
 import './Profile.css'
 const Profile = () => {
 
     const location = useLocation()
     const [user, setUser] = useState(null)
+    const postData = useSelector(getPosts)
 
     useEffect(() => {
         const userId = (location.pathname).split('/')[2]
@@ -43,11 +46,13 @@ const Profile = () => {
                         <h3> Posts </h3>
                         <div className='profile__feedPosts'>
 
-                            {user && user.postsArray.map(postId => (
-                                <PostMiddleware
-                                    key={postId._id}
-                                    postId={postId}
-                                />
+                            {user && postData.map(post => (
+                                (post.userId == user.userId) && (
+                                    <Post
+                                        key={post._id}
+                                        post={post}
+                                    />
+                                )
                             ))
                             }
 

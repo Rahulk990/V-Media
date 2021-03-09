@@ -23,7 +23,7 @@ export const roomSlice = createSlice({
     },
 });
 
-export const { setRoomsData, appendRoomsData, updateRoomData, setMessagesData, setCurrentRoom } = roomSlice.actions;
+export const { setRoomsData, appendRoomsData, updateRoomData } = roomSlice.actions;
 
 export const selectRoomsData = state => state.room.roomsData;
 

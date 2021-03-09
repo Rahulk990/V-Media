@@ -9,7 +9,6 @@ import { getPosts } from '../ReduxStore/postSlice'
 const Feed = () => {
 
     const postData = useSelector(getPosts)
-
     return (
         <div className='feed'>
             <PostSender />
