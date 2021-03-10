@@ -1,7 +1,7 @@
 import axios from "../Misc/axios";
 
-const removeDirectRoom = (userId, roomId) =>{
-	 axios.get("/update/room/removeDirectRoom", { params: { userId: userId, roomId: roomId } })
+const removeDirectRoom = (roomId) =>{
+	 axios.get("/update/room/removeDirectRoom", { params: { roomId: roomId } })
 }
 
 export default removeDirectRoom

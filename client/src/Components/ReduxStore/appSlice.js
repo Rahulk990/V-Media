@@ -37,11 +37,23 @@ export const appSlice = createSlice({
                 state.rooms.every((v, i) => v === action.payload[i]))) {
                 state.rooms = action.payload
             }
+        },
+
+        appendRoom: (state, action) => {
+            state.rooms.push(action.payload)
+        },
+
+        popRoom: (state, action) => {
+            const ind = state.rooms.findIndex(obj => obj === action.payload.roomId)
+            if (state.rooms[ind]) {
+                state.rooms[ind] = state.rooms[state.rooms.length - 1]
+                state.rooms.pop()
+            }
         }
     },
 });
 
-export const { login, logout, setEvents, setUserPosts, setRooms } = appSlice.actions;
+export const { login, logout, setEvents, setUserPosts, setRooms, appendRoom, popRoom } = appSlice.actions;
 
 export const selectUser = state => state.app.user;
 export const selectEvents = state => state.app.events;

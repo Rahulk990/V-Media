@@ -71,27 +71,30 @@ mongoose.connection.once("open", () => {
 
 	const changeStream1 = mongoose.connection.collection("rooms").watch();
 	changeStream1.on("change", (change) => {
-		console.log(change);
 
-		for(let x in change.updateDescription.updatedFields)
-		{
-			if(x.substring(0, x.length - 3) == 'messagesArray'){
-				io.emit("message", change.documentKey._id)
+		if (change.operationType == 'insert') {
+			io.emit("New Room Created", change.fullDocument)
+		}
+
+		if(change.operationType == 'delete') {
+			io.emit("Room Deleted", change.documentKey)
+		}
+
+		if (change.operationType == 'update') {
+			for (let x in change.updateDescription.updatedFields) {
+				if (x.substring(0, 13) == 'messagesArray') {
+					io.emit("message", change.documentKey._id)
+				}
+				if (x.substring(0, 10) == 'usersArray') {
+					const data = {
+						roomId: change.documentKey._id,
+						usersArray: change.updateDescription.updatedFields[x]
+					}
+					io.emit("users", data)
+				}
 			}
 		}
 	})
-
-	// const changeStream1 = mongoose.connection.collection("rooms").watch();
-	// changeStream1.on("change", (change) => {
-	// 	if (change.operationType === "insert" ||
-	// 		(change.operationType === "update" && change.updateDescription.updatedFields.usersArray))
-	// 		pusher.trigger("messages", "inserted", "Update Rooms");
-
-	// 	if (change.operationType === "update") {
-	// 		pusher.trigger("messages", "updated", change.documentKey._id);
-	// 	}
-
-	// });
 });
 
 

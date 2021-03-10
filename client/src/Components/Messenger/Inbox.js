@@ -35,7 +35,7 @@ const Inbox = ({ roomId, roomInfo }) => {
 
 
     const [newMessage, setNewMessage] = useState('')
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         const messageText = newMessage.trim()
@@ -51,7 +51,7 @@ const Inbox = ({ roomId, roomInfo }) => {
                 roomId: roomId
             }
 
-            await addMessage(requestData)
+            addMessage(requestData)
             setNewMessage('')
         }
     }

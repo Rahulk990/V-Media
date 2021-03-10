@@ -3,7 +3,7 @@ import { updateRoomData } from "../ReduxStore/roomSlice";
 
 const fetchRoomData = async (dispatch, userRooms, roomId) => {
     if (userRooms.includes(roomId)) {
-        axios.get('retrieve/roomData', { params: { roomId: roomId } })
+        await axios.get('retrieve/roomData', { params: { roomId: roomId } })
             .then(res => dispatch(updateRoomData(res.data)))
     }
 }

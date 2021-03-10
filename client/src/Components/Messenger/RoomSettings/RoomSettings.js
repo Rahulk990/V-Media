@@ -29,8 +29,8 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 		history.replace('/messenger')
 	};
 
-	const deleteRoom = async (e) => {
-		await removeDirectRoom(user.userId, roomId);
+	const deleteRoom = (e) => {
+		removeDirectRoom(roomId);
 		history.replace('/messenger')
 	};
 

@@ -37,8 +37,8 @@ const Chat = ({ roomId, userId, message, messagesArray, setMessageReply }) => {
         setMessageReply(messageReply)
     }
 
-    const handleDelete = async () => {
-        await removeMessage(roomId, message._id)
+    const handleDelete = () => {
+        removeMessage(roomId, message._id)
     }
 
 

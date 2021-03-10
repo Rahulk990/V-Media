@@ -16,6 +16,15 @@ export const roomSlice = createSlice({
             state.roomsData.push(action.payload)
         },
 
+        popRoomsData: (state, action) => {
+            const ind = state.roomsData.findIndex(obj => obj._id === action.payload.roomId)
+            if (state.roomsData[ind]) {
+                console.log(ind);
+                state.roomsData[ind] = state.roomsData[state.roomsData.length - 1]
+                state.roomsData.pop()
+            }
+        },
+
         updateRoomData: (state, action) => {
             const ind = state.roomsData.findIndex(obj => obj._id === action.payload._id)
             if (state.roomsData[ind]) state.roomsData[ind] = action.payload
@@ -23,7 +32,7 @@ export const roomSlice = createSlice({
     },
 });
 
-export const { setRoomsData, appendRoomsData, updateRoomData } = roomSlice.actions;
+export const { setRoomsData, appendRoomsData, popRoomsData, updateRoomData } = roomSlice.actions;
 
 export const selectRoomsData = state => state.room.roomsData;
 
