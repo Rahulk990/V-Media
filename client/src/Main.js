@@ -28,10 +28,10 @@ const Main = () => {
 	const user = useSelector(selectUser);
 	const userRooms = useSelector(selectRooms);
 
-	const userRoomsRef = useRef(userRooms)
+	const userRoomsRef = useRef(userRooms);
 	useEffect(() => {
-		userRoomsRef.current = userRooms
-	}, [userRooms])
+		userRoomsRef.current = userRooms;
+	}, [userRooms]);
 
 	useEffect(() => {
 		if (!user) {
@@ -41,15 +41,23 @@ const Main = () => {
 			fetchAllData(dispatch, user.userId);
 
 			// Setup Sockets
-			const socket = socketIOClient("http://localhost:8000");
-			// const socket = socketIOClient("https://network-backend-server.herokuapp.com/")
+			// const socket = socketIOClient("http://localhost:8000");
+			const socket = socketIOClient(
+				"https://network-backend-server.herokuapp.com/"
+			);
 
 			// Setting Triggers
 			socket.on("refresh", () => fetchPosts(dispatch));
-			socket.on("New Room Created", (data) => addRoom(dispatch, data, user.userId))
-			socket.on("message", (data) => fetchRoomData(dispatch, userRoomsRef.current, data));
-			socket.on("users", (data) => updateRooms(dispatch, userRoomsRef.current, data, user.userId))
-			socket.on("Room Deleted", (data) => deleteRoom(dispatch, data))
+			socket.on("New Room Created", (data) =>
+				addRoom(dispatch, data, user.userId)
+			);
+			socket.on("message", (data) =>
+				fetchRoomData(dispatch, userRoomsRef.current, data)
+			);
+			socket.on("users", (data) =>
+				updateRooms(dispatch, userRoomsRef.current, data, user.userId)
+			);
+			socket.on("Room Deleted", (data) => deleteRoom(dispatch, data));
 
 			socket.emit("Joined", user.userId)
 			socket.on("Welcome", (data) => setUsers(dispatch, data))
@@ -69,7 +77,6 @@ const Main = () => {
 					<Navbar />
 					<div className="app__body">
 						<Switch>
-
 							<Route exact path="/about">
 								<AboutUs />
 							</Route>

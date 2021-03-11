@@ -10,7 +10,7 @@ const AboutUs = () => {
 			<div className="card_container">
 				<div className="card_1 card">
 					<div className="card_img">
-						<img src="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg" />
+						<img src="https://media-exp1.licdn.com/dms/image/C5603AQH55E6ahPSbjA/profile-displayphoto-shrink_800_800/0/1587156175552?e=1620864000&v=beta&t=dVJKMa7tWHa632NxS5KfGTtncWn0rXHlA5QXr1TN6hU" />
 					</div>
 					<div className="card_socialmedia">
 						<form action='https://www.linkedin.com/in/puneet-jangid-26a0ba16b/' target="_blank">
@@ -44,7 +44,7 @@ const AboutUs = () => {
 				</div>
 				<div className="card_2 card">
 					<div className="card_img">
-						<img src="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg" />
+						<img src="https://media-exp1.licdn.com/dms/image/C4D03AQHeMy9dQaf6IA/profile-displayphoto-shrink_800_800/0/1566177968990?e=1620864000&v=beta&t=gbhDhSZEhrvebULNQnn4oIR8MgHwmjK9U94mubwoPVM" />
 					</div>
 
 					<div className="card_socialmedia">
