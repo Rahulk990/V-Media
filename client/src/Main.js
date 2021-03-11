@@ -41,22 +41,14 @@ const Main = () => {
 			fetchAllData(dispatch, user.userId);
 
 			// Setup Sockets
-			// const socket = socketIOClient("http://localhost:8000");
-			const socket = socketIOClient(
-				"https://network-backend-server.herokuapp.com/"
-			);
+			const socket = socketIOClient("http://localhost:8000");
+			// const socket = socketIOClient("https://network-backend-server.herokuapp.com/");
 
 			// Setting Triggers
 			socket.on("refresh", () => fetchPosts(dispatch));
-			socket.on("New Room Created", (data) =>
-				addRoom(dispatch, data, user.userId)
-			);
-			socket.on("message", (data) =>
-				fetchRoomData(dispatch, userRoomsRef.current, data)
-			);
-			socket.on("users", (data) =>
-				updateRooms(dispatch, userRoomsRef.current, data, user.userId)
-			);
+			socket.on("New Room Created", (data) => addRoom(dispatch, data, user.userId));
+			socket.on("message", (data) => fetchRoomData(dispatch, userRoomsRef.current, data));
+			socket.on("users", (data) => updateRooms(dispatch, userRoomsRef.current, data, user.userId));
 			socket.on("Room Deleted", (data) => deleteRoom(dispatch, data));
 
 			socket.emit("Joined", user.userId)
