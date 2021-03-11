@@ -54,6 +54,7 @@ const Inbox = ({ roomId, roomInfo }) => {
 
             addMessage(requestData)
             setNewMessage('')
+            setMessageReply(null)
         }
     }
 

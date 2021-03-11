@@ -82,7 +82,7 @@ mongoose.connection.once("open", () => {
 	const changeStream = mongoose.connection.collection("posts").watch();
 	changeStream.on("change", (change) => {
 		if (change.operationType === "insert" || change.operationType === "delete") {
-			io.emit("refresh", { body: "DB Changed" });
+			io.sockets.emit("refresh", { body: "DB Changed" });
 		}
 	});
 
@@ -90,24 +90,24 @@ mongoose.connection.once("open", () => {
 	changeStream1.on("change", (change) => {
 
 		if (change.operationType == 'insert') {
-			io.emit("New Room Created", change.fullDocument)
+			io.sockets.emit("New Room Created", change.fullDocument)
 		}
 
 		if (change.operationType == 'delete') {
-			io.emit("Room Deleted", change.documentKey)
+			io.sockets.emit("Room Deleted", change.documentKey)
 		}
 
 		if (change.operationType == 'update') {
 			for (let x in change.updateDescription.updatedFields) {
 				if (x.substring(0, 13) == 'messagesArray') {
-					io.emit("message", change.documentKey._id)
+					io.sockets.emit("message", change.documentKey._id)
 				}
 				if (x.substring(0, 10) == 'usersArray') {
 					const data = {
 						roomId: change.documentKey._id,
 						usersArray: change.updateDescription.updatedFields[x]
 					}
-					io.emit("users", data)
+					io.sockets.emit("users", data)
 				}
 			}
 		}
