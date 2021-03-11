@@ -40,14 +40,31 @@ const io = new socketIo.Server(server, {
 	},
 });
 
+const users = []
 io.on("connection", (socket) => {
 	console.log("User Connected");
+	socket.emit("Welcome", users)
+
+	socket.on("Joined", (data) => {
+		socket.join("Users");
+		users.push({
+			socketId: socket.id,
+			userId: data
+		})
+
+		io.sockets.in("Users").emit("Someone Connected", data);
+	});
 
 	socket.on("disconnect", () => {
+		socket.leave("Users");
+
+		const ind = users.findIndex(obj => obj.socketId === socket.id)
+		io.sockets.in("Users").emit("Someone Disconnected", users[ind].userId);
+		users.splice(ind, 1)
+
 		console.log("User Disconnected");
 	});
 });
-
 
 // DB Config
 const mongoURI = process.env.URI;
@@ -76,7 +93,7 @@ mongoose.connection.once("open", () => {
 			io.emit("New Room Created", change.fullDocument)
 		}
 
-		if(change.operationType == 'delete') {
+		if (change.operationType == 'delete') {
 			io.emit("Room Deleted", change.documentKey)
 		}
 

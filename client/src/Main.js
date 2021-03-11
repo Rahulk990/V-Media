@@ -12,7 +12,7 @@ import Home from "./Components/Home/Home";
 import Messenger from "./Components/Messenger/Messenger";
 import Profile from "./Components/Profile/Profile";
 import fetchAllData from "./Components/API/fetchAllData";
-import { selectRooms, selectUser } from "./Components/ReduxStore/appSlice";
+import { appendUser, popUser, selectRooms, selectUser, setSocket } from "./Components/ReduxStore/appSlice";
 import socketIOClient from "socket.io-client";
 import fetchPosts from "./Components/API/fetchPosts";
 import AboutUs from "./Components/AboutUs/AboutUs";
@@ -20,6 +20,7 @@ import fetchRoomData from "./Components/API/fetchRoomData";
 import addRoom from "./Components/API/addRoom";
 import deleteRoom from "./Components/API/deleteRoom";
 import updateRooms from "./Components/API/updateRooms";
+import setUsers from "./Components/API/setUsers";
 
 const Main = () => {
 	const history = useHistory();
@@ -34,7 +35,7 @@ const Main = () => {
 
 	useEffect(() => {
 		if (!user) {
-			history.push("/login");
+			history.replace("/login");
 		} else {
 			// Fetch All Data
 			fetchAllData(dispatch, user.userId);
@@ -49,6 +50,11 @@ const Main = () => {
 			socket.on("message", (data) => fetchRoomData(dispatch, userRoomsRef.current, data));
 			socket.on("users", (data) => updateRooms(dispatch, userRoomsRef.current, data, user.userId))
 			socket.on("Room Deleted", (data) => deleteRoom(dispatch, data))
+
+			socket.emit("Joined", user.userId)
+			socket.on("Welcome", (data) => setUsers(dispatch, data))
+			socket.on("Someone Connected", (data) => dispatch(appendUser(data)))
+			socket.on("Someone Disconnected", (data) => dispatch(popUser(data)))
 
 			return () => {
 				socket.disconnect();

@@ -7,7 +7,8 @@ export const appSlice = createSlice({
         user: null,
         events: [],
         userPosts: [],
-        rooms: []
+        rooms: [],
+        activeUsers: []
     },
 
     reducers: {
@@ -20,6 +21,7 @@ export const appSlice = createSlice({
             state.events = []
             state.rooms = []
             state.userPosts = []
+            state.activeUsers = []
         },
 
         setEvents: (state, action) => {
@@ -49,15 +51,28 @@ export const appSlice = createSlice({
                 state.rooms[ind] = state.rooms[state.rooms.length - 1]
                 state.rooms.pop()
             }
+        },
+        
+        appendUser: (state, action) => {
+            state.activeUsers.push(action.payload)
+        },
+
+        popUser: (state, action) => {
+            const ind = state.activeUsers.findIndex(obj => obj === action.payload)
+            if (state.activeUsers[ind]) {
+                state.activeUsers[ind] = state.activeUsers[state.activeUsers.length - 1]
+                state.activeUsers.pop()
+            }
         }
     },
 });
 
-export const { login, logout, setEvents, setUserPosts, setRooms, appendRoom, popRoom } = appSlice.actions;
+export const { login, logout, setEvents, setUserPosts, setRooms, appendRoom, popRoom, appendUser, popUser } = appSlice.actions;
 
 export const selectUser = state => state.app.user;
 export const selectEvents = state => state.app.events;
 export const selectPosts = state => state.app.userPosts;
 export const selectRooms = state => state.app.rooms;
+export const selectActiveUsers = state => state.app.activeUsers;
 
 export default appSlice.reducer;

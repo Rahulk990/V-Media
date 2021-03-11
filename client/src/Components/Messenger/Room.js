@@ -3,16 +3,17 @@ import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import './Room.css'
 
-import { Avatar } from '@material-ui/core'
-import { selectUser } from '../ReduxStore/appSlice'
+import { Avatar, Badge, withStyles } from '@material-ui/core'
+import { selectActiveUsers, selectUser } from '../ReduxStore/appSlice'
 import axios from '../Misc/axios'
 
+const GreenBadge = withStyles(() => ({ badge: { backgroundColor: '#1EE657' } }))(Badge);
 const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recentMessageContent }) => {
-
     const history = useHistory()
     const user = useSelector(selectUser)
-    const [newUser, setNewUser] = useState({})
+    const activeUsers = useSelector(selectActiveUsers)
 
+    const [newUser, setNewUser] = useState({})
     useEffect(() => {
         if (!title && usersArray) {
             const fetchId = (usersArray[0] === user.userId) ? (usersArray[1]) : (usersArray[0])
@@ -31,7 +32,7 @@ const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recen
         await setRoomInfo({
             title: newUser.name,
             avatar: newUser.avatar,
-            isGroup: (title) ? ('group') : ('direct'),
+            isGroup: (title) ? ('group') : (newUser.userId),
         })
     }
 
@@ -43,13 +44,25 @@ const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recen
         }
     }
 
+
     return (
         <div className='room' onClick={handleSelect}>
-            <Avatar
-                className="room__avatar"
-                style={{ "height": "30px", "width": "30px" }}
-                src={newUser.avatar}
-            />
+
+            {(title !== null && activeUsers.includes(newUser.userId) ? (
+                <GreenBadge className="room__avatar" variant="dot" overlap="circle">
+                    <Avatar
+                        style={{ "height": "30px", "width": "30px" }}
+                        src={newUser.avatar}
+                    />
+                </GreenBadge>
+            ) : (
+                    <Avatar
+                        className="room__avatar"
+                        style={{ "height": "30px", "width": "30px" }}
+                        src={newUser.avatar}
+                    />
+                ))
+            }
 
             <div className='room__content'>
                 <p>{newUser.name}</p>
