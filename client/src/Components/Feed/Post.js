@@ -47,7 +47,7 @@ const Post = ({ post }) => {
                     <Avatar
                         className='post__avatar'
                         src={post.avatar}
-                        onClick={() => history.replace('/user/' + user.userId)}
+                        onClick={() => history.replace('/user/' + post.userId)}
                     />
 
                     <div className='post__topInfo'>
