@@ -11,7 +11,6 @@ const userSchema = new Schema({
   name: { type: mongoose.SchemaTypes.String, required: true },
   avatar: { type: mongoose.SchemaTypes.String, required: true },
   email: { type: mongoose.SchemaTypes.String, required: true },
-  roomsArray: { type: [mongoose.SchemaTypes.String] },
   eventsArray: { type: [eventSchema] },
 });
 
