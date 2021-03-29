@@ -5,7 +5,6 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import * as socketIo from "socket.io";
 import dotenv from "dotenv";
-// import Pusher from "pusher";
 
 import eventRoutes from "./Routes/eventRoutes.js";
 import postRoutes from "./Routes/postRoutes.js";
