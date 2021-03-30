@@ -5,13 +5,15 @@ import './PostSender.css'
 import { Avatar, Button, IconButton } from '@material-ui/core'
 import { Close, PhotoLibrary } from '@material-ui/icons'
 import { selectUser } from '../ReduxStore/appSlice'
-import uploadPost from '../API/uploadPost'
 import { storage } from '../../firebase'
+import { AddPost } from '../API/postAPI'
+import { useMutation } from "@apollo/react-hooks";
 
 const PostSender = () => {
-
-    const dispatch = useDispatch()
+    
     const user = useSelector(selectUser)
+	const [addPost] = useMutation(AddPost);
+
     const [postInput, setPostInput] = useState('')
     const [postImage, setPostImage] = useState(null)
 
@@ -42,38 +44,34 @@ const PostSender = () => {
                     storage.ref('images').child(imageName).getDownloadURL()
                         .then(fireBaseUrl => {
                             const postData = {
-                                userId: user.userId,
-                                username: user.username,
+                                userId: user._id,
                                 text: postText,
-                                avatar: user.avatarSrc,
-                                imgName: fireBaseUrl,
-                                timestamp: Date.now()
+                                imgUrl: fireBaseUrl,
+                                timestamp: String(Date.now())
                             }
 
                             setPostInput('');
                             setPostImage(null);
-                            uploadPost(dispatch, postData)
+                            addPost({ variables: postData});
                         })
                 })
 
         } else if (postText.length > 0) {
             const postData = {
-                userId: user.userId,
-                username: user.username,
+                userId: user._id,
                 text: postText,
-                avatar: user.avatarSrc,
-                timestamp: Date.now()
+                timestamp: String(Date.now())
             }
 
             setPostInput('');
-            await uploadPost(dispatch, postData)
+            addPost({ variables: postData});
         }
     }
 
     return (
         <div className='postSender'>
             <div className='postSender__top'>
-                <Avatar src={user.avatarSrc} />
+                <Avatar src={user.avatar} />
 
                 <form>
 

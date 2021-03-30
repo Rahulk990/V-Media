@@ -4,19 +4,23 @@ import { useHistory } from "react-router-dom";
 import "./Login.css";
 
 import { Button } from "@material-ui/core";
-import createUser from "../API/createUser";
-import checkAuth from "./checkAuth";
+import { useMutation } from "@apollo/react-hooks";
+import { AddUser } from "../API/userAPI";
+import { checkAuth, signIn } from "./checkAuth";
 
 const Login = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const [addUser] = useMutation(AddUser);
 
+	// For Auto-Authentication from Cache
 	useEffect(() => {
-		checkAuth(dispatch, history);
+		checkAuth(addUser, dispatch, history);
 	}, [])
 
-	const signInHandler = async () => {
-		await createUser();
+	// For SignIn/SignUp
+	const signInHandler = () => {
+		signIn(addUser, dispatch, history);
 	};
 
 	return (

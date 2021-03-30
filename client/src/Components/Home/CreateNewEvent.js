@@ -5,13 +5,15 @@ import './CreateNewEvent.css'
 import StyledDialog from '../Misc/StyledDialog'
 import { Close } from '@material-ui/icons'
 import { Button, IconButton, TextField } from '@material-ui/core'
-import uploadEvent from '../API/uploadEvent'
-import { selectUser } from '../ReduxStore/appSlice'
+import { selectUser, setEvents } from '../ReduxStore/appSlice'
+import { AddEvent } from '../API/userAPI'
+import { useMutation } from "@apollo/react-hooks";
 
 const CreateNewEvent = ({ open, onClose }) => {
 
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
+    const [addEvent] = useMutation(AddEvent)
 
     const [heading, setHeading] = useState('')
     const [description, setDescription] = useState('')
@@ -37,15 +39,14 @@ const CreateNewEvent = ({ open, onClose }) => {
 
         if (heading.length >= 6 && heading.length <= 30 && description.length > 0) {
             const uploadData = {
-                data: {
-                    heading: heading,
-                    description: description,
-                    timestamp: Date.parse(dateTime)
-                },
-                userId: user.userId
+                id: user._id,
+                heading: heading,
+                description: description,
+                timestamp: String(Date.parse(dateTime))
             }
 
-            await uploadEvent(dispatch, uploadData)
+            const events = await addEvent({ variables: uploadData });
+            dispatch(setEvents(events.data.addEvent.eventsArray));
             onClose();
         }
     }
@@ -65,7 +66,7 @@ const CreateNewEvent = ({ open, onClose }) => {
                     </div>
 
                     <form>
-                    
+
                         <div className='createNewEvent__body'>
 
                             <div className='createNewEvent__bodyEntry'>

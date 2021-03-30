@@ -31,7 +31,7 @@ const HomeRight = () => {
             { newEvent && <CreateNewEvent
                 open={newEvent}
                 onClose={() => setNewEvent(false)}
-                userId={user.userId}
+                userId={user._id}
             />
             }
 

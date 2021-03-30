@@ -12,7 +12,6 @@ const Feed = () => {
     return (
         <div className='feed'>
             <PostSender />
-
             {
                 postData.map(post => (
                     <Post

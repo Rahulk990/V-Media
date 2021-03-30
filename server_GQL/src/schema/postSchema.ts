@@ -59,25 +59,27 @@ const PostType: any = new GraphQLObjectType({
   }),
 });
 
-const PostRootQuery = {
+const PostRootQuery = {};
+
+const PostMutation = {
   post: {
     type: PostType,
     args: {
-      id: { type: GraphQLID },
+      id: { type: new GraphQLNonNull(GraphQLID) },
     },
     resolve(parent: any, args: any) {
       return Post.findById(args.id);
     },
   },
+
   posts: {
     type: new GraphQLList(PostType),
+    args: { placeHolder: {type: GraphQLInt}},
     resolve(parent: any, args: any) {
       return Post.find({});
     },
   },
-};
 
-const PostMutation = {
   addPost: {
     type: PostType,
     args: {
@@ -131,11 +133,11 @@ const PostMutation = {
     type: PostType,
     args: {
       id: { type: new GraphQLNonNull(GraphQLID) },
-      likeId: { type: new GraphQLNonNull(GraphQLID) },
+      userId: { type: new GraphQLNonNull(GraphQLID) },
     },
     resolve(parent: any, args: any) {
       let update = {
-        $pull: { likesArray: { _id: args.likeId } },
+        $pull: { likesArray: { userId: args.userId } },
       };
       return Post.findByIdAndUpdate(args.id, update, { returnOriginal: false });
     },

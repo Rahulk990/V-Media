@@ -16,7 +16,7 @@ import { RoomType } from "./roomSchema";
 const EventType = new GraphQLObjectType({
   name: "Event",
   fields: () => ({
-    _id: { type: GraphQLID},
+    _id: { type: GraphQLID },
     heading: { type: GraphQLString },
     description: { type: GraphQLString },
     timestamp: { type: GraphQLString },
@@ -40,25 +40,26 @@ const UserType: any = new GraphQLObjectType({
     userRooms: {
       type: GraphQLList(RoomType),
       resolve(parent: any, args: any) {
-        return Room.find({ usersArray: parent._id})
-      }
-    }
+        return Room.find({ usersArray: parent._id });
+      },
+    },
   }),
 });
 
 const UserRootQuery = {
+};
+
+const UserMutation = {
   user: {
     type: UserType,
     args: {
-      id: { type: GraphQLID },
+      id: { type: new GraphQLNonNull(GraphQLID) },
     },
     resolve(parent: any, args: any) {
       return User.findById(args.id);
     },
   },
-};
 
-const UserMutation = {
   addUser: {
     type: UserType,
     args: {
@@ -67,12 +68,15 @@ const UserMutation = {
       email: { type: new GraphQLNonNull(GraphQLString) },
     },
     resolve(parent: any, args: any) {
-      let user = new User({
+      let user = {
         name: args.name,
         avatar: args.avatar,
         email: args.email,
+      };
+      return User.findOneAndUpdate({ email: args.email }, user, {
+        returnOriginal: false,
+        upsert: true,
       });
-      return user.save();
     },
   },
 

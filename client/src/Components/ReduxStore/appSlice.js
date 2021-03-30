@@ -29,10 +29,6 @@ export const appSlice = createSlice({
             state.events = action.payload;
         },
 
-        setUserPosts: (state, action) => {
-            state.userPosts = action.payload
-        },
-
         setRooms: (state, action) => {
             action.payload.sort((a, b) => a._id - b._id)
             if (!(state.rooms.length === action.payload.length &&
@@ -67,11 +63,10 @@ export const appSlice = createSlice({
     },
 });
 
-export const { login, logout, setEvents, setUserPosts, setRooms, appendRoom, popRoom, appendUser, popUser } = appSlice.actions;
+export const { login, logout, setEvents, setRooms, appendRoom, popRoom, appendUser, popUser } = appSlice.actions;
 
 export const selectUser = state => state.app.user;
 export const selectEvents = state => state.app.events;
-export const selectPosts = state => state.app.userPosts;
 export const selectRooms = state => state.app.rooms;
 export const selectActiveUsers = state => state.app.activeUsers;
 
