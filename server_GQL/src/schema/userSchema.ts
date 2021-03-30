@@ -8,12 +8,15 @@ import {
 
 import User from "../models/user";
 import Post from "../models/post";
+import Room from "../models/room";
 
 import { PostType } from "./postSchema";
+import { RoomType } from "./roomSchema";
 
 const EventType = new GraphQLObjectType({
   name: "Event",
   fields: () => ({
+    _id: { type: GraphQLID},
     heading: { type: GraphQLString },
     description: { type: GraphQLString },
     timestamp: { type: GraphQLString },
@@ -34,6 +37,12 @@ const UserType: any = new GraphQLObjectType({
         return Post.find({ userId: parent._id });
       },
     },
+    userRooms: {
+      type: GraphQLList(RoomType),
+      resolve(parent: any, args: any) {
+        return Room.find({ usersArray: parent._id})
+      }
+    }
   }),
 });
 
@@ -64,6 +73,42 @@ const UserMutation = {
         email: args.email,
       });
       return user.save();
+    },
+  },
+
+  addEvent: {
+    type: UserType,
+    args: {
+      id: { type: new GraphQLNonNull(GraphQLID) },
+      heading: { type: new GraphQLNonNull(GraphQLString) },
+      description: { type: new GraphQLNonNull(GraphQLString) },
+      timestamp: { type: new GraphQLNonNull(GraphQLString) },
+    },
+    resolve(parent: any, args: any) {
+      let event = {
+        heading: args.heading,
+        description: args.description,
+        timestamp: args.timestamp,
+      };
+      return User.findByIdAndUpdate(
+        args.id,
+        { $push: { eventsArray: event } },
+        { returnOriginal: false }
+      );
+    },
+  },
+
+  deleteEvent: {
+    type: UserType,
+    args: {
+      id: { type: new GraphQLNonNull(GraphQLID) },
+      eventId: { type: new GraphQLNonNull(GraphQLID) },
+    },
+    resolve(parent: any, args: any) {
+      let update = {
+        $pull: { eventsArray: { _id: args.eventId } },
+      };
+      return User.findByIdAndUpdate(args.id, update, { returnOriginal: false });
     },
   },
 };

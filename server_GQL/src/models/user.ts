@@ -10,8 +10,8 @@ const eventSchema = new Schema({
 const userSchema = new Schema({
   name: { type: mongoose.SchemaTypes.String, required: true },
   avatar: { type: mongoose.SchemaTypes.String, required: true },
-  email: { type: mongoose.SchemaTypes.String, required: true },
-  eventsArray: { type: [eventSchema] },
+  email: { type: mongoose.SchemaTypes.String, required: true, unique: true },
+  eventsArray: [{ type: eventSchema }],
 });
 
 export default mongoose.model("User", userSchema);
