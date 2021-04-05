@@ -1,8 +1,8 @@
 import { setEvents } from '../ReduxStore/appSlice'
-import { setPosts } from '../ReduxStore/postSlice';
+import { setRoomsData } from '../ReduxStore/roomSlice';
 import fetchPosts from './fetchPosts'
 
-const fetchData = async (userId, dispatch, getEvents, getPosts) => {
+const fetchData = async (userId, dispatch, getEvents, getPosts, getRooms) => {
 
     // Fetching Events
     const events = await getEvents({ variables: { id: userId } });
@@ -12,6 +12,8 @@ const fetchData = async (userId, dispatch, getEvents, getPosts) => {
     await fetchPosts(dispatch, getPosts);
 
     // fetchUserRooms(dispatch, userId)
+    const rooms = await getRooms({ variables: {id: userId} });
+    dispatch(setRoomsData(rooms.data.user.userRooms))
 }
 
 export default fetchData;

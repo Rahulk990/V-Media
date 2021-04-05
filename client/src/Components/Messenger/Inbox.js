@@ -10,8 +10,9 @@ import { EmojiEmotions, Send } from '@material-ui/icons';
 
 import { selectActiveUsers, selectUser } from '../ReduxStore/appSlice'
 import { selectRoomsData } from '../ReduxStore/roomSlice';
-import addMessage from '../API/addMessage'
 import { useHistory } from 'react-router-dom';
+import { useMutation } from "@apollo/react-hooks";
+import { AddMessage } from '../API/roomAPI';
 
 const GreenBadge = withStyles(() => ({ badge: { backgroundColor: '#1EE657' } }))(Badge);
 const Inbox = ({ roomId, roomInfo }) => {
@@ -20,6 +21,8 @@ const Inbox = ({ roomId, roomInfo }) => {
     const roomsData = useSelector(selectRoomsData)
     const activeUsers = useSelector(selectActiveUsers)
 
+    const [addMessage] = useMutation(AddMessage);
+
     const [messages, setMessages] = useState([])
     const [usersArray, setUsersArray] = useState([])
     useEffect(() => {
@@ -27,7 +30,7 @@ const Inbox = ({ roomId, roomInfo }) => {
             const ind = roomsData.findIndex(obj => obj._id === roomId)
             if (roomsData[ind]) {
                 setMessages(roomsData[ind].messagesArray);
-                setUsersArray(roomsData[ind].usersArray)
+                setUsersArray(roomsData[ind].users)
             } else {
                 history.replace('/messenger')
             }
@@ -36,23 +39,21 @@ const Inbox = ({ roomId, roomInfo }) => {
 
 
     const [newMessage, setNewMessage] = useState('')
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const messageText = newMessage.trim()
         if (messageText.length > 0) {
-            const requestData = {
-                data: {
-                    userId: user.userId,
-                    username: user.username,
-                    content: messageText,
-                    timestamp: Date.now(),
-                    replyId: (messageReply) ? (messageReply.messageId) : (null)
-                },
-                roomId: roomId
+            const messageData = {
+                id: roomId,
+                userId: user._id,
+                username: user.name,
+                content: messageText,
+                timestamp: String(Date.now()),
+                replyId: (messageReply) ? (messageReply.messageId) : (null)
             }
 
-            addMessage(requestData)
+            await addMessage({ variables: messageData })
             setNewMessage('')
             setMessageReply(null)
         }
@@ -76,11 +77,11 @@ const Inbox = ({ roomId, roomInfo }) => {
                             />
                         </GreenBadge>
                     ) : (
-                            <Avatar
-                                style={{ "height": "30px", "width": "30px" }}
-                                src={roomInfo.avatar}
-                            />
-                        ))
+                        <Avatar
+                            style={{ "height": "30px", "width": "30px" }}
+                            src={roomInfo.avatar}
+                        />
+                    ))
                     }
 
                     <p>{roomInfo.title}</p>
@@ -105,7 +106,7 @@ const Inbox = ({ roomId, roomInfo }) => {
                                 <Chat
                                     key={message.timestamp + message.content}
                                     roomId={roomId}
-                                    userId={user.userId}
+                                    userId={user._id}
                                     message={message}
                                     messagesArray={messages}
                                     setMessageReply={setMessageReply}

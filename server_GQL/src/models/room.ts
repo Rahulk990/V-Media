@@ -11,7 +11,7 @@ const messageSchema = new Schema({
 
 const roomSchema = new Schema({
   title: { type: mongoose.SchemaTypes.String, required: false },
-  usersArray: [{ type: mongoose.SchemaTypes.ObjectId, unique: true, ref: "User" }],
+  usersArray: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
   messagesArray: [{ type: messageSchema }],
 });
 

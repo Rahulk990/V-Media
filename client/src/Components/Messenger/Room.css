@@ -34,9 +34,9 @@
 .room__contentRecent > h3 {
     font-size: 12px;
     font-weight: 600;
+    margin-right: 5px;
 }
 
 .room__contentRecent > p {
-    margin-left: 5px;
     font-size: 12px;
 }

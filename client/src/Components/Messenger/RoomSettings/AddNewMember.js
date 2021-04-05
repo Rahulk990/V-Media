@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import "./AddMember.css";
+import "./AddNewMember.css";
 
-import addMember from "../../API/addMember"
 import { IconButton } from "@material-ui/core";
 import { AddRounded } from "@material-ui/icons";
+import { useMutation } from "@apollo/react-hooks";
+import { AddMember } from "../../API/roomAPI";
 
-const AddMember = ({ roomId }) => {
+const AddNewMember = ({ roomId }) => {
+
+	const [addMember] = useMutation(AddMember)
 
 	const [newMember, setNewMember] = useState("")
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setNewMember("");
-		await addMember(newMember, roomId)
+		await addMember({ variables: { id: roomId, userEmail: newMember } })
 	}
 
 	return (
@@ -37,4 +40,4 @@ const AddMember = ({ roomId }) => {
 	);
 };
 
-export default AddMember;
+export default AddNewMember;

@@ -5,34 +5,31 @@ import './Room.css'
 
 import { Avatar, Badge, withStyles } from '@material-ui/core'
 import { selectActiveUsers, selectUser } from '../ReduxStore/appSlice'
-import axios from '../Misc/axios'
 
 const GreenBadge = withStyles(() => ({ badge: { backgroundColor: '#1EE657' } }))(Badge);
-const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recentMessageContent }) => {
+const Room = ({ roomData, setRoomInfo, recentMessageUser, recentMessageContent }) => {
     const history = useHistory()
     const user = useSelector(selectUser)
     const activeUsers = useSelector(selectActiveUsers)
 
     const [newUser, setNewUser] = useState({})
     useEffect(() => {
-        if (!title && usersArray) {
-            const fetchId = (usersArray[0] === user.userId) ? (usersArray[1]) : (usersArray[0])
-            axios.get('retrieve/user', { params: { userId: fetchId } })
-                .then((res) => setNewUser(res.data))
+        if (!roomData.title && roomData.users) {
+            (roomData.users[0]._id === user._id) ? setNewUser(roomData.users[1]) : setNewUser(roomData.users[0])
         }
         else {
-            setNewUser({ name: title, avatar: '' })
+            setNewUser({ name: roomData.title, avatar: '' })
         }
     }, [])
 
     const handleSelect = async () => {
-        if (title) history.push('/messenger/g/' + roomId);
-        else history.push('/messenger/d/' + roomId);
+        if (roomData.title) history.push('/messenger/g/' + roomData._id);
+        else history.push('/messenger/d/' + roomData._id);
 
         await setRoomInfo({
             title: newUser.name,
             avatar: newUser.avatar,
-            isGroup: (title) ? ('group') : (newUser.userId),
+            isGroup: (roomData.title) ? ('group') : (newUser._id),
         })
     }
 
@@ -44,11 +41,10 @@ const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recen
         }
     }
 
-
     return (
         <div className='room' onClick={handleSelect}>
 
-            {(title !== null && activeUsers.includes(newUser.userId) ? (
+            {(roomData.title === null && activeUsers.includes(newUser._id) ? (
                 <GreenBadge className="room__avatar" variant="dot" overlap="circle">
                     <Avatar
                         style={{ "height": "30px", "width": "30px" }}
@@ -56,12 +52,12 @@ const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recen
                     />
                 </GreenBadge>
             ) : (
-                    <Avatar
-                        className="room__avatar"
-                        style={{ "height": "30px", "width": "30px" }}
-                        src={newUser.avatar}
-                    />
-                ))
+                <Avatar
+                    className="room__avatar"
+                    style={{ "height": "30px", "width": "30px" }}
+                    src={newUser.avatar}
+                />
+            ))
             }
 
             <div className='room__content'>
@@ -69,7 +65,10 @@ const Room = ({ roomId, title, usersArray, setRoomInfo, recentMessageUser, recen
 
                 {recentMessageUser && recentMessageUser.length > 0 &&
                     <div className='room__contentRecent'>
-                        <h3>{recentMessageUser + ':'}</h3>
+                        {
+                            recentMessageUser !== 'AAAAA' &&
+                            <h3>{recentMessageUser + ':'}</h3>
+                        }
                         <p>{sliceMessage()}</p>
                     </div>
                 }

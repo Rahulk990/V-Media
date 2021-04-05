@@ -12,24 +12,25 @@ import Home from "./Components/Home/Home";
 import Messenger from "./Components/Messenger/Messenger";
 import Profile from "./Components/Profile/Profile";
 import fetchData from "./Components/API/fetchData";
-import { appendUser, popUser, selectRooms, selectUser, setSocket } from "./Components/ReduxStore/appSlice";
+import { appendUser, popUser, selectUser } from "./Components/ReduxStore/appSlice";
 import socketIOClient from "socket.io-client";
 import AboutUs from "./Components/AboutUs/AboutUs";
 import fetchRoomData from "./Components/API/fetchRoomData";
 import addRoom from "./Components/API/addRoom";
-import deleteRoom from "./Components/API/deleteRoom";
 import updateRooms from "./Components/API/updateRooms";
 import setUsers from "./Components/API/setUsers";
 import { useMutation } from "@apollo/react-hooks";
-import { GetEvents } from "./Components/API/userAPI";
+import { GetEvents, GetRooms } from "./Components/API/userAPI";
 import { GetPosts } from "./Components/API/postAPI";
 import fetchPosts from "./Components/API/fetchPosts";
+import { GetRoom } from "./Components/API/roomAPI";
+import { popRoomsData, selectRoomsData } from "./Components/ReduxStore/roomSlice";
 
 const Main = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
-	const userRooms = useSelector(selectRooms);
+	const userRooms = useSelector(selectRoomsData);
 
 	const userRoomsRef = useRef(userRooms);
 	useEffect(() => {
@@ -39,13 +40,15 @@ const Main = () => {
 	// Defining Queries
 	const [getEvents] = useMutation(GetEvents);
 	const [getPosts] = useMutation(GetPosts);
+	const [getRooms] = useMutation(GetRooms);
+	const [getRoom] = useMutation(GetRoom);
 
 	useEffect(() => {
 		if (!user) {
 			history.replace("/login");
 		} else {
 			// Fetching All Data
-			fetchData(user._id, dispatch, getEvents, getPosts);
+			fetchData(user._id, dispatch, getEvents, getPosts, getRooms);
 
 			// Setup Sockets
 			const socket = socketIOClient("http://localhost:8000");
@@ -53,10 +56,10 @@ const Main = () => {
 
 			// Setting Triggers
 			socket.on("refresh", () => fetchPosts(dispatch, getPosts));
-			// socket.on("New Room Created", (data) => addRoom(dispatch, data, user.userId));
-			// socket.on("message", (data) => fetchRoomData(dispatch, userRoomsRef.current, data));
-			// socket.on("users", (data) => updateRooms(dispatch, userRoomsRef.current, data, user.userId));
-			// socket.on("Room Deleted", (data) => deleteRoom(dispatch, data));
+			socket.on("New Room Created", (data) => { if (data.usersArray.includes(user._id)) addRoom(data._id, dispatch, getRoom) });
+			socket.on("message", (data) => fetchRoomData(data, userRoomsRef.current, dispatch, getRoom));
+			socket.on("users", (data) => updateRooms(user._id, data, userRoomsRef.current, dispatch, getRoom));
+			socket.on("Room Deleted", (data) => dispatch(popRoomsData(data)));
 
 			socket.emit("Joined", user._id)
 			socket.on("Welcome", (data) => setUsers(dispatch, data))

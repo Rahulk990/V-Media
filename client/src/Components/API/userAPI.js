@@ -61,4 +61,29 @@ const DeleteEvent = gql`
     }
 `;
 
-export { AddUser, GetUser, AddEvent, GetEvents, DeleteEvent };
+const GetRooms = gql`
+    mutation GetRooms($id: ID!){
+        user(id: $id){
+            userRooms{
+                _id
+                title
+                users{
+                    _id
+                    name
+                    avatar
+                    email
+                }
+                messagesArray{
+                    _id
+                    userId
+                    replyId
+                    username
+                    content
+                    timestamp
+                }
+            }
+        }
+    }
+`
+
+export { AddUser, GetUser, AddEvent, GetEvents, DeleteEvent, GetRooms };

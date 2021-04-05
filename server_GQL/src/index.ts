@@ -33,7 +33,7 @@ const io = new socketIo.Server(server, {
   },
 });
 
-const users: {socketId: string, userId: string}[] = [];
+const users: { socketId: string; userId: string }[] = [];
 io.on("connection", (socket) => {
   console.log("User Connected");
   socket.emit("Welcome", users);
@@ -52,8 +52,10 @@ io.on("connection", (socket) => {
     socket.leave("Users");
 
     const ind = users.findIndex((obj) => obj.socketId === socket.id);
-    io.sockets.in("Users").emit("Someone Disconnected", users[ind].userId);
-    users.splice(ind, 1);
+    if (users[ind]) {
+      io.sockets.in("Users").emit("Someone Disconnected", users[ind].userId);
+      users.splice(ind, 1);
+    }
 
     console.log("User Disconnected");
   });
@@ -69,41 +71,43 @@ mongoose.connect(mongoURI, {
 });
 
 mongoose.connection.once("open", () => {
-	console.log("Connected to Mongo DB");
+  console.log("Connected to Mongo DB");
 
-	const changeStream = mongoose.connection.collection("posts").watch();
-	changeStream.on("change", (change) => {
-		if (change.operationType === "insert" || change.operationType === "delete") {
-			io.sockets.emit("refresh", { body: "DB Changed" });
-		}
-	});
+  const changeStream = mongoose.connection.collection("posts").watch();
+  changeStream.on("change", (change) => {
+    if (
+      change.operationType === "insert" ||
+      change.operationType === "delete"
+    ) {
+      io.sockets.emit("refresh", { body: "DB Changed" });
+    }
+  });
 
-	const changeStream1 = mongoose.connection.collection("rooms").watch();
-	changeStream1.on("change", (change) => {
+  const changeStream1 = mongoose.connection.collection("rooms").watch();
+  changeStream1.on("change", (change) => {
+    if (change.operationType == "insert") {
+      io.sockets.emit("New Room Created", change.fullDocument);
+    }
 
-		if (change.operationType == 'insert') {
-			io.sockets.emit("New Room Created", change.fullDocument)
-		}
+    if (change.operationType == "delete") {
+      io.sockets.emit("Room Deleted", change.documentKey);
+    }
 
-		if (change.operationType == 'delete') {
-			io.sockets.emit("Room Deleted", change.documentKey)
-		}
-
-		if (change.operationType == 'update') {
-			for (let x in change.updateDescription.updatedFields) {
-				if (x.substring(0, 13) == 'messagesArray') {
-					io.sockets.emit("message", change.documentKey._id)
-				}
-				if (x.substring(0, 10) == 'usersArray') {
-					const data = {
-						roomId: change.documentKey._id,
-						usersArray: change.updateDescription.updatedFields[x]
-					}
-					io.sockets.emit("users", data)
-				}
-			}
-		}
-	})
+    if (change.operationType == "update") {
+      for (let x in change.updateDescription.updatedFields) {
+        if (x.substring(0, 13) == "messagesArray") {
+          io.sockets.emit("message", change.documentKey._id);
+        }
+        if (x.substring(0, 10) == "usersArray") {
+          const data = {
+            roomId: change.documentKey._id,
+            usersArray: change.updateDescription.updatedFields[x],
+          };
+          io.sockets.emit("users", data);
+        }
+      }
+    }
+  });
 });
 
 // Configuring Graph QL API

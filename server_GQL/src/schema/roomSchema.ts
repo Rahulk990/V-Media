@@ -39,6 +39,15 @@ const RoomType = new GraphQLObjectType({
 });
 
 const RoomRootQuery = {
+  rooms: {
+    type: GraphQLList(RoomType),
+    resolve(parent: any, args: any) {
+      return Room.find();
+    },
+  },
+};
+
+const RoomMutation = {
   room: {
     type: RoomType,
     args: {
@@ -48,9 +57,7 @@ const RoomRootQuery = {
       return Room.findById({ _id: args.id });
     },
   },
-};
 
-const RoomMutation = {
   addDirectRoom: {
     type: RoomType,
     args: {
@@ -59,16 +66,7 @@ const RoomMutation = {
       title: { type: GraphQLString },
     },
     resolve(parent: any, args: any) {
-      let secondUser: any = User.find({ email: args.userEmail });
-      if (secondUser && secondUser._id !== args.userId) {
-        let room = new Room({
-          title: args.title,
-          usersArray: [args.userId, secondUser._id],
-        });
-        return room.save();
-      } else {
-        return null;
-      }
+      return addDirectRoomUtil(args.userId, args.userEmail, args.title);
     },
   },
 
@@ -104,21 +102,7 @@ const RoomMutation = {
       userEmail: { type: new GraphQLNonNull(GraphQLString) },
     },
     resolve(parent: any, args: any) {
-      let secondUser: any = User.find({ email: args.userEmail });
-      if (secondUser) {
-        let message = {
-          replyId: "AAAAA",
-          content: secondUser.name + " has been Added",
-          timestamp: Date.now(),
-        };
-        return Room.findByIdAndUpdate(
-          args.id,
-          { $push: { usersArray: secondUser._id, messagesArray: message } },
-          { returnOriginal: false }
-        );
-      } else {
-        return null;
-      }
+      return addMemberUtil(args.id, args.userEmail);
     },
   },
 
@@ -126,30 +110,11 @@ const RoomMutation = {
     type: RoomType,
     args: {
       id: { type: new GraphQLNonNull(GraphQLID) },
-      userId: { type: new GraphQLNonNull(GraphQLString) },
+      userId: { type: new GraphQLNonNull(GraphQLID) },
       username: { type: new GraphQLNonNull(GraphQLString) },
     },
     resolve(parent: any, args: any) {
-      let message = {
-        replyId: "AAAAA",
-        content: args.username + " has been Added",
-        timestamp: Date.now(),
-      };
-
-      let update = {
-        $pull: { usersArray: args.userId },
-        $push: { messagesArray: message },
-      };
-
-      let room: any = Room.findByIdAndUpdate(args.id, update, {
-        returnOriginal: false,
-      });
-
-      if (room.usersArray.length == 0) {
-        return Room.findByIdAndDelete(args.id);
-      } else {
-        return room;
-      }
+      return deleteMemberUtil(args.id, args.userId, args.username);
     },
   },
 
@@ -186,12 +151,74 @@ const RoomMutation = {
       messageId: { type: new GraphQLNonNull(GraphQLID) },
     },
     resolve(parent: any, args: any) {
-      let update = {
-        $pull: { messagesArray: { _id: args.messageId } },
-      };
+      let update = { $pull: { messagesArray: { _id: args.messageId } } };
       return Room.findByIdAndUpdate(args.id, update, { returnOriginal: false });
     },
   },
+};
+
+const addDirectRoomUtil = async (
+  userId: String,
+  userEmail: String,
+  title: String
+) => {
+  let secondUser: any = await User.findOne({ email: userEmail });
+  if (!secondUser || secondUser._id === userId) {
+    return null;
+  } else {
+    let room = new Room({
+      title: title,
+      usersArray: [userId, secondUser._id],
+    });
+    return room.save();
+  }
+};
+
+const addMemberUtil = async (id: String, userEmail: String) => {
+  let secondUser: any = await User.findOne({ email: userEmail });
+  if (secondUser) {
+    let message = {
+      userId: secondUser._id,
+      username: "AAAAA",
+      content: secondUser.name + " has been Added",
+      timestamp: String(Date.now()),
+    };
+
+    return Room.findByIdAndUpdate(
+      id,
+      { $push: { usersArray: secondUser._id, messagesArray: message } },
+      { returnOriginal: false }
+    );
+  } else {
+    return null;
+  }
+};
+
+const deleteMemberUtil = async (
+  id: String,
+  userId: String,
+  username: String
+) => {
+  let message = {
+    userId: userId,
+    username: "AAAAA",
+    content: username + " left",
+    timestamp: String(Date.now()),
+  };
+
+  let update = {
+    $pull: { usersArray: userId },
+    $push: { messagesArray: message },
+  };
+
+  let room: any = await Room.findByIdAndUpdate(id, update, {
+    returnOriginal: false,
+  });
+  if (room.usersArray.length == 0) {
+    return Room.findByIdAndDelete(id);
+  } else {
+    return room;
+  }
 };
 
 export { RoomType, RoomRootQuery, RoomMutation };

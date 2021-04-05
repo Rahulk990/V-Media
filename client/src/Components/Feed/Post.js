@@ -37,7 +37,7 @@ const Post = ({ post }) => {
     }
 
     const handleLike = async () => {
-        if (post.likesArray.some((like) => (like.user._id == user._id))) {
+        if (post.likesArray.some((like) => (like.user._id === user._id))) {
             let postData = await deleteLike({ variables: { id: post._id, userId: user._id } })
             dispatch(updatePost(postData.data.deleteLike))
         } else {
@@ -100,7 +100,7 @@ const Post = ({ post }) => {
             <div className={`post__bottom ${showComments && 'post__bottom--active'}`}>
 
                 <div
-                    className={`post__option ${post.likesArray.some((like) => (like.user._id == user._id)) && 'post__option--active'}`}
+                    className={`post__option ${post.likesArray.some((like) => (like.user._id === user._id)) && 'post__option--active'}`}
                     onClick={handleLike}
                 >
                     <ThumbUp />

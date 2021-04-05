@@ -9,17 +9,17 @@ export const roomSlice = createSlice({
 
     reducers: {
         setRoomsData: (state, action) => {
+            action.payload.forEach((room) => room.messagesArray.sort((a, b) => b.timestamp - a.timestamp))
             state.roomsData = action.payload
         },
 
-        appendRoomsData: (state, action) => {
+        appendRoomData: (state, action) => {
             state.roomsData.push(action.payload)
         },
 
         popRoomsData: (state, action) => {
-            const ind = state.roomsData.findIndex(obj => obj._id === action.payload.roomId)
+            const ind = state.roomsData.findIndex(obj => obj._id === action.payload._id)
             if (state.roomsData[ind]) {
-                console.log(ind);
                 state.roomsData[ind] = state.roomsData[state.roomsData.length - 1]
                 state.roomsData.pop()
             }
@@ -32,7 +32,7 @@ export const roomSlice = createSlice({
     },
 });
 
-export const { setRoomsData, appendRoomsData, popRoomsData, updateRoomData } = roomSlice.actions;
+export const { setRoomsData, appendRoomData, popRoomsData, updateRoomData } = roomSlice.actions;
 
 export const selectRoomsData = state => state.room.roomsData;
 

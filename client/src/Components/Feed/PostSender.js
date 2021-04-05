@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import './PostSender.css'
 
 import { Avatar, Button, IconButton } from '@material-ui/core'

@@ -53,7 +53,7 @@ const Profile = () => {
                         <div className='profile__feedPosts'>
 
                             {user && postData.map(post => (
-                                (post.userId == user._id) && (
+                                (post.user._id === user._id) && (
                                     <Post
                                         key={post._id}
                                         post={post}
