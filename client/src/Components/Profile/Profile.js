@@ -2,21 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
-import axios from '../Misc/axios'
-import { getPosts } from '../ReduxStore/postSlice'
 import Post from '../Feed/Post'
+import { getPosts } from '../ReduxStore/postSlice'
+import { useMutation } from '@apollo/react-hooks'
+import { GetUser } from '../API/userAPI'
 
 import './Profile.css'
 const Profile = () => {
 
     const location = useLocation()
     const [user, setUser] = useState(null)
+    const [getUser] = useMutation(GetUser)
     const postData = useSelector(getPosts)
+
+    const fetchUserData = async (userId) => {
+        let user = await getUser({ variables: { id: userId } })
+        setUser(user.data.user)
+    }
 
     useEffect(() => {
         const userId = (location.pathname).split('/')[2]
-        axios.get('retrieve/user', { params: { userId: userId } })
-            .then((res) => setUser(res.data))
+        fetchUserData(userId)
     }, [location])
 
     return (
@@ -47,7 +53,7 @@ const Profile = () => {
                         <div className='profile__feedPosts'>
 
                             {user && postData.map(post => (
-                                (post.userId == user.userId) && (
+                                (post.user._id === user._id) && (
                                     <Post
                                         key={post._id}
                                         post={post}
@@ -58,7 +64,7 @@ const Profile = () => {
 
                         </div>
                     </div>
-                    
+
                 </div>
 
             </div>

@@ -1,20 +1,17 @@
-import { auth } from "../../firebase";
-import { login, logout } from "../ReduxStore/appSlice";
+import { auth, provider } from "../../firebase";
+import { logout } from "../ReduxStore/appSlice";
+import saveUser from "./saveUser";
 
-const checkAuth = (dispatch, history) => {
-	auth.onAuthStateChanged((authUser) => {
+const checkAuth = async (addUser, dispatch, history) => {
+	await auth.onAuthStateChanged((authUser) => {
 		if (authUser) {
-			// Insert User Details into Redux Store
-			dispatch(
-				login({
-					userId: authUser.uid,
-					username: authUser.displayName,
-					avatarSrc: authUser.photoURL,
-				})
-			);
+			const userData = {
+				name: authUser.displayName,
+				avatar: authUser.photoURL,
+				email: authUser.email,
+			};
 
-			// Redirect to Home
-			history.replace("/home");
+			saveUser(userData, addUser, dispatch, history);
 		} else {
 			dispatch(logout());
 			history.replace("/login");
@@ -22,4 +19,18 @@ const checkAuth = (dispatch, history) => {
 	});
 };
 
-export default checkAuth;
+const signIn = async (addUser, dispatch, history) => {
+	await auth.signInWithPopup(provider)
+		.then(result => {
+			const userData = {
+				name: result.user.displayName,
+				avatar: result.user.photoURL,
+				email: result.user.email
+			};
+
+			saveUser(userData, addUser, dispatch, history);
+		})
+		.catch(err => console.log("Error with Google Authorization"))
+}
+
+export { checkAuth, signIn };

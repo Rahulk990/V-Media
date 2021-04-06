@@ -80,15 +80,15 @@ const Navbar = () => {
 				<div
 					id='profile'
 					className="navbar__info"
-					onClick={() => history.push("/user/" + user.userId)}
+					onClick={() => history.push("/user/" + user._id)}
 				>
 
 					<Avatar
-						src={user.avatarSrc}
+						src={user.avatar}
 						style={{ height: "25px", width: "25px" }}
 					/>
 
-					<p> {user.username} </p>
+					<p> {user.name} </p>
 				</div>
 
 				<div className="navbar__settings">

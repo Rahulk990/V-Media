@@ -7,12 +7,12 @@ import { Telegram, InfoOutlined } from '@material-ui/icons'
 import { selectUser } from '../ReduxStore/appSlice'
 
 const HomeLeft = () => {
-
+    
     const user = useSelector(selectUser)
 
     return (
         <div className='homeLeft'>
-            <HomeLeftRow src={user.avatarSrc} title={user.username} path={'/user/' + user.userId} />
+            <HomeLeftRow src={user.avatar} title={user.name} path={'/user/' + user._id} />
             <HomeLeftRow Icon={Telegram} title='Messenger' path={'/messenger'} />
             <HomeLeftRow Icon={InfoOutlined} title='About Us' path={'/about'} />
         </div>

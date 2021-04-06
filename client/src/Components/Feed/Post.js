@@ -9,33 +9,41 @@ import { Avatar, IconButton } from '@material-ui/core'
 import { ChatBubbleOutline, Delete, Sync, ThumbUp } from '@material-ui/icons'
 import { selectUser } from '../ReduxStore/appSlice'
 
-import deletePost from '../API/deletePost'
-import removeLike from '../API/removeLike'
-import addLike from '../API/addLike'
-import fetchPostData from '../API/fetchPostData'
 import { storage } from '../../firebase'
+import { useMutation } from "@apollo/react-hooks";
+import { AddLike, DeleteLike, DeletePost, GetPost } from '../API/postAPI'
+import { updatePost } from '../ReduxStore/postSlice'
 
 const Post = ({ post }) => {
 
     const history = useHistory()
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
+    const [deletePost] = useMutation(DeletePost);
+    const [addLike] = useMutation(AddLike);
+    const [deleteLike] = useMutation(DeleteLike);
+    const [getPost] = useMutation(GetPost);
+
     const [showComments, setShowComments] = useState(false)
 
     const handleDelete = async () => {
-        if (post.imgName) storage.refFromURL(post.imgName).delete();
-        await deletePost(dispatch, user.userId, post._id)
+        if (post.imgUrl) storage.refFromURL(post.imgUrl).delete();
+        deletePost({ variables: { id: post._id } });
     }
 
     const handleRefresh = async () => {
-        await fetchPostData(dispatch, post._id)
+        let postData = await getPost({ variables: { id: post._id } })
+        dispatch(updatePost(postData.data.post))
     }
 
     const handleLike = async () => {
-        if (post.likesArray.includes(user.userId)) {
-            await removeLike(dispatch, user.userId, post._id)
+        if (post.likesArray.some((like) => (like.user._id === user._id))) {
+            let postData = await deleteLike({ variables: { id: post._id, userId: user._id } })
+            dispatch(updatePost(postData.data.deleteLike))
         } else {
-            await addLike(dispatch, user.userId, post._id)
+            const likeData = { id: post._id, userId: user._id, likeType: 0 }
+            let postData = await addLike({ variables: likeData })
+            dispatch(updatePost(postData.data.addLike))
         }
     }
 
@@ -46,19 +54,19 @@ const Post = ({ post }) => {
                 <div className='post__topLeft'>
                     <Avatar
                         className='post__avatar'
-                        src={post.avatar}
-                        onClick={() => history.replace('/user/' + post.userId)}
+                        src={post.user.avatar}
+                        onClick={() => history.replace('/user/' + post.user._id)}
                     />
 
                     <div className='post__topInfo'>
-                        <h3 onClick={() => history.replace('/user/' + post.userId)}>{post.username}</h3>
+                        <h3 onClick={() => history.replace('/user/' + post.user._id)}>{post.user.name}</h3>
                         <p> {new Date(parseInt(post.timestamp)).toLocaleString()} </p>
                     </div>
                 </div>
 
                 <div className='post__topIcons'>
 
-                    {post.userId === user.userId &&
+                    {post.user._id === user._id &&
                         <IconButton
                             className='post__topIconsDelete'
                             onClick={handleDelete}
@@ -83,8 +91,8 @@ const Post = ({ post }) => {
             </div>
 
             <div className='post__image'>
-                {post.imgName && <img
-                    src={post.imgName}
+                {post.imgUrl && <img
+                    src={post.imgUrl}
                     alt=''
                 />}
             </div>
@@ -92,7 +100,7 @@ const Post = ({ post }) => {
             <div className={`post__bottom ${showComments && 'post__bottom--active'}`}>
 
                 <div
-                    className={`post__option ${post.likesArray.includes(user.userId) && 'post__option--active'}`}
+                    className={`post__option ${post.likesArray.some((like) => (like.user._id === user._id)) && 'post__option--active'}`}
                     onClick={handleLike}
                 >
                     <ThumbUp />

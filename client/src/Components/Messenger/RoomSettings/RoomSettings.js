@@ -4,7 +4,7 @@ import "./RoomSettings.css";
 
 import { selectUser } from "../../ReduxStore/appSlice";
 import { useSelector } from "react-redux";
-import AddMember from "./AddMember";
+import AddNewMember from "./AddNewMember";
 import GroupMember from "./GroupMember";
 import OutsideAlerter from "../../Misc/OutsideAlerter";
 import {
@@ -13,24 +13,28 @@ import {
 	PermIdentityRounded,
 } from "@material-ui/icons";
 import { IconButton, Tooltip } from "@material-ui/core";
-import removeMember from "../../API/removeMember";
-import removeDirectRoom from "../../API/removeDirectRoom";
+import { useMutation } from "@apollo/react-hooks";
+import { DeleteDirectRoom, DeleteMember } from "../../API/roomAPI";
 
 
 const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 
 	const history = useHistory()
 	const user = useSelector(selectUser);
+
+	const [deleteDirectRoom] = useMutation(DeleteDirectRoom)
+	const [deleteMember] = useMutation(DeleteMember)
+
 	const [addMemberDialog, setAddMemberDialog] = useState(false);
 	const [viewMembersDialog, setViewMembersDialog] = useState(false);
 
 	const exitFromGroup = async (e) => {
-		await removeMember(user.userId, roomId);
+		await deleteMember({ variables: { id: roomId, userId: user._id, username: user.name } });
 		history.replace('/messenger')
 	};
 
-	const deleteRoom = (e) => {
-		removeDirectRoom(roomId);
+	const deleteRoom = async (e) => {
+		await deleteDirectRoom({ variables: { id: roomId } });
 		history.replace('/messenger')
 	};
 
@@ -54,7 +58,7 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 						<OutsideAlerter
 							open={addMemberDialog}
 							outsideHandler={() => setAddMemberDialog(!addMemberDialog)}
-							component={<AddMember roomId={roomId} />}
+							component={<AddNewMember roomId={roomId} usersArray={usersArray}/>}
 						/>
 					)}
 
@@ -75,8 +79,8 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 							outsideHandler={() => setViewMembersDialog(!viewMembersDialog)}
 							component={
 								<div className="groupMember__dialog">
-									{usersArray.map((userId) => (
-										<GroupMember key={userId} userId={userId} />
+									{usersArray.map((user) => (
+										<GroupMember key={user._id} user={user} />
 									))}
 								</div>
 							}
@@ -93,18 +97,18 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 
 				</div>
 			) : (
-					<div className="roomSettings">
+				<div className="roomSettings">
 
-						<Tooltip title="Exit" enterDelay={1000}>
-							<div className="roomSetting__listOption">
-								<IconButton onClick={deleteRoom}>
-									<ExitToAppRounded />
-								</IconButton>
-							</div>
-						</Tooltip>
+					<Tooltip title="Exit" enterDelay={1000}>
+						<div className="roomSetting__listOption">
+							<IconButton onClick={deleteRoom}>
+								<ExitToAppRounded />
+							</IconButton>
+						</div>
+					</Tooltip>
 
-					</div>
-				)}
+				</div>
+			)}
 		</>
 	);
 };

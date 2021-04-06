@@ -8,8 +8,8 @@ import { Add } from '@material-ui/icons'
 import { selectRoomsData } from '../ReduxStore/roomSlice'
 import { selectUser } from '../ReduxStore/appSlice'
 
-import addDirectRoom from '../API/addDirectRoom'
-import addGroupRoom from '../API/addGroupRoom'
+import { AddDirectRoom, AddGroupRoom } from '../API/roomAPI'
+import { useMutation } from "@apollo/react-hooks";
 
 const MessengerLeft = ({ setRoomInfo }) => {
 
@@ -19,29 +19,36 @@ const MessengerLeft = ({ setRoomInfo }) => {
     const [userInput, setUserInput] = useState('')
     const [option, setOption] = useState('direct')
 
+    const [addDirectRoom] = useMutation(AddDirectRoom)
+    const [addGroupRoom] = useMutation(AddGroupRoom)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (userInput) {
             if (option === 'direct') {
-                const queryData = {
-                    userId: user.userId,
-                    userEmail: userInput
-                }
 
                 setUserInput('');
-                await addDirectRoom(queryData)
+                if (user.email !== userInput) {
+                    const queryData = {
+                        userId: user._id,
+                        userEmail: userInput
+                    }
+                    await addDirectRoom({ variables: queryData });
+                } else {
+                    alert("Not Possible");
+                }
+
             } else {
                 const queryData = {
-                    userId: user.userId,
+                    userId: user._id,
                     title: userInput
                 }
 
                 setUserInput('');
-                await addGroupRoom(queryData)
+                await addGroupRoom({ variables: queryData });
             }
         }
-
     }
 
     const selectOption = (id) => {
@@ -60,7 +67,6 @@ const MessengerLeft = ({ setRoomInfo }) => {
         })
         setSortedRooms(rooms)
     }, [roomsData])
-
 
     return (
         <div className='messengerLeft'>
@@ -118,8 +124,7 @@ const MessengerLeft = ({ setRoomInfo }) => {
                         !room.title &&
                         <Room
                             key={room._id}
-                            roomId={room._id}
-                            usersArray={room.usersArray}
+                            roomData={room}
                             setRoomInfo={setRoomInfo}
                             recentMessageUser={(room.messagesArray.length) ? (room.messagesArray[0].username) : ('')}
                             recentMessageContent={(room.messagesArray.length) ? (room.messagesArray[0].content) : ('')}
@@ -132,9 +137,7 @@ const MessengerLeft = ({ setRoomInfo }) => {
                         room.title &&
                         <Room
                             key={room._id}
-                            roomId={room._id}
-                            title={room.title}
-                            usersArray={room.usersArray}
+                            roomData={room}
                             setRoomInfo={setRoomInfo}
                             recentMessageUser={(room.messagesArray.length) ? (room.messagesArray[0].username) : ('')}
                             recentMessageContent={(room.messagesArray.length) ? (room.messagesArray[0].content) : ('')}

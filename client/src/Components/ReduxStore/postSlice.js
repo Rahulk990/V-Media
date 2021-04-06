@@ -9,6 +9,7 @@ export const postSlice = createSlice({
 
     reducers: {
         setPosts: (state, action) => {
+            action.payload.sort((a, b) => b.timestamp - a.timestamp)
             state.posts = action.payload
         },
 

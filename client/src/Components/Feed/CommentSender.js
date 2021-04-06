@@ -5,12 +5,16 @@ import './CommentSender.css'
 import { Avatar, IconButton } from "@material-ui/core";
 import { Send } from '@material-ui/icons';
 import { selectUser } from '../ReduxStore/appSlice'
-import addComment from '../API/addComment'
+import { useMutation } from "@apollo/react-hooks";
+import { AddComment } from '../API/postAPI';
+import { updatePost } from '../ReduxStore/postSlice';
 
 const CommentSender = ({ postId }) => {
 
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
+    const [addComment] = useMutation(AddComment);
+
     const [commentInput, setCommentInput] = useState('')
 
     const handleSubmit = async (e) => {
@@ -18,19 +22,16 @@ const CommentSender = ({ postId }) => {
 
         const comment = commentInput.trim()
         if (comment.length > 0) {
-            const requestData = {
-                commentData: {
-                    userId: user.userId,
-                    username: user.username,
-                    avatar: user.avatarSrc,
-                    content: comment,
-                    timestamp: Date.now()
-                },
-                postId: postId
+            const commentData = {
+                id: postId,
+                userId: user._id,
+                content: comment,
+                timestamp: String(Date.now())
             }
 
             setCommentInput('');
-            await addComment(dispatch, requestData)
+            let postData = await addComment({ variables: commentData })
+            dispatch(updatePost(postData.data.addComment))
         }
     }
 
@@ -38,7 +39,7 @@ const CommentSender = ({ postId }) => {
         <div className='commentSender'>
             <Avatar
                 style={{ width: '30px', height: '30px' }}
-                src={user.avatarSrc}
+                src={user.avatar}
             />
 
             <form>

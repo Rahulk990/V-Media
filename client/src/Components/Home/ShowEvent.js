@@ -5,17 +5,20 @@ import './ShowEvent.css'
 import StyledDialog from '../Misc/StyledDialog'
 import { Close, Delete } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
-import { selectUser } from '../ReduxStore/appSlice'
-import deleteEvent from '../API/deleteEvent'
+import { selectUser, setEvents } from '../ReduxStore/appSlice'
+import { useMutation } from "@apollo/react-hooks";
+import { DeleteEvent } from '../API/userAPI'
 
 const ShowEvent = ({ open, onClose, eventId, heading, description, timestamp }) => {
 
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
+	const [deleteEvent] = useMutation(DeleteEvent)
 
     const handleDelete = async () => {
         onClose()
-        await deleteEvent(dispatch, user.userId, eventId)
+        const events = await deleteEvent({ variables: { id: user._id, eventId: eventId}});
+        dispatch(setEvents(events.data.deleteEvent.eventsArray));
     }
 
     return (
