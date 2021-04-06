@@ -27,13 +27,18 @@ const MessengerLeft = ({ setRoomInfo }) => {
 
         if (userInput) {
             if (option === 'direct') {
-                const queryData = {
-                    userId: user._id,
-                    userEmail: userInput
-                }
 
                 setUserInput('');
-                await addDirectRoom({ variables: queryData });
+                if (user.email !== userInput) {
+                    const queryData = {
+                        userId: user._id,
+                        userEmail: userInput
+                    }
+                    await addDirectRoom({ variables: queryData });
+                } else {
+                    alert("Not Possible");
+                }
+
             } else {
                 const queryData = {
                     userId: user._id,

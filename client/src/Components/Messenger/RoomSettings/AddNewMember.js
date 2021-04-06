@@ -6,7 +6,7 @@ import { AddRounded } from "@material-ui/icons";
 import { useMutation } from "@apollo/react-hooks";
 import { AddMember } from "../../API/roomAPI";
 
-const AddNewMember = ({ roomId }) => {
+const AddNewMember = ({ roomId, usersArray }) => {
 
 	const [addMember] = useMutation(AddMember)
 
@@ -14,7 +14,11 @@ const AddNewMember = ({ roomId }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setNewMember("");
-		await addMember({ variables: { id: roomId, userEmail: newMember } })
+		if (!usersArray.some((user) => (user.email == newMember))) {
+			await addMember({ variables: { id: roomId, userEmail: newMember } })
+		} else {
+			alert("User already present");
+		}
 	}
 
 	return (

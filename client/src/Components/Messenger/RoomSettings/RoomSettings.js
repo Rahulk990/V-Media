@@ -58,7 +58,7 @@ const RoomSettings = ({ roomId, isGroup, usersArray }) => {
 						<OutsideAlerter
 							open={addMemberDialog}
 							outsideHandler={() => setAddMemberDialog(!addMemberDialog)}
-							component={<AddNewMember roomId={roomId} />}
+							component={<AddNewMember roomId={roomId} usersArray={usersArray}/>}
 						/>
 					)}
 

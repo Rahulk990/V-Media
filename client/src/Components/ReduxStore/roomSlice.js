@@ -18,7 +18,7 @@ export const roomSlice = createSlice({
         },
 
         popRoomsData: (state, action) => {
-            const ind = state.roomsData.findIndex(obj => obj._id === action.payload._id)
+            const ind = state.roomsData.findIndex(obj => obj._id === action.payload.roomId)
             if (state.roomsData[ind]) {
                 state.roomsData[ind] = state.roomsData[state.roomsData.length - 1]
                 state.roomsData.pop()
