@@ -21,6 +21,7 @@ This is a code repository for a social network website for any group of people w
 - Users can maintain their personal to-do list while surfing the site
 - Users can able to chat with each other using Direct Messages
 - Users can also create chating groups for sending messages
+- Users are also able to see which users are currently active
 - Both posting and messaging are made real-time using Socket Io
 - Done Authentication using Google Authentication
 
@@ -52,20 +53,21 @@ This is a code repository for a social network website for any group of people w
 
 ## _Screenshots_
 
-* Progress Charts
+* Post Feed
  
+![Post Feed](/Screenshots/feed.jpg "Post Feed")
 
-* Company-wise categorization of coding questions
+* Personal To Do List
 
+![To Do List](/Screenshots/todo.jpg "To Do List")
 
-* Topic-wise categorization of coding questions
+* Direct Messaging
 
+![Direct Messaging](/Screenshots/direct.jpg "Direct Messaging")
 
-* Company page with charts
+* Group Messaging
 
-
-* Topic page with Charts
-
+![Group Messaging](/Screenshots/group.jpg "Group Messaging")
 
 ## _Future Considerations_
 
