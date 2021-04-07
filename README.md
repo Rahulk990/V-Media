@@ -55,7 +55,7 @@ This is a code repository for a social network website for any group of people w
 
 * Post Feed
  
-![Post Feed](/Screenshots/Feed.jpg "Post Feed")
+![Post Feed](/Screenshots/feed.jpg "Post Feed")
 
 * Personal To Do List
 
