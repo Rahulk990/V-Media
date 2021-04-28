@@ -51,24 +51,6 @@ This is a code repository for a social network website for any group of people w
 - [Vs Code] - Awesome code editor 😍
 - [Heroku] - Free Website Deployment 🙂
 
-## _Screenshots_
-
-* Post Feed
- 
-![Post Feed](/Screenshots/feed.jpg "Post Feed")
-
-* Personal To Do List
-
-![To Do List](/Screenshots/todo.jpg "To Do List")
-
-* Direct Messaging
-
-![Direct Messaging](/Screenshots/direct.jpg "Direct Messaging")
-
-* Group Messaging
-
-![Group Messaging](/Screenshots/group.jpg "Group Messaging")
-
 ## _Future Considerations_
 
 - Multiple types of likes can be added
