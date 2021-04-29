@@ -1,6 +1,6 @@
 # V-Media: A Social Network
 
-This is a code repository for a social network website for any group of people who wants to share their views and interests with others. The site is currently hosted [here](https://v-media.herokuapp.com).
+V-Media is a social networking website for any group of people who wants to share their views and interests with others. The site is mainly built for students and employees so that they can connect with each other and the fact that, _ Everyone is reachable to Everyone_ can be realized. The site is currently hosted [here](https://v-media.herokuapp.com).
 
 **Table of Contents**  
 
